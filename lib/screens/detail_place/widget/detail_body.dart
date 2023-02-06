@@ -14,7 +14,7 @@ class _DetailBodyState extends State<DetailBody> {
   Widget build(BuildContext context) {
     return Container(
       width: 378,
-      height: 350,
+      height: 323,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(

@@ -16,17 +16,8 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       backgroundColor: Styles.bgBackground,
       // appBar: ,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: Column(
-            children: const [
-              DetailHeader(),
-              SizedBox(height: 20),
-              DetailBody()
-            ],
-          ),
-        ),
+      body: Column(
+        children: const [DetailHeader(), SizedBox(height: 20), DetailBody()],
       ),
     );
   }
