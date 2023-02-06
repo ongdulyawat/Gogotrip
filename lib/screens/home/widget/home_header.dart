@@ -20,7 +20,7 @@ class _HomeHeaderState extends State<HomeHeader> {
             flex: 15,
             child: Container(
               color: Colors.transparent,
-              padding: const EdgeInsets.only(top: 34, left: 16),
+              padding: const EdgeInsets.only(top: 34, left: 15),
               child: GestureDetector(
                 onTap: () {},
                 child: Container(

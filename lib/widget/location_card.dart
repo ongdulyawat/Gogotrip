@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
+import 'package:gogotrip/screens/detail_place/detail_screen.dart';
 
 class LocationCard extends StatefulWidget {
   const LocationCard({Key? key}) : super(key: key);
@@ -30,9 +31,15 @@ class _LocationCardState extends State<LocationCard> {
   _buildListItem(String locationName, String imgPath, String map, String rating,
       Color cardColor) {
     return Padding(
-      padding: EdgeInsets.only(left: 15),
+      padding: const EdgeInsets.only(left: 15),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DetailScreen(),
+              ));
+        },
         child: Container(
           height: 175,
           width: 150,
