@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gogotrip/screens/home/homepage_screen.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:gogotrip/screens/first_app/app_screen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +12,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: AppScreen(),
     );
   }
 }

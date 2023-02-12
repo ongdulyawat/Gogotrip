@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Styles{
   static const Color bgBackground = Color.fromRGBO(251, 237, 249, 1);
   static const Color buttonColor = Color.fromRGBO(220, 171, 171, 1);
+  static const Color buttonCreateColor = Color.fromRGBO(0, 181, 7, 1);
 
   static var boxShadows = [
     const BoxShadow(

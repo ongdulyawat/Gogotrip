@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gogotrip/constants/styles.dart';
+import 'package:gogotrip/screens/party_room/party_screen.dart';
 
 class DetailBody extends StatefulWidget {
   const DetailBody({Key? key}) : super(key: key);
@@ -43,7 +44,13 @@ class _DetailBodyState extends State<DetailBody> {
                         padding: const EdgeInsets.only(
                             left: 35.0, top: 5, bottom: 5, right: 10),
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PartyScreen(),
+                                ));
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Styles.buttonColor,
