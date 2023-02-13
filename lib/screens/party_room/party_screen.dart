@@ -16,7 +16,8 @@ class _PartyScreenState extends State<PartyScreen> {
       backgroundColor: Styles.bgBackground,
       // appBar: ,
       body: Column(
-        children: const [PartyHeader(), SizedBox(height: 20),
+        children: const [
+          PartyHeader(), SizedBox(height: 20),
           // DetailBody()
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SlideLocation extends StatefulWidget {
   const SlideLocation({Key? key}) : super(key: key);
@@ -60,7 +61,9 @@ class _SlideLocationState extends State<SlideLocation> {
             },
             child: Container(
               decoration: BoxDecoration(
-                  color: location == selectItem ? Colors.black : Colors.grey,
+                  color: location == selectItem
+                      ? Styles.buttonColor
+                      : Colors.white,
                   borderRadius: BorderRadius.circular(8),
                   boxShadow: Styles.boxShadows),
               child: Padding(
@@ -88,9 +91,13 @@ class _SlideLocationState extends State<SlideLocation> {
                     ),
                     Text(
                       location,
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
+                      style: GoogleFonts.poppins(
+                          color: location == selectItem
+                              ? Colors.white
+                              : Colors.black,
+                          fontWeight: location == selectItem
+                              ? FontWeight.bold
+                              : FontWeight.w500,
                           fontSize: 14),
                     ),
                   ],
@@ -104,8 +111,9 @@ class _SlideLocationState extends State<SlideLocation> {
             width: 8,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color:
-                    location == selectItem ? Colors.black : Colors.transparent),
+                color: location == selectItem
+                    ? Styles.buttonColor
+                    : Colors.transparent),
           )
         ],
       ),

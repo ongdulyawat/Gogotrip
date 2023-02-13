@@ -16,8 +16,8 @@ class AppScreen extends StatefulWidget {
 class _AppScreenState extends State<AppScreen> {
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 2), () {
-      Get.to(LoginScreen());
+    Timer(const Duration(seconds: 3), () {
+      Get.to(const LoginScreen());
     });
     return const Scaffold(
       backgroundColor: Styles.buttonColor,
