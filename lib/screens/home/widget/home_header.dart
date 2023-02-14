@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gogotrip/screens/test_page/test_screen.dart';
 
 class HomeHeader extends StatefulWidget {
   const HomeHeader({Key? key}) : super(key: key);
@@ -67,7 +68,17 @@ class _HomeHeaderState extends State<HomeHeader> {
           ),
           Expanded(
             flex: 10,
-            child: Container(),
+            child: GestureDetector(
+              onTap: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TestPage(),
+                    ));
+              },
+                child: Container(
+                  child: Text("test",style: TextStyle(color: Colors.green),),
+                )),
           ),
         ],
       ),
