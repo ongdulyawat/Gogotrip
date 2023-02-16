@@ -49,24 +49,12 @@ class _RecommendCardState extends State<RecommendCard> {
                     height: 95,
                     width: 95,
                     decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(imgPath), fit: BoxFit.fill),
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: Styles.boxShadows),
-                    child: ClipRect(
-                      // borderRadius: BorderRadius.circular(20),
-                      child: SizedBox.fromSize(
-                        size: Size.fromRadius(48),
-                        child: Center(
-                          child: Image.asset(
-                            imgPath,
-                            height: 85,
-                            width: 85,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                    ),
                   )),
               const SizedBox(height: 10),
               Padding(
@@ -114,7 +102,7 @@ class _RecommendCardState extends State<RecommendCard> {
                     Expanded(
                       flex: 65,
                       child: Text(
-                        '\$$map',
+                        map,
                         style: const TextStyle(fontSize: 17),
                       ),
                     ),

@@ -56,18 +56,12 @@ class _LocationCardState extends State<LocationCard> {
                     height: 95,
                     width: 95,
                     decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(imgPath), fit: BoxFit.fill),
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                         boxShadow: Styles.boxShadows),
-                    child: Center(
-                      child: Image.asset(
-                        imgPath,
-                        height: 85,
-                        width: 85,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
                   )),
               const SizedBox(height: 10),
               Padding(

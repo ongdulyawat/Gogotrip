@@ -49,6 +49,10 @@ class _DetailHeaderState extends State<DetailHeader> {
               width: 375,
               height: 160,
               decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/beach.png'),
+                    fit: BoxFit.fill
+                ),
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: Styles.boxShadows,

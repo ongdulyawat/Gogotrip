@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
+import 'package:gogotrip/screens/party_room/widget/party_body.dart';
 import 'package:gogotrip/screens/party_room/widget/party_header.dart';
 
 class PartyScreen extends StatefulWidget {
@@ -15,11 +16,10 @@ class _PartyScreenState extends State<PartyScreen> {
     return Scaffold(
       backgroundColor: Styles.bgBackground,
       // appBar: ,
-      body: Column(
-        children: const [
-          PartyHeader(), SizedBox(height: 20),
-          // DetailBody()
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [PartyHeader(), SizedBox(height: 10), PartyBody()],
+        ),
       ),
     );
   }
