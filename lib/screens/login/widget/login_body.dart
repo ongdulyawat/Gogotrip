@@ -1,6 +1,9 @@
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/screens/home/homepage_screen.dart';
+// import 'package:gogotrip/controller/user_controller.dart';
+
 
 class LoginBody extends StatefulWidget {
   const LoginBody({Key? key}) : super(key: key);
@@ -10,6 +13,9 @@ class LoginBody extends StatefulWidget {
 }
 
 class _LoginBodyState extends State<LoginBody> {
+  // final controllerUsername = TextEditingController();
+  // final controllerPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,6 +28,7 @@ class _LoginBodyState extends State<LoginBody> {
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
             child: const TextField(
+              // controller: controllerUsername,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   border: InputBorder.none,
@@ -41,6 +48,7 @@ class _LoginBodyState extends State<LoginBody> {
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
             child: const TextField(
+              // controller: controllerPassword,
               obscureText: true,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -56,6 +64,12 @@ class _LoginBodyState extends State<LoginBody> {
         Padding(
           padding: const EdgeInsets.only(left: 25, right: 25),
           child: GestureDetector(
+            // final user = User(
+            // username: controllerUsername.text,
+            // password: controllerPassword.text,
+            // );
+            // createUser(user);
+            // userSetup(_usernameController.text);
             onTap: () {
               Navigator.push(
                   context,
@@ -82,4 +96,11 @@ class _LoginBodyState extends State<LoginBody> {
       ],
     );
   }
+  // Future createUser(User user) async {
+  //   final docUser = FirebaseFirestore.instance.collection('users').doc();
+  //   user.id = docUser.id;
+  //
+  //   final json = user.toJson();
+  //   await docUser.set(json);
+  // }
 }

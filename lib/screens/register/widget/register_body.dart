@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/screens/login/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../main.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
+}
 
 class RegisterBody extends StatefulWidget {
   const RegisterBody({Key? key}) : super(key: key);
@@ -10,6 +20,55 @@ class RegisterBody extends StatefulWidget {
 }
 
 class _RegisterBodyState extends State<RegisterBody> {
+  // final controllerFirstName = TextEditingController();
+  // final controllerLastName = TextEditingController();
+  // final controllerUserName = TextEditingController();
+  // final controllerEmail = TextEditingController();
+  // final controllerPassword = TextEditingController();
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
+  // Future<void> _create([DocumentSnapshot? documentSnapshot]) async {
+  //   await showModalBottomSheet(
+  //       isScrollControlled: true,
+  //       context: context,
+  //       builder: (BuildContext ctx) {
+  //         return GestureDetector(
+  //           onTap: () async {
+  //             final String username = _usernameController.text;
+  //             final String password = _passwordController.text;
+  //             final String firstname = _firstnameController.text;
+  //             final String lastname = _lastnameController.text;
+  //             final String email = _emailController.text;
+  //
+  //             if (password != null) {
+  //               await _users.add({
+  //                 "username": username,
+  //                 "password": password,
+  //                 "firstname": firstname,
+  //                 "lastname": lastname,
+  //                 "email": email
+  //               });
+  //
+  //               _usernameController.text = '';
+  //               _passwordController.text = '';
+  //               _firstnameController.text = '';
+  //               _lastnameController.text = '';
+  //               _emailController.text = '';
+  //               Navigator.of(context).pop();
+  //             }
+  //           },
+  //         );
+  //       });
+  // }
+
+  final CollectionReference _users =
+      FirebaseFirestore.instance.collection('users');
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,7 +80,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                 color: Colors.white,
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
-            child: const TextField(
+            child: TextField(
+              controller: _firstnameController,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   border: InputBorder.none,
@@ -40,7 +100,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                 color: Colors.white,
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
-            child: const TextField(
+            child: TextField(
+              controller: _lastnameController,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   border: InputBorder.none,
@@ -59,7 +120,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                 color: Colors.white,
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
-            child: const TextField(
+            child: TextField(
+              controller: _usernameController,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   border: InputBorder.none,
@@ -78,7 +140,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                 color: Colors.white,
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
-            child: const TextField(
+            child: TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   border: InputBorder.none,
@@ -97,7 +160,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                 color: Colors.white,
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
-            child: const TextField(
+            child: TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -113,7 +177,32 @@ class _RegisterBodyState extends State<RegisterBody> {
         Padding(
           padding: const EdgeInsets.only(left: 25, right: 25),
           child: GestureDetector(
-            onTap: () {
+            // onPressed: () => _create(),
+            onTap: () async {
+              {
+                final String username = _usernameController.text;
+                final String password = _passwordController.text;
+                final String firstname = _firstnameController.text;
+                final String lastname = _lastnameController.text;
+                final String email = _emailController.text;
+                if (password != null) {
+                  await _users.add({
+                    "username": username,
+                    "password": password,
+                    "firstname": firstname,
+                    "lastname": lastname,
+                    "email": email
+                  });
+
+                  _usernameController.text = '';
+                  _passwordController.text = '';
+                  _firstnameController.text = '';
+                  _lastnameController.text = '';
+                  _emailController.text = '';
+                  Navigator.of(context).pop();
+                }
+              }
+              ;
               Navigator.push(
                   context,
                   MaterialPageRoute(
