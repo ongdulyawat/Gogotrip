@@ -12,16 +12,15 @@ import 'package:gogotrip/widget/search.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
-  final user  = FirebaseAuth.instance.currentUser!;
 
-void signUserOut (){
+final user = FirebaseAuth.instance.currentUser!;
+
+void signUserOut() {
   FirebaseAuth.instance.signOut();
 }
-
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -42,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 250,
                     child: Text(
-                      "LOGGED BY :"+user.email!,
+                      "LOGGED BY :${user.email!}",
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                       overflow: TextOverflow.clip,
                       maxLines: 1,
@@ -122,14 +121,13 @@ class _HomePageState extends State<HomePage> {
             color: Styles.bgBackground,
             child: ListView(
               children: [
-                const UserAccountsDrawerHeader(
+                UserAccountsDrawerHeader(
                   decoration: BoxDecoration(color: Styles.buttonColor),
                   accountName: Text("Dulyawat Visitruangrit"),
-                  accountEmail: Text("@gmail"),
+                  accountEmail: Text(user.email!),
                   currentAccountPicture: CircleAvatar(
                       foregroundImage: AssetImage('assets/images/beach.png')),
                 ),
-                Text(user.email!),
                 ListTile(
                   leading: const Icon(
                     Icons.book_online_outlined,
