@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/screens/login/login_screen.dart';
@@ -15,16 +16,14 @@ void main() async {
 class RegisterBody extends StatefulWidget {
   const RegisterBody({Key? key}) : super(key: key);
 
+
   @override
   State<RegisterBody> createState() => _RegisterBodyState();
 }
 
+
 class _RegisterBodyState extends State<RegisterBody> {
-  // final controllerFirstName = TextEditingController();
-  // final controllerLastName = TextEditingController();
-  // final controllerUserName = TextEditingController();
-  // final controllerEmail = TextEditingController();
-  // final controllerPassword = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -178,31 +177,50 @@ class _RegisterBodyState extends State<RegisterBody> {
           padding: const EdgeInsets.only(left: 25, right: 25),
           child: GestureDetector(
             // onPressed: () => _create(),
-            onTap: () async {
+            onTap: ()
+            async {
               {
-                final String username = _usernameController.text;
-                final String password = _passwordController.text;
-                final String firstname = _firstnameController.text;
-                final String lastname = _lastnameController.text;
-                final String email = _emailController.text;
-                if (password != null) {
-                  await _users.add({
+                final String username = _usernameController.text.trim();
+                final String password = _passwordController.text.trim();
+                final String firstname = _firstnameController.text.trim();
+                final String lastname = _lastnameController.text.trim();
+                final String email = _emailController.text.trim();
+
+                await _users.add({
                     "username": username,
                     "password": password,
                     "firstname": firstname,
                     "lastname": lastname,
                     "email": email
                   });
-
-                  _usernameController.text = '';
-                  _passwordController.text = '';
-                  _firstnameController.text = '';
-                  _lastnameController.text = '';
-                  _emailController.text = '';
-                  Navigator.of(context).pop();
+                try{
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim());
                 }
-              }
-              ;
+                on FirebaseAuthException catch (e){
+                  print(e);
+                }
+                // Navigator.of(context).pop();
+
+                // if (password != null) {
+                //   await _users.add({
+                //     "username": username,
+                //     "password": password,
+                //     "firstname": firstname,
+                //     "lastname": lastname,
+                //     "email": email
+                //   });
+                //   _usernameController.text = '';
+                //   _passwordController.text = '';
+                //   _firstnameController.text = '';
+                //   _lastnameController.text = '';
+                //   _emailController.text = '';
+                //   Navigator.of(context).pop();
+                // }
+
+              };
+
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -228,4 +246,14 @@ class _RegisterBodyState extends State<RegisterBody> {
       ],
     );
   }
+  // Future registerUser() async{
+  //   try{
+  //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //         email: _emailController.text.trim(),
+  //         password: _passwordController.text.trim());
+  //   }
+  //   on FirebaseAuthException catch (e){
+  //     print(e);
+  //   }
+  // }
 }

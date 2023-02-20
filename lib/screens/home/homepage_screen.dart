@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,9 +12,16 @@ import 'package:gogotrip/widget/search.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
+  final user  = FirebaseAuth.instance.currentUser!;
+
+void signUserOut (){
+  FirebaseAuth.instance.signOut();
+}
+
 
 class _HomePageState extends State<HomePage> {
   @override
@@ -27,35 +35,38 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           title: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 95.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "Dulyawat Visitruangrit",
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 250,
+                    child: Text(
+                      "LOGGED BY :"+user.email!,
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
+                      overflow: TextOverflow.clip,
+                      maxLines: 1,
+                      softWrap: true,
                     ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Icon(
-                          Icons.location_on_outlined,
-                          color: Colors.white,
-                          size: 14,
-                        ),
-                        Text(
-                          "Location",
-                          style: TextStyle(color: Colors.white, fontSize: 14.0),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: Colors.white,
+                        size: 14,
+                      ),
+                      Text(
+                        "Location",
+                        style: TextStyle(color: Colors.white, fontSize: 14.0),
+                      ),
+                    ],
+                  )
+                ],
               ),
               Container(
                 height: 35,
@@ -114,10 +125,11 @@ class _HomePageState extends State<HomePage> {
                 const UserAccountsDrawerHeader(
                   decoration: BoxDecoration(color: Styles.buttonColor),
                   accountName: Text("Dulyawat Visitruangrit"),
-                  accountEmail: Text("Dulyawat.wi@ku.th"),
+                  accountEmail: Text("@gmail"),
                   currentAccountPicture: CircleAvatar(
                       foregroundImage: AssetImage('assets/images/beach.png')),
                 ),
+                Text(user.email!),
                 ListTile(
                   leading: const Icon(
                     Icons.book_online_outlined,
@@ -133,7 +145,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                   title: const Text('Lock out'),
                   onTap: () {
+                    // signUserOut();
+                    FirebaseAuth.instance.signOut();
                     Get.to(const LoginScreen());
+                    print("Sign out");
                   },
                 )
               ],

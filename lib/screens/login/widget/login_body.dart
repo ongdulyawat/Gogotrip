@@ -1,9 +1,18 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/screens/home/homepage_screen.dart';
+
+import '../../../main.dart';
 // import 'package:gogotrip/controller/user_controller.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const MyApp());
+}
 
 class LoginBody extends StatefulWidget {
   const LoginBody({Key? key}) : super(key: key);
@@ -13,8 +22,24 @@ class LoginBody extends StatefulWidget {
 }
 
 class _LoginBodyState extends State<LoginBody> {
-  // final controllerUsername = TextEditingController();
-  // final controllerPassword = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+
+  // void signIn() async{
+  //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //       email: _emailController.text.trim(),
+  //       password: _passwordController.text.trim()
+  //   );
+  // }
+
+  @override
+  void dispose(){
+    _emailController.dispose();
+    _passwordController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +52,12 @@ class _LoginBodyState extends State<LoginBody> {
                 color: Colors.white,
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
-            child: const TextField(
-              // controller: controllerUsername,
+            child:  TextField(
+              controller: _emailController,
               decoration: InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   border: InputBorder.none,
-                  hintText: "Username",
+                  hintText: "Email",
                   contentPadding: EdgeInsets.only(top: 15)),
             ),
           ),
@@ -47,8 +72,8 @@ class _LoginBodyState extends State<LoginBody> {
                 color: Colors.white,
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(12)),
-            child: const TextField(
-              // controller: controllerPassword,
+            child:  TextField(
+              controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                   border: InputBorder.none,
@@ -70,12 +95,37 @@ class _LoginBodyState extends State<LoginBody> {
             // );
             // createUser(user);
             // userSetup(_usernameController.text);
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomePage(),
-                  ));
+            onTap: () async{
+              {
+                showDialog(context: context,
+                    builder: (context){
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                });
+                try {
+                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: _emailController.text.trim(),
+                      password: _passwordController.text.trim()
+                  );
+                  Navigator.pop(context);
+                  Navigator.push(
+
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                } on FirebaseAuthException {
+                  Navigator.pop(context);
+                  showDialog(context: context, builder: (context){
+                    return const AlertDialog(
+                      title: Text('Incorrect'),
+                    );
+                  },
+                  );
+                }
+              }
+
             },
             child: Container(
               padding: const EdgeInsets.all(18),
@@ -96,11 +146,4 @@ class _LoginBodyState extends State<LoginBody> {
       ],
     );
   }
-  // Future createUser(User user) async {
-  //   final docUser = FirebaseFirestore.instance.collection('users').doc();
-  //   user.id = docUser.id;
-  //
-  //   final json = user.toJson();
-  //   await docUser.set(json);
-  // }
 }
