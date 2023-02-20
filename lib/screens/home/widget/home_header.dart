@@ -20,20 +20,20 @@ class _HomeHeaderState extends State<HomeHeader> {
           Expanded(
             flex: 15,
             child: Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.only(top: 34, left: 15),
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(28)),
-                  child: const Icon(Icons.density_medium),
-                ),
-              ),
+              // color: Colors.transparent,
+              // padding: const EdgeInsets.only(top: 34, left: 15),
+              // child: GestureDetector(
+              //   onTap: () {},
+              //   child: Container(
+              //     padding: const EdgeInsets.all(8),
+              //     width: 42,
+              //     height: 42,
+              //     decoration: BoxDecoration(
+              //         color: Colors.white,
+              //         borderRadius: BorderRadius.circular(28)),
+              //     child: const Icon(Icons.density_medium),
+              //   ),
+              // ),
             ),
           ),
           Expanded(
@@ -73,11 +73,11 @@ class _HomeHeaderState extends State<HomeHeader> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => TestPage(),
+                      builder: (context) => const TestPage(),
                     ));
               },
                 child: Container(
-                  child: Text("test",style: TextStyle(color: Colors.green),),
+                  child: const Text("test",style: TextStyle(color: Colors.green),),
                 )),
           ),
         ],

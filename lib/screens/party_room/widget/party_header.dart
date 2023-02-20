@@ -18,99 +18,83 @@ class _PartyHeaderState extends State<PartyHeader> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // GestureDetector(
-        //   onTap: () => pickDate(context),
-        //   child: Container(
-        //     padding: EdgeInsets.all(8),
-        //     width: 100,
-        //     height: 42,
-        //     decoration: BoxDecoration(
-        //         color: Colors.white, borderRadius: BorderRadius.circular(28)),
-        //     child: Text(
-        //         getDate()),
-        //   ),
-        // ),
-        Container(
-          // width: 376,
-          // height:300,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 80,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 5.0, right: 245),
-                  child: Container(
-                    padding:
-                        const EdgeInsets.only(top: 34, left: 10, bottom: 20),
-                    child: GestureDetector(
-                      onTap: () {
-                        {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const DetailScreen(),
-                              ));
-                        }
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(8),
-                        width: 42,
-                        height: 42,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(28)),
-                        child: const Icon(Icons.arrow_back),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 20,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 80,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5.0, right: 245),
                 child: Container(
-                  padding: const EdgeInsets.only(top: 50, right: 18),
+                  padding:
+                      const EdgeInsets.only(top: 34, left: 10, bottom: 20),
                   child: GestureDetector(
                     onTap: () {
                       {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const CreatePartyScreen(),
+                              builder: (context) => const DetailScreen(),
                             ));
                       }
                     },
                     child: Container(
-                      height: 25,
+                      padding: const EdgeInsets.all(8),
+                      width: 42,
+                      height: 42,
                       decoration: BoxDecoration(
-                          color: Styles.buttonCreateColor,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.exposure_plus_1,
-                            size: 15,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 3),
-                          Text(
-                            "create",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(28)),
+                      child: const Icon(Icons.arrow_back),
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            Expanded(
+              flex: 20,
+              child: Container(
+                padding: const EdgeInsets.only(top: 50, right: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CreatePartyScreen(),
+                          ));
+                    }
+                  },
+                  child: Container(
+                    height: 25,
+                    decoration: BoxDecoration(
+                        color: Styles.buttonCreateColor,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.exposure_plus_1,
+                          size: 15,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 3),
+                        Text(
+                          "create",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
 
         GestureDetector(

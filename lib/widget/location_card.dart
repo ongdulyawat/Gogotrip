@@ -91,7 +91,7 @@ class _LocationCardState extends State<LocationCard> {
                               boxShadow: Styles.boxShadows,
                             ),
                             child: const Icon(
-                              Icons.star_outline_sharp,
+                              Icons.heart_broken,
                               size: 15,
                               color: Colors.white,
                             ),
