@@ -42,6 +42,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   final _controller = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   String feeling = "Love Salmon,love travel";
+  String username = "Ong Dulyawat";
 
   @override
   Widget build(BuildContext context) {
@@ -77,8 +78,117 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                         height: 15,
                       ),
                       Center(
-                        child: Text("Ong Dulyawat",
-                            style: GoogleFonts.bebasNeue(fontSize: 35)),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(username,
+                                style: GoogleFonts.bebasNeue(fontSize: 35)),
+                            IconButton(
+                              icon: Image.asset(
+                                "assets/icons/pencil.png",
+                                width: 20,
+                                height: 20,
+                              ),
+                              onPressed: () async {
+                                // mark the function as async
+                                await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        SimpleDialog(
+                                          title: const Text("Edit Username"),
+                                          children: <Widget>[
+                                            SimpleDialogOption(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 24,
+                                                      vertical: 24),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text(username),
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            32),
+                                                    child: TextField(
+                                                      controller: _controller,
+                                                      decoration:
+                                                          InputDecoration(
+                                                              enabledBorder:
+                                                                  const OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: Colors
+                                                                        .transparent),
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            30)),
+                                                              ),
+                                                              focusedBorder:
+                                                                  const OutlineInputBorder(
+                                                                borderSide: BorderSide(
+                                                                    color: Colors
+                                                                        .transparent),
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            30)),
+                                                              ),
+                                                              prefixIcon:
+                                                                  Image.asset(
+                                                                "assets/icons/pencil.png",
+                                                                width: 10,
+                                                                height: 10,
+                                                              ),
+                                                              hintText:
+                                                                  "Username",
+                                                              filled: true,
+                                                              fillColor: Styles
+                                                                  .bgBackground),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        const EdgeInsets.all(5),
+                                                    child: TextButton(
+                                                      style: ButtonStyle(
+                                                          foregroundColor:
+                                                              MaterialStateProperty.all(
+                                                                  Colors.white),
+                                                          backgroundColor:
+                                                              MaterialStateProperty.all(
+                                                                  Styles
+                                                                      .buttonColor),
+                                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          20),
+                                                                  side: BorderSide(
+                                                                      color: Styles
+                                                                          .buttonColor)))),
+                                                      child: Text("Change"),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          username =
+                                                              _controller.text;
+                                                        });
+                                                        // Navigator.of(context).pop();
+                                                      },
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ));
+                                Navigator.pop(context);
+                              },
+                            )
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 5,
@@ -113,42 +223,64 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                               children: <Widget>[
                                                 Text(feeling),
                                                 Container(
-                                                  padding: const EdgeInsets.all(32),
+                                                  padding:
+                                                      const EdgeInsets.all(32),
                                                   child: TextField(
                                                     controller: _controller,
                                                     decoration: InputDecoration(
-                                                      enabledBorder: const OutlineInputBorder(
-                                                        borderSide: BorderSide(color: Colors.transparent),
-                                                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                                                      ),
-                                                      focusedBorder: const OutlineInputBorder(
-                                                        borderSide: BorderSide(color: Colors.transparent),
-                                                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                                                      ),
-                                                      prefixIcon: Image.asset(
-                                                        "assets/icons/pencil.png",
-                                                        width: 10,
-                                                        height: 10,
-                                                      ),
-                                                      hintText: "Change feeling",
-                                                      filled: true,
-                                                      fillColor: Styles.bgBackground
-                                                    ),
+                                                        enabledBorder:
+                                                            const OutlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: Colors
+                                                                  .transparent),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          30)),
+                                                        ),
+                                                        focusedBorder:
+                                                            const OutlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: Colors
+                                                                  .transparent),
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          30)),
+                                                        ),
+                                                        prefixIcon: Image.asset(
+                                                          "assets/icons/pencil.png",
+                                                          width: 10,
+                                                          height: 10,
+                                                        ),
+                                                        hintText:
+                                                            "Change feeling",
+                                                        filled: true,
+                                                        fillColor: Styles
+                                                            .bgBackground),
                                                   ),
                                                 ),
                                                 Container(
-                                                  padding: const EdgeInsets.all(5),
+                                                  padding:
+                                                      const EdgeInsets.all(5),
                                                   child: TextButton(
                                                     style: ButtonStyle(
-                                                      foregroundColor: MaterialStateProperty.all(Colors.white),
-                                                      backgroundColor: MaterialStateProperty.all(Styles.buttonColor),
-                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius: BorderRadius.circular(20),
-                                                          side: BorderSide(color: Styles.buttonColor)
-                                                        )
-                                                      )
-                                                    ),
+                                                        foregroundColor:
+                                                            MaterialStateProperty.all(
+                                                                Colors.white),
+                                                        backgroundColor: MaterialStateProperty.all(
+                                                            Styles.buttonColor),
+                                                        shape: MaterialStateProperty.all<
+                                                                RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius.circular(
+                                                                        20),
+                                                                side: BorderSide(
+                                                                    color:
+                                                                        Styles.buttonColor)))),
                                                     child: Text("Change"),
                                                     onPressed: () {
                                                       setState(() {
