@@ -3,6 +3,8 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:gogotrip/screens/first_app/app_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -12,6 +14,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  //final _scaffoldKey = GlobalKey <ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
     // return MaterialApp(
@@ -19,6 +22,8 @@ class MyApp extends StatelessWidget {
     //   home: CustomDrawer(),
     // );
     return GetMaterialApp(
+      //scaffoldMessengerKey: _scaffoldKey,
+      
       debugShowCheckedModeBanner: false,
       home: AppScreen(),
     );

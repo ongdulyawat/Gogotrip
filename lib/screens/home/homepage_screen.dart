@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:gogotrip/constants/styles.dart';
+import 'package:gogotrip/controllers/user_model.dart';
 import 'package:gogotrip/screens/home/widget/home_body.dart';
 import 'package:gogotrip/screens/home/widget/home_footer.dart';
 import 'package:gogotrip/screens/login/login_screen.dart';
@@ -16,13 +18,31 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-final user = FirebaseAuth.instance.currentUser!;
 
-void signUserOut() {
-  FirebaseAuth.instance.signOut();
-}
+
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
 class _HomePageState extends State<HomePage> {
+
+  // Firestore
+  User? user = FirebaseAuth.instance.currentUser;
+  // Authentication
+  //final user = FirebaseAuth.instance.currentUser!;
+  UserModel loggedInUser = UserModel();
+  @override
+  void initState(){
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+          this.loggedInUser = UserModel.fromMap(value.data());
+        setState(() {});
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     width: 250,
                     child: Text(
-                      "LOGGED BY :${user.email!}",
+                      "${loggedInUser.username}",
                       style: TextStyle(color: Colors.white, fontSize: 16.0),
                       overflow: TextOverflow.clip,
                       maxLines: 1,
@@ -123,8 +143,10 @@ class _HomePageState extends State<HomePage> {
               children: [
                 UserAccountsDrawerHeader(
                   decoration: BoxDecoration(color: Styles.buttonColor),
-                  accountName: Text("Dulyawat Visitruangrit"),
-                  accountEmail: Text(user.email!),
+                  accountName: Text("${loggedInUser.firstname} ${loggedInUser.lastname}"),
+                  //accountEmail: Text(""),
+                  // accountEmail: Text(user.email!),
+                  accountEmail: Text("${loggedInUser.email}"),
                   currentAccountPicture: CircleAvatar(
                       foregroundImage: AssetImage('assets/images/beach.png')),
                 ),
