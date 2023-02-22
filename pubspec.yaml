@@ -21,6 +21,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   hidden_drawer_menu: ^3.0.1
   date_picker_timeline:
+  image_picker: ^0.8.6+2
+  file_picker: ^5.2.5
+  path_provider: ^2.0.12
   intl:
   get: ^4.6.5
   google_fonts:
