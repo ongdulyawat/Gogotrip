@@ -1,6 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../controllers/user_model.dart';
+import '../profile_screen.dart';
 
 class ProfileBody extends StatefulWidget {
   const ProfileBody({Key? key}) : super(key: key);
@@ -10,10 +15,34 @@ class ProfileBody extends StatefulWidget {
 }
 
 class _ProfileBodyState extends State<ProfileBody> {
-  final _controller = TextEditingController();
-  String ig = "Ong vst";
-  String facebook = "Ong dyw";
-  String line = "-";
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState(){
+    super.initState();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+  final TextEditingController _instagramController = TextEditingController();
+  final TextEditingController _facebookController = TextEditingController();
+  final TextEditingController _lineController = TextEditingController();
+
+  final CollectionReference _users =
+  FirebaseFirestore.instance.collection('users');
+
+  final formKey = GlobalKey<FormState>();
+
+  //final _controller = TextEditingController();
+  // String ig = "Ong vst";
+  // String facebook = "Ong dyw";
+  // String line = "-";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,12 +52,15 @@ class _ProfileBodyState extends State<ProfileBody> {
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(24)),
       ),
+      child: Form(
+        key: formKey,
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Row(
               children: [
                 IconButton(
@@ -39,7 +71,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                   ),
                   onPressed: () async {},
                 ),
-                Text(ig,
+                Text("${loggedInUser.instagram}",
                     style: GoogleFonts.poppins(fontSize: 20)),
                 IconButton(
                   icon: Image.asset(
@@ -62,11 +94,11 @@ class _ProfileBodyState extends State<ProfileBody> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text(ig),
+                                      Text("${loggedInUser.instagram}"),
                                       Container(
                                         padding: const EdgeInsets.all(32),
-                                        child: TextField(
-                                          controller: _controller,
+                                        child: TextFormField(
+                                          controller: _instagramController,
                                           decoration: InputDecoration(
                                               enabledBorder: const OutlineInputBorder(
                                                 borderSide: BorderSide(color: Colors.transparent),
@@ -85,6 +117,9 @@ class _ProfileBodyState extends State<ProfileBody> {
                                               filled: true,
                                               fillColor: Styles.bgBackground
                                           ),
+                                          validator: (value) => value != null && value.length < 1
+                                              ? 'Please enter Username'
+                                              : null,
                                         ),
                                       ),
                                       Container(
@@ -101,11 +136,31 @@ class _ProfileBodyState extends State<ProfileBody> {
                                               )
                                           ),
                                           child: Text("Change"),
-                                          onPressed: () {
-                                            setState(() {
-                                              ig =
-                                                  _controller.text;
-                                            });
+                                          onPressed: () async {
+                                            final isValid = formKey.currentState!.validate();
+                                            if (!isValid) return;
+                                            {
+                                              final String instagram = _instagramController.text.trim();
+                                              if (instagram != null) {
+                                                await _users
+                                                    .doc(user!.uid)
+                                                //.doc(documentSnapshot!.id)
+                                                    .update({"instagram": instagram});
+                                                _instagramController.text = '';
+                                                //Navigator.of(context).pop();
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => const ProfileScreen(),
+                                                    ));
+                                                //Get.back();
+                                              }
+                                            }
+
+                                            // setState(() {
+                                            //   ig =
+                                            //       _controller.text;
+                                            // });
                                             // Navigator.of(context).pop();
                                           },
                                         ),
@@ -115,7 +170,12 @@ class _ProfileBodyState extends State<ProfileBody> {
                                 )
                               ],
                             ));
-                    Navigator.pop(context);
+                    //Navigator.pop(context);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const ProfileScreen(),
+                    //     ));
                   },
                 )
               ],
@@ -130,7 +190,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                   ),
                   onPressed: () async {},
                 ),
-                Text(facebook,
+                Text("${loggedInUser.facebook}",
                     style: GoogleFonts.poppins(fontSize: 20)),
                 IconButton(
                   icon: Image.asset(
@@ -153,11 +213,11 @@ class _ProfileBodyState extends State<ProfileBody> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text(facebook),
+                                      Text("${loggedInUser.facebook}"),
                                       Container(
                                         padding: const EdgeInsets.all(32),
                                         child: TextField(
-                                          controller: _controller,
+                                          controller: _facebookController,
                                           decoration: InputDecoration(
                                               enabledBorder: const OutlineInputBorder(
                                                 borderSide: BorderSide(color: Colors.transparent),
@@ -192,11 +252,30 @@ class _ProfileBodyState extends State<ProfileBody> {
                                               )
                                           ),
                                           child: Text("Change"),
-                                          onPressed: () {
-                                            setState(() {
-                                              facebook =
-                                                  _controller.text;
-                                            });
+                                          onPressed: () async {
+                                            final isValid = formKey.currentState!.validate();
+                                            if (!isValid) return;
+                                            {
+                                              final String facebook = _facebookController.text.trim();
+                                              if (facebook != null) {
+                                                await _users
+                                                    .doc(user!.uid)
+                                                //.doc(documentSnapshot!.id)
+                                                    .update({"facebook": facebook});
+                                                _facebookController.text = '';
+                                                //Navigator.of(context).pop();
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => const ProfileScreen(),
+                                                    ));
+                                                //Get.back();
+                                              }
+                                            }
+                                            // setState(() {
+                                            //   facebook =
+                                            //       _controller.text;
+                                            // });
                                             // Navigator.of(context).pop();
                                           },
                                         ),
@@ -206,7 +285,12 @@ class _ProfileBodyState extends State<ProfileBody> {
                                 )
                               ],
                             ));
-                    Navigator.pop(context);
+                    //Navigator.pop(context);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const ProfileScreen(),
+                    //     ));
                   },
                 )
               ],
@@ -221,7 +305,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                   ),
                   onPressed: () async {},
                 ),
-                Text(line,
+                Text("${loggedInUser.line}",
                     style: GoogleFonts.poppins(fontSize: 20)),
                 IconButton(
                   icon: Image.asset(
@@ -244,11 +328,11 @@ class _ProfileBodyState extends State<ProfileBody> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Text(line),
+                                      Text("${loggedInUser.line}"),
                                       Container(
                                         padding: const EdgeInsets.all(32),
                                         child: TextField(
-                                          controller: _controller,
+                                          controller: _lineController,
                                           decoration: InputDecoration(
                                               enabledBorder: const OutlineInputBorder(
                                                 borderSide: BorderSide(color: Colors.transparent),
@@ -283,11 +367,31 @@ class _ProfileBodyState extends State<ProfileBody> {
                                               )
                                           ),
                                           child: Text("Change"),
-                                          onPressed: () {
-                                            setState(() {
-                                              line =
-                                                  _controller.text;
-                                            });
+                                          onPressed: () async {
+                                            final isValid = formKey.currentState!.validate();
+                                            if (!isValid) return;
+                                            {
+                                              final String line = _lineController.text.trim();
+                                              if (line != null) {
+                                                await _users
+                                                    .doc(user!.uid)
+                                                //.doc(documentSnapshot!.id)
+                                                    .update({"line": line});
+                                                _lineController.text = '';
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => const ProfileScreen(),
+                                                    ));
+                                                //Get.back();
+                                                //Navigator.of(context).pop();
+                                              }
+                                            }
+
+                                            // setState(() {
+                                            //   line =
+                                            //       _controller.text;
+                                            // });
                                             // Navigator.of(context).pop();
                                           },
                                         ),
@@ -297,12 +401,18 @@ class _ProfileBodyState extends State<ProfileBody> {
                                 )
                               ],
                             ));
-                    Navigator.pop(context);
+                    //Navigator.pop(context);
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const ProfileScreen(),
+                    //     ));
                   },
                 )
               ],
             ),
           ],
+        ),
         ),
       ),
     );

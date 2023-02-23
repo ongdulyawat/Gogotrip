@@ -186,7 +186,6 @@ class _RegisterBodyState extends State<RegisterBody> {
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(12)),
               child: TextFormField(
-
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
@@ -242,14 +241,26 @@ class _RegisterBodyState extends State<RegisterBody> {
                     userModel.email = _emailController.text.trim();
                     userModel.username = _usernameController.text.trim();
                     userModel.password = _passwordController.text.trim();
+                    userModel.describe = "-";
+                    userModel.instagram = "-";
+                    userModel.facebook = "-";
+                    userModel.line = "-";
 
                     await firebaseFirestore
                         .collection("users").doc(user.uid).set(userModel.toMap());
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ));
+
                   }
                   on FirebaseAuthException catch (e){
                     print(e);
                     Utils.showSnackBar(e.message);
                     print("Already used");
+
                   }
 
                   // Navigator.of(context).pop();
@@ -270,11 +281,11 @@ class _RegisterBodyState extends State<RegisterBody> {
                   //   Navigator.of(context).pop();
                   // }
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //       builder: (context) => const LoginScreen(),
+                  //     ));
                 };
               },
               child: Container(

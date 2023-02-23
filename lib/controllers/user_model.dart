@@ -5,10 +5,15 @@ class UserModel{
   String? lastname;
   String? username;
   String? password;
+  String? describe;
+  String? instagram;
+  String? facebook;
+  String? line;
 
 
   UserModel({this.uid,this.email,this.firstname,
-    this.lastname,this.username,this.password});
+    this.lastname,this.username,this.password,
+  this.describe,this.instagram,this.facebook,this.line});
 
   factory UserModel.fromMap(map){
     return UserModel(
@@ -18,6 +23,10 @@ class UserModel{
       lastname: map['lastname'],
       username: map['username'],
       password: map['password'],
+      describe: map['describe'],
+      instagram: map['instagram'],
+      facebook: map['facebook'],
+      line: map['line'],
     );
   }
 
@@ -29,6 +38,10 @@ class UserModel{
      'lastname' : lastname,
      'username' : username,
       'password' : password,
+      'describe' : describe,
+      'instagram' : instagram,
+      'facebook' : facebook,
+      'line' : line,
     };
   }
 }
