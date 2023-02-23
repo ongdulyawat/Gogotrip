@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,34 +15,7 @@ class ProfileHeader extends StatefulWidget {
 }
 
 class _ProfileHeaderState extends State<ProfileHeader> {
-  // ImagePicker picker = ImagePicker();
-  // XFile? image;
-  //
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       appBar: AppBar(
-  //           title: Text("Image Picker from Gallery"),
-  //           backgroundColor: Colors.redAccent),
-  //       body: Container(
-  //           padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-  //           alignment: Alignment.topCenter,
-  //           child: Column(
-  //             children: [
-  //               ElevatedButton(
-  //                   onPressed: () async {
-  //                     image =
-  //                         await picker.pickImage(source: ImageSource.gallery);
-  //                     setState(() {
-  //                       //update UI
-  //                     });
-  //                   },
-  //                   child: Text("Pick Image")),
-  //               image == null ? Container() : Image.file(File(image!.path))
-  //             ],
-  //           )));
-  // }
-  late PickedFile _imageFile;
+  PickedFile? _imageFile;
   final _controller = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   String feeling = "Love Salmon,love travel";
@@ -184,7 +161,6 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                             )
                                           ],
                                         ));
-                                Navigator.pop(context);
                               },
                             )
                           ],
@@ -278,10 +254,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                 borderRadius:
                                                                     BorderRadius.circular(
                                                                         20),
-                                                                side: BorderSide(
+                                                                side: const BorderSide(
                                                                     color:
                                                                         Styles.buttonColor)))),
-                                                    child: Text("Change"),
+                                                    child: const Text("Change"),
                                                     onPressed: () {
                                                       setState(() {
                                                         feeling =
@@ -369,16 +345,17 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   Widget imageProfile() {
     return Center(
       child: Stack(children: <Widget>[
-        CircleAvatar(
-          radius: 80,
-          backgroundImage: const AssetImage(
-            "assets/images/user.png",
-          ),
-          // _imageFile == null
-          //     ? AssetImage("assets/icons/temple.png")
-          //     : FileImage(File(_imageFile.path)),
-          backgroundColor: Colors.grey[400],
-        ),
+        _imageFile == null
+            ? CircleAvatar(
+                radius: 80,
+                backgroundImage: const AssetImage("assets/images/user.png"),
+                backgroundColor: Colors.grey[400],
+              )
+            : CircleAvatar(
+                radius: 80,
+                backgroundImage: FileImage(File(_imageFile!.path)),
+                backgroundColor: Colors.grey[400],
+              ),
         Positioned(
           bottom: 20.0,
           right: 20.0,
