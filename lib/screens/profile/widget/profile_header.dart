@@ -1,8 +1,12 @@
 import 'dart:io';
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -67,6 +71,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
 
 
   //final _controller = TextEditingController();
+
+  PickedFile? _imageFile;
+  final _controller = TextEditingController();
+
   final ImagePicker _picker = ImagePicker();
   //String describe = "Love Salmon,love travel";
   //String username = "Ong Dulyawat";
@@ -301,12 +309,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                             )
                                           ],
                                         ));
-                                //Navigator.pop(context);
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => const ProfileScreen(),
-                                //     ));
+
                               },
                             )
                           ],
@@ -403,9 +406,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                 borderRadius:
                                                                     BorderRadius.circular(
                                                                         20),
-                                                                side: BorderSide(
+                                                                side: const BorderSide(
                                                                     color:
                                                                         Styles.buttonColor)))),
+
                                                     child: Text("Change"),
                                                     onPressed: () async {
                                                       final isValid = formKey.currentState!.validate();
@@ -432,7 +436,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                       //   describe =
                                                       //       _controller.text;
                                                       // });
-                                                      // Navigator.of(context).pop();
+
                                                     },
                                                   ),
                                                 )
