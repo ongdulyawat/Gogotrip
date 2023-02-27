@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import '../../../controllers/user_model.dart';
 import '../profile_screen.dart';
 
@@ -21,7 +21,7 @@ class ProfileHeader extends StatefulWidget {
 class _ProfileHeaderState extends State<ProfileHeader> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-
+  late String userImageUrl;
   @override
   void initState() {
     super.initState();
@@ -49,6 +49,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
 
   final formKey = GlobalKey<FormState>();
 
+  String imageUrl ='';
   @override
   Widget build(BuildContext context) {
     // return Form(
@@ -124,8 +125,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                           const EdgeInsets.all(
                                                               32),
                                                       child: TextFormField(
-                                                        controller:
-                                                            _usernameController,
+                                                        controller: _usernameController,
                                                         decoration:
                                                             InputDecoration(
                                                                 enabledBorder:
@@ -161,9 +161,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                 filled: true,
                                                                 fillColor: Styles
                                                                     .bgBackground),
-                                                        validator: (value) => value !=
-                                                                    null &&
-                                                                value.length < 1
+
+                                                            validator: (value) => value != null && value.length < 1
                                                             ? 'Please enter Username'
                                                             : null,
                                                       ),
@@ -191,29 +190,15 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                     side: BorderSide(color: Styles.buttonColor)))),
                                                         child: Text("Change"),
                                                         onPressed: () async {
-                                                          final isValid =
-                                                              formKey
-                                                                  .currentState!
-                                                                  .validate();
+                                                          final isValid = formKey.currentState!.validate();
                                                           if (!isValid) return;
                                                           {
-                                                            final String
-                                                                username =
-                                                                _usernameController
-                                                                    .text
-                                                                    .trim();
-                                                            if (username !=
-                                                                null) {
-                                                              await _users
-                                                                  .doc(
-                                                                      user!.uid)
-                                                                  //.doc(documentSnapshot!.id)
-                                                                  .update({
-                                                                "username":
-                                                                    username
-                                                              });
-                                                              _usernameController
-                                                                  .text = '';
+                                                            final String username = _usernameController.text.trim();
+                                                            if (username != null) {
+                                                              await _users.doc(user!.uid)
+                                                              //.doc(documentSnapshot!.id)
+                                                                  .update({"username": username});
+                                                              //_usernameController.text = 'name';
 
                                                               Navigator.push(
                                                                   context,
@@ -222,8 +207,13 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                         (context) =>
                                                                             const ProfileScreen(),
                                                                   ));
-                                                            }
+                                                           }
+                                                            AlertDialog(
+                                                              title: Text('Incorrect'),
+                                                            );
+                                                            print("ERROR username");
                                                           }
+
                                                           // setState(() {
                                                           //   username =
                                                           //       _controller.text;
@@ -347,27 +337,17 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                           .buttonColor)))),
                                                       child: Text("Change"),
                                                       onPressed: () async {
-                                                        final isValid = formKey
-                                                            .currentState!
-                                                            .validate();
+                                                        final isValid = formKey.currentState!.validate();
                                                         if (!isValid) return;
                                                         {
-                                                          final String
-                                                              describe =
-                                                              _describeController
-                                                                  .text
-                                                                  .trim();
-                                                          if (describe !=
-                                                              null) {
-                                                            await _users
-                                                                .doc(user!.uid)
+                                                          final String describe = _describeController.text.trim();
+                                                          if (describe != null) {
+                                                            await _users.doc(user!.uid)
                                                                 //.doc(documentSnapshot!.id)
                                                                 .update({
-                                                              "describe":
-                                                                  describe
+                                                              "describe": describe
                                                             });
-                                                            _describeController
-                                                                .text = '';
+                                                           // _describeController.text = '';
                                                             //Navigator.of(context).pop();
                                                             Navigator.push(
                                                                 context,
@@ -378,6 +358,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                 ));
                                                             //Get.back();
                                                           }
+                                                          print("ERROR describe");
                                                         }
 
                                                         // setState(() {
@@ -466,15 +447,20 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   Widget imageProfile() {
     return Center(
       child: Stack(children: <Widget>[
-        _imageFile == null
+        '${loggedInUser.image}' == "-"
+        //_imageFile == null
             ? CircleAvatar(
                 radius: 80,
                 backgroundImage: const AssetImage("assets/images/user.png"),
+                //backgroundImage: NetworkImage('${loggedInUser.image}'),
+
                 backgroundColor: Colors.grey[400],
               )
             : CircleAvatar(
                 radius: 80,
-                backgroundImage: FileImage(File(_imageFile!.path)),
+                //backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/gogotripdb.appspot.com/o/userimages%2F1677272716744?alt=media&token=471ff32a-5f9e-4ac8-9b6a-137f98219b42'),
+                backgroundImage: NetworkImage('${loggedInUser.image}'),
+                //backgroundImage: FileImage(File(_imageFile!.path)),
                 backgroundColor: Colors.grey[400],
               ),
         Positioned(
@@ -520,15 +506,61 @@ class _ProfileHeaderState extends State<ProfileHeader> {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
             TextButton.icon(
               icon: const Icon(Icons.camera),
-              onPressed: () {
-                takePhoto(ImageSource.camera);
+              onPressed: () async {
+                ImagePicker imagePicker = ImagePicker();
+                XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+                print('${file?.path}');
+                print("camera");
+                String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+                Reference referenceRoot = FirebaseStorage.instance.ref();
+                Reference referenceDirImages = referenceRoot.child('userimages');
+
+                Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+                await referenceImageToUpload.putFile(File(file!.path));
+                imageUrl = await referenceImageToUpload.getDownloadURL();
+                await _users.doc(user!.uid).update({"image": imageUrl});
+
+                // takePhoto(ImageSource.camera);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                      const ProfileScreen(),
+                    ));
+
               },
               label: const Text("Camera"),
             ),
             TextButton.icon(
               icon: const Icon(Icons.image),
-              onPressed: () {
-                takePhoto(ImageSource.gallery);
+              onPressed: () async {
+
+                ImagePicker imagePicker = ImagePicker();
+                XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+                print('${file?.path}');
+                print("Gallery");
+
+                String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+                Reference referenceRoot = FirebaseStorage.instance.ref();
+                Reference referenceDirImages = referenceRoot.child('userimages');
+
+                Reference referenceImageToUpload = referenceDirImages.child(uniqueFileName);
+
+                await referenceImageToUpload.putFile(File(file!.path));
+                imageUrl = await referenceImageToUpload.getDownloadURL();
+                await _users.doc(user!.uid).update({"image": imageUrl});
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                      const ProfileScreen(),
+                    ));
+                // takePhoto(ImageSource.gallery);
               },
               label: const Text("Gallery"),
             ),
@@ -538,10 +570,10 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     );
   }
 
-  void takePhoto(ImageSource source) async {
-    final pickedFile = await _picker.getImage(source: source);
-    setState(() {
-      _imageFile = pickedFile!;
-    });
-  }
+  // void takePhoto(ImageSource source) async {
+  //   final pickedFile = await _picker.getImage(source: source);
+  //   setState(() {
+  //     _imageFile = pickedFile!;
+  //   });
+  // }
 }

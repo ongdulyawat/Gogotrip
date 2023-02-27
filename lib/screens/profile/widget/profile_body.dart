@@ -142,11 +142,10 @@ class _ProfileBodyState extends State<ProfileBody> {
                                             {
                                               final String instagram = _instagramController.text.trim();
                                               if (instagram != null) {
-                                                await _users
-                                                    .doc(user!.uid)
+                                                await _users.doc(user!.uid)
                                                 //.doc(documentSnapshot!.id)
                                                     .update({"instagram": instagram});
-                                                _instagramController.text = '';
+                                                //_instagramController.text = '';
                                                 //Navigator.of(context).pop();
                                                 Navigator.push(
                                                     context,
@@ -155,6 +154,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                                                     ));
                                                 //Get.back();
                                               }
+                                              print("ERROR");
                                             }
 
                                             // setState(() {
@@ -262,7 +262,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                                                     .doc(user!.uid)
                                                 //.doc(documentSnapshot!.id)
                                                     .update({"facebook": facebook});
-                                                _facebookController.text = '';
+                                                //_facebookController.text = '';
                                                 //Navigator.of(context).pop();
                                                 Navigator.push(
                                                     context,
@@ -271,6 +271,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                                                     ));
                                                 //Get.back();
                                               }
+                                              print("ERROR account facebook");
                                             }
                                             // setState(() {
                                             //   facebook =
@@ -377,7 +378,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                                                     .doc(user!.uid)
                                                 //.doc(documentSnapshot!.id)
                                                     .update({"line": line});
-                                                _lineController.text = '';
+                                                //_lineController.text = '';
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -386,6 +387,7 @@ class _ProfileBodyState extends State<ProfileBody> {
                                                 //Get.back();
                                                 //Navigator.of(context).pop();
                                               }
+                                              print("ERROR account LINE");
                                             }
 
                                             // setState(() {

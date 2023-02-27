@@ -207,8 +207,7 @@ class _RegisterBodyState extends State<RegisterBody> {
             padding: const EdgeInsets.only(left: 25, right: 25),
             child: GestureDetector(
               // onPressed: () => _create(),
-              onTap: ()
-              async {
+              onTap: () async {
                 final isValid = formKey.currentState!.validate();
                 if (!isValid) return;
                 {
@@ -245,6 +244,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                     userModel.instagram = "-";
                     userModel.facebook = "-";
                     userModel.line = "-";
+                    userModel.image = "-";
 
                     await firebaseFirestore
                         .collection("users").doc(user.uid).set(userModel.toMap());

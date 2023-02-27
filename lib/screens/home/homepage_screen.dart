@@ -128,8 +128,8 @@ class _HomePageState extends State<HomePage> {
                 height: 35,
                 width: 35,
                 decoration: BoxDecoration(
-                    image: const DecorationImage(
-                        image: AssetImage("assets/images/beach.png"),
+                    image: DecorationImage(
+                        image: NetworkImage('${loggedInUser.image}'),
                         fit: BoxFit.fill),
                     color: Colors.white,
                     shape: BoxShape.rectangle,
@@ -162,8 +162,10 @@ class _HomePageState extends State<HomePage> {
                   //accountEmail: Text(""),
                   // accountEmail: Text(user.email!),
                   accountEmail: Text("${loggedInUser.email}"),
-                  currentAccountPicture: const CircleAvatar(
-                      foregroundImage: AssetImage('assets/images/beach.png')),
+                  currentAccountPicture: CircleAvatar(
+                      //foregroundImage: AssetImage('assets/images/beach.png')),
+                      foregroundImage: NetworkImage('${loggedInUser.image}'),
+                  ),
                 ),
                 ListTile(
                   leading: const Icon(
