@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
-import 'package:gogotrip/screens/add_place/add_place_screen.dart';
 import 'package:gogotrip/screens/calendar/calendar_screen.dart';
 import 'package:gogotrip/screens/favourite/favourite_screen.dart';
 import 'package:gogotrip/screens/home/homepage_screen.dart';
@@ -42,15 +41,15 @@ class _FooterBarState extends State<FooterBar> {
                     ));
               },
               icon: Image.asset('assets/icons/like.png')),
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const AddPlaceScreen(),
-                    ));
-              },
-              icon: Image.asset('assets/icons/add.png')),
+          // IconButton(
+          //     onPressed: () {
+          //       Navigator.push(
+          //           context,
+          //           MaterialPageRoute(
+          //             builder: (context) => const AddPlaceScreen(),
+          //           ));
+          //     },
+          //     icon: Image.asset('assets/icons/add.png')),
           IconButton(
               onPressed: () {
                 Navigator.push(

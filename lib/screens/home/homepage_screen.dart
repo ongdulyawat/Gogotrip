@@ -53,6 +53,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   getCurrentLocation() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
     final geoposition = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
@@ -67,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     List<Placemark> placemark = await placemarkFromCoordinates(lat!, long!);
     setState(() {
       street = placemark[0].street!;
+      street = street.substring(0, 26);
     });
   }
 
@@ -115,7 +121,9 @@ class _HomePageState extends State<HomePage> {
                             "${street}",
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 14.0),
+                            overflow: TextOverflow.ellipsis,
                           ),
+
                           // Text("${lat} , ",style: const TextStyle(color: Colors.white, fontSize: 10.0),),
                           // Text(" ${long}",style: const TextStyle(color: Colors.white, fontSize: 10.0),),
                         ],

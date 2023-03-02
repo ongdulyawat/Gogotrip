@@ -57,7 +57,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     // child: Container(
     return Container(
       width: 378,
-      height: 400,
+      height: 410,
       decoration: const BoxDecoration(
         color: Styles.buttonColor,
         borderRadius: BorderRadius.only(
@@ -71,8 +71,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
             children: [
               Container(
                 width: 378,
-                height: 325,
-                decoration: const BoxDecoration(
+                decoration:const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(24),
@@ -83,6 +82,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     child: ListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
                       children: <Widget>[
                         imageProfile(),
                         const SizedBox(
@@ -187,8 +188,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                     borderRadius:
                                                                         BorderRadius.circular(
                                                                             20),
-                                                                    side: BorderSide(color: Styles.buttonColor)))),
-                                                        child: Text("Change"),
+                                                                    side: const BorderSide(color: Styles.buttonColor)))),
+                                                        child: const Text("Change"),
                                                         onPressed: () async {
                                                           final isValid = formKey.currentState!.validate();
                                                           if (!isValid) return;
@@ -208,7 +209,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                             const ProfileScreen(),
                                                                   ));
                                                            }
-                                                            AlertDialog(
+                                                            const AlertDialog(
                                                               title: Text('Incorrect'),
                                                             );
                                                             print("ERROR username");
@@ -335,7 +336,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                   side: const BorderSide(
                                                                       color: Styles
                                                                           .buttonColor)))),
-                                                      child: Text("Change"),
+                                                      child: const Text("Change"),
                                                       onPressed: () async {
                                                         final isValid = formKey.currentState!.validate();
                                                         if (!isValid) return;

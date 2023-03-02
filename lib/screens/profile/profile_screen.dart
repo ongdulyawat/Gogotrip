@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: const [
               ProfileHeader(),
-              SizedBox(height: 10),
+              SizedBox(height: 5),
               ProfileBody()
             ],
           ),
