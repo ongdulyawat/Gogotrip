@@ -16,6 +16,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+//        maven{
+//            url 'https://nostramap.jfrog.io/artifactory/tat-sdk/'
+//        }
     }
 }
 

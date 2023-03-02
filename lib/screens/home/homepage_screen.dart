@@ -53,11 +53,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   getCurrentLocation() async {
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-    }
     final geoposition = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
@@ -72,7 +67,6 @@ class _HomePageState extends State<HomePage> {
     List<Placemark> placemark = await placemarkFromCoordinates(lat!, long!);
     setState(() {
       street = placemark[0].street!;
-      street = street.substring(0, 26);
     });
   }
 
@@ -117,13 +111,11 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text(street == null ?
                           "Getting Address.."
-                            :
-                            "${street}",
+                              :
+                          "${street}",
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 14.0),
-                            overflow: TextOverflow.ellipsis,
                           ),
-
                           // Text("${lat} , ",style: const TextStyle(color: Colors.white, fontSize: 10.0),),
                           // Text(" ${long}",style: const TextStyle(color: Colors.white, fontSize: 10.0),),
                         ],
@@ -135,7 +127,18 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: 35,
                 width: 35,
-                decoration: BoxDecoration(
+                decoration: '${loggedInUser.image}' == '-'
+
+                    ?BoxDecoration(
+                    image: const DecorationImage(
+                        image: AssetImage('assets/images/user.png'),
+                        fit: BoxFit.fill),
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: Styles.boxShadows)
+
+                    :BoxDecoration(
                     image: DecorationImage(
                         image: NetworkImage('${loggedInUser.image}'),
                         fit: BoxFit.fill),
@@ -170,10 +173,26 @@ class _HomePageState extends State<HomePage> {
                   //accountEmail: Text(""),
                   // accountEmail: Text(user.email!),
                   accountEmail: Text("${loggedInUser.email}"),
-                  currentAccountPicture: CircleAvatar(
-                      //foregroundImage: AssetImage('assets/images/beach.png')),
-                      foregroundImage: NetworkImage('${loggedInUser.image}'),
+                  //currentAccountPicture: CircleAvatar(
+                  //foregroundImage: AssetImage('assets/images/beach.png')),
+                  // if ('${loggedInUser.image}' == "-"){
+                  //     AssetImage("assets/images/user.png"),
+                  // }
+                  // else{
+                  //   foregroundImage: NetworkImage('${loggedInUser.image}'),
+                  // }
+                  //   '${loggedInUser.image}' == '-'
+                  //     ? AssetImage('assets/images/user.png')
+                  //     : foregroundImage: NetworkImage('${loggedInUser.image}'),
+
+                  currentAccountPicture: '${loggedInUser.image}' == '-'
+                      ? const CircleAvatar(
+                      foregroundImage: AssetImage('assets/images/user.png')
+                  )
+                      : CircleAvatar(
+                    foregroundImage: NetworkImage('${loggedInUser.image}'),
                   ),
+                  //),
                 ),
                 ListTile(
                   leading: const Icon(
@@ -221,3 +240,4 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: const HomeFooter());
   }
 }
+
