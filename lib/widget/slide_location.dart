@@ -16,7 +16,6 @@ class _SlideLocationState extends State<SlideLocation> {
     "Restaurant",
     "Park",
     "Cafe",
-    "Swimming pool"
   ];
 
   String selectItem = 'Beach';
@@ -57,6 +56,7 @@ class _SlideLocationState extends State<SlideLocation> {
             onTap: () {
               setState(() {
                 selectItem = location;
+
               });
             },
             child: Container(

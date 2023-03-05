@@ -35,7 +35,7 @@ class _PartyHeaderState extends State<PartyHeader> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const DetailScreen(),
+                              builder: (context) => const DetailScreen(data: null,),
                             ));
                       }
                     },
