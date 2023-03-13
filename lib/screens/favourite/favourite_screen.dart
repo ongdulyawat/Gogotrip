@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/screens/home/widget/home_footer.dart';
@@ -11,6 +12,21 @@ class FavouriteScreen extends StatefulWidget {
 }
 
 class _FavouriteScreenState extends State<FavouriteScreen> {
+  //final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+
+  // String place = '';
+  // getDataFromPlace() async {
+  //   final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
+  //
+  //   if (snapshot.exists) {
+  //     setState(() {
+  //       place = snapshot.get('place');
+  //       print("Hello"+place);
+  //     });
+  //   }
+  // }
+  //String location = place;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +35,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children:  [
               Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 45, bottom: 20),
                 child: Text(
@@ -27,6 +43,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
+              //LocationCard(locations: location)
               LocationCard()
             ],
           ),

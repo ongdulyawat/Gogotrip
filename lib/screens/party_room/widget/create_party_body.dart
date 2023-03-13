@@ -1,7 +1,16 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'dart:math';
+
+
+import '../../../controllers/user_model.dart';
+import '../../home/homepage_screen.dart';
 
 class CreatePartyBody extends StatefulWidget {
   const CreatePartyBody({Key? key}) : super(key: key);
@@ -11,6 +20,99 @@ class CreatePartyBody extends StatefulWidget {
 }
 
 class _CreatePartyBodyState extends State<CreatePartyBody> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+  final CollectionReference _users =
+  FirebaseFirestore.instance.collection('users');
+
+  final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+  final FirebaseFirestore firestoreDocument = FirebaseFirestore.instance;
+
+
+  final TextEditingController _noteController = TextEditingController();
+
+  // randomField(){
+  //   return
+  //   Timer.periodic(Duration(seconds: 30), (timer) {
+  //     //  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  //     // Random _rnd = Random();
+  //     //
+  //     // String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+  //     //     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  //     //String randomString = randomAlphaNumeric(10);
+  //     String generateRandomString() {
+  //       const _chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  //       Random _rnd = Random();
+  //       return String.fromCharCodes(Iterable.generate(10, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+  //     }
+  //   });
+  // }
+  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+  String place = '';
+  String placeId = '';
+  String placeInfo = '';
+  String placeClose = '';
+  String placeOpen = '';
+  String placeName = '';
+  String placeUrl = '';
+  String detailReload = '';
+
+  getDataFromPlace() async {
+    final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
+    if (snapshot.exists) {
+      setState(() {
+        place = snapshot.get('place');
+        placeClose = snapshot.get('placeClose');
+        placeId = snapshot.get('placeId');
+        placeInfo = snapshot.get('placeInfo');
+        placeName = snapshot.get('placeName');
+        placeOpen = snapshot.get('placeOpen');
+        placeUrl = snapshot.get('placeUrl');
+        detailReload = snapshot.get('detailReload');
+        //print("Slidesssssssssss"+place);
+      });
+    }
+  }
+
+  // getDocument () async {
+  //   if(place == "Temple"){
+  //     await firestoreDocument.collection('temples').doc(placeId).set({
+  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+  //         ,placeUrl]),
+  //     });
+  //   }
+  //   else if(place == "Beach"){
+  //     await firestoreDocument.collection('beaches').doc(placeId).set({
+  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+  //         ,placeUrl]),
+  //     });
+  //   }
+  //   else if(place == "Restaurant"){
+  //     await firestoreDocument.collection('restaurants').doc(placeId).set({
+  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+  //         ,placeUrl]),
+  //     });
+  //   }
+  //   else if(place == "Park"){
+  //     await firestoreDocument.collection('parks').doc(placeId).set({
+  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+  //         ,placeUrl]),
+  //     });
+  //   }
+  //   else {
+  //     await firestoreDocument.collection('cafes').doc(placeId).set({
+  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+  //         ,placeUrl]),
+  //     });
+  //   }
+  //
+  // }
+
   TextEditingController? controller;
   late DateTime _selectDate = DateTime.now();
   String _endTime = "9.30 PM";
@@ -57,6 +159,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
     if (_pickDate != null) {
       setState(() {
         _selectDate = _pickDate;
+
       });
     }
   }
@@ -87,6 +190,97 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
         ));
   }
 
+  Future<void> checkIfDocumentExists(String documentId) async {
+    if(place == "Temple"){
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('temples')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        //getDocument();
+        print('Document does not exist!');
+      }
+    }
+    else if(place == "Beach"){
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('beaches')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        //getDocument();
+        print('Document does not exist!');
+      }
+    }
+    else if(place == "Restaurant"){
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('restaurants')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        //getDocument();
+        print('Document does not exist!');
+      }
+    }
+    else if(place == "Park"){
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('parks')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        //getDocument();
+        print('Document does not exist!');
+      }
+    }
+    else {
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('cafes')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        //getDocument();
+        print('Document does not exist!');
+        print(loggedInUser.uid);
+      }
+    }
+
+  }
+  @override
+  void initState() {
+    super.initState();
+    getDataFromPlace();
+    // Future.delayed(Duration(milliseconds: 1100), () {
+    //checkIfDocumentExists(placeId);
+    // });
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+
+    // Future.delayed(Duration(milliseconds: 1100), () {
+    //   print(loggedInUser.uid);
+    // });
+    getRandomString(10);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -99,14 +293,136 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
             children: [
               Expanded(
                 flex: 58,
-                child: Text("Kasetsart",
+                child: Text(placeName,
                     style: GoogleFonts.bebasNeue(
                         textStyle: const TextStyle(fontSize: 40))),
               ),
               Expanded(
                   flex: 42,
                   child: GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        checkIfDocumentExists(placeId);
+                        final String note = _noteController.text.trim();
+                        String typeSex = '';
+                        //Future.delayed(Duration(milliseconds: 1100), () async {
+                        if(clickAny == true){
+                          typeSex = "Any";
+                        }
+                        else if(clickBoy == true){
+                          typeSex = "Boy";
+                        }
+                        else if(clickGirl == true){
+                          typeSex = "Girl";
+                        }
+                          if (place == "Temple") {
+                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                .instance
+                                .collection('temples')
+                                .doc(placeId)
+                                .get();
+
+                            await firestoreDocument.collection('temples').doc(
+                                placeId).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                            await _users.doc(loggedInUser.uid).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                              _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                            ]),
+                            });
+                            // getDocument();
+                            print('Temple Document does not exist!');
+                          }
+                          else if (place == "Beach") {
+                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                .instance
+                                .collection('beaches')
+                                .doc(placeId)
+                                .get();
+                            await firestoreDocument.collection('beaches').doc(
+                                placeId).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                            print('Beach Document does not exist!');
+                          }
+                          else if (place == "Restaurant") {
+                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                .instance
+                                .collection('restaurants')
+                                .doc(placeId)
+                                .get();
+                            await firestoreDocument.collection('restaurants')
+                                .doc(placeId)
+                                .set({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                            print('Restaurant Document does not exist!');
+                          }
+                          else if (place == "Park") {
+                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                .instance
+                                .collection('parks')
+                                .doc(placeId)
+                                .get();
+                            await firestoreDocument.collection('parks').doc(
+                                placeId).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                            print('Park Document does not exist!');
+                          }
+                          else {
+                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                .instance
+                                .collection('cafes')
+                                .doc(placeId)
+                                .get();
+                            await firestoreDocument.collection('cafes').doc(
+                                placeId).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                            print('Cafe Document does not exist!');
+                          }
+                        //});
+                        final String? a = loggedInUser.createCount;
+                        int b = int.parse(a!) + 1;
+                        String c = b.toString();
+                        await _users.doc(user!.uid)
+                            .update({"createCount": c});
+                        print("aaaaaaaaa"+a);
+                        print(b);
+                        print("cccccccccc"+c);
+                        print("xxxxxxxaaaaaaaa"+ note);
+                        print("xxxxxx"+ getRandomString(10));
+
+                      Navigator.push(
+                      context,
+                        MaterialPageRoute(
+                      builder: (context) =>
+                        const HomePage(
+                          ),
+                          ));
+
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 18.0),
                         child: Container(
@@ -195,6 +511,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                       color: Colors.grey,
                     ),
                     onPressed: () {
+
                       _getDate();
                     },
                   ),
@@ -240,6 +557,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                         enabled: false,
                         autofocus: false,
                         cursorColor: Styles.buttonColor,
+                        //controller: _startDateController,
                         // controller: controller,
                         decoration: InputDecoration(
                           border: const UnderlineInputBorder(
@@ -297,6 +615,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                         enabled: false,
                         autofocus: false,
                         cursorColor: Styles.buttonColor,
+                        //controller: _endDateController,
                         // controller: controller,
                         decoration: InputDecoration(
                           border: const UnderlineInputBorder(
@@ -387,6 +706,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                   clickGirl = false;
                                   clickAny = false;
                                 });
+
                               },
                               child: Container(
                                 height: 35,
@@ -495,6 +815,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                           enabled: false,
                           autofocus: false,
                           cursorColor: Styles.buttonColor,
+                          //controller: _memberController,
                           // controller: controller,
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(
@@ -579,6 +900,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                       textLength = value.length;
                     });
                   },
+                      controller: _noteController,
                   // controller: controller,
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(15),

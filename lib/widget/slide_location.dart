@@ -1,9 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:gogotrip/constants/styles.dart';
+import 'package:gogotrip/screens/home/homepage_screen.dart';
+import 'package:gogotrip/widget/location_card.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../screens/profile/profile_screen.dart';
+
 class SlideLocation extends StatefulWidget {
-  const SlideLocation({Key? key}) : super(key: key);
+
+  SlideLocation({Key? key}) : super(key: key);
 
   @override
   State<SlideLocation> createState() => _SlideLocationState();
@@ -18,11 +25,32 @@ class _SlideLocationState extends State<SlideLocation> {
     "Cafe",
   ];
 
-  String selectItem = 'Beach';
+
   int count = -1;
+  final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+
+  String place = '';
+  getDataFromPlace() async {
+    final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
+    if (snapshot.exists) {
+      setState(() {
+        place = snapshot.get('place');
+        print("Slidesssssssssss"+place);
+      });
+    }
+  }
 
   @override
+  void initState() {
+    super.initState();
+    getDataFromPlace();
+  }
+
+  String selectItem = '' ;
+  @override
   Widget build(BuildContext context) {
+    print('slideeeeeeeeeeeee'+place);
+    selectItem = place;
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Container(
@@ -48,15 +76,88 @@ class _SlideLocationState extends State<SlideLocation> {
   }
 
   Widget _buildTypes(location, count) {
-    return Padding(
+
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    return  Padding(
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         children: [
           GestureDetector(
             onTap: () {
               setState(() {
+                //location = widget.location;
+                //print('a'+widget.locations);
+                //widget.locations = location;
+                //print('b'+widget.locations);
                 selectItem = location;
+                //selectItem = place;
+                if (location == 'Beach'){
+                  selectItem = 'Beach';
+                  firestore.collection('checks').doc('state').update({
+                    'place': 'Beach'
+                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                  print(place);
+                  //print('c'+location);
+                  //location = 'Beach';
+                  // print('d'+location);
 
+                  // Navigator.of(context).push(MaterialPageRoute
+                  //   (builder: (context) => LocationCard(location: location),
+                  // ));
+                }
+                else if(location == 'Temple'){
+                  selectItem = 'Temple';
+                  firestore.collection('checks').doc('state').update({
+                    'place': 'Temple'
+                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                  print(place);
+                }
+                else if(location == 'Restaurant'){
+                  selectItem = 'Restaurant';
+                  firestore.collection('checks').doc('state').update({
+                  'place': 'Restaurant'
+                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                  print(place);
+                }
+                else if(location == 'Park'){
+                  selectItem = 'Park';
+                  firestore.collection('checks').doc('state').update({
+                    'place': 'Park'
+                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                  print(place);
+                }
+                else{
+                  selectItem = 'Cafe';
+                  firestore.collection('checks').doc('state').update({
+                    'place': 'Cafe'
+                  });
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                  print(place);
+                }
               });
             },
             child: Container(

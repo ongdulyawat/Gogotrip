@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/widget/location_card.dart';
@@ -12,11 +13,13 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SlideLocation(),
+        SlideLocation(),
         Padding(
           padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
           child: Row(
@@ -40,7 +43,7 @@ class _HomeBodyState extends State<HomeBody> {
             ],
           ),
         ),
-        const Padding(
+         Padding(
           padding: EdgeInsets.only(top: 10.0, left: 15, right: 15),
           child: LocationCard(),
         ),

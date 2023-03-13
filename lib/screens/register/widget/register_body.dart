@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -245,6 +247,8 @@ class _RegisterBodyState extends State<RegisterBody> {
                     userModel.facebook = "-";
                     userModel.line = "-";
                     userModel.image = "-";
+                    userModel.createCount = "0";
+                    userModel.joinCount = "0";
 
                     await firebaseFirestore
                         .collection("users").doc(user.uid).set(userModel.toMap());

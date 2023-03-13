@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class UserModel{
   String? uid;
   String? email;
@@ -10,11 +12,13 @@ class UserModel{
   String? facebook;
   String? line;
   String? image;
+  String? createCount;
+  String? joinCount;
 
 
   UserModel({this.uid,this.email,this.firstname,
     this.lastname,this.username,this.password,
-  this.describe,this.instagram,this.facebook,this.line,this.image});
+  this.describe,this.instagram,this.facebook,this.line,this.image,this.createCount,this.joinCount});
 
   factory UserModel.fromMap(map){
     return UserModel(
@@ -29,6 +33,8 @@ class UserModel{
       facebook: map['facebook'],
       line: map['line'],
       image: map['image'],
+      createCount: map['createCount'],
+      joinCount: map['joinCount'],
     );
   }
 
@@ -45,6 +51,8 @@ class UserModel{
       'facebook' : facebook,
       'line' : line,
       'image' : image,
+      'createCount' : createCount,
+      'joinCount' : joinCount,
     };
   }
 }

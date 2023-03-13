@@ -391,7 +391,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                   children: [
                     Column(
                       children: [
-                        Text("123",
+                        Text("${loggedInUser.createCount}",
                             style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold,
@@ -407,7 +407,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                       padding: const EdgeInsets.only(right: 8.0),
                       child: Column(
                         children: [
-                          Text("123",
+                          Text("${loggedInUser.joinCount}",
                               style: GoogleFonts.poppins(
                                   textStyle: const TextStyle(
                                       fontWeight: FontWeight.bold,
