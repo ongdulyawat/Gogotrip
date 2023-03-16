@@ -73,6 +73,10 @@ class _DetailHeaderState extends State<DetailHeader> {
               height: 160,
               decoration: BoxDecoration(
                 image: DecorationImage(
+                    // image: NetworkImage(placeUrl) != ""
+                    //     ? NetworkImage(placeUrl)
+                    //     : AssetImage("assets/images/beach.png")
+                    // as ImageProvider,
                     //image: AssetImage('assets/images/beach.png'),
                     image : NetworkImage(placeUrl),
                     fit: BoxFit.fill

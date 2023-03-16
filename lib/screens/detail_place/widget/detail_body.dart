@@ -25,6 +25,11 @@ class _DetailBodyState extends State<DetailBody> {
   Map<dynamic, dynamic>? dataDetail;
 
   final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+  final CollectionReference templeRating = FirebaseFirestore.instance.collection('temples');
+  final CollectionReference restaurantRating = FirebaseFirestore.instance.collection('restaurant');
+  final CollectionReference beachRating = FirebaseFirestore.instance.collection('beaches');
+  final CollectionReference parkRating = FirebaseFirestore.instance.collection('parks');
+  final CollectionReference cafeRating= FirebaseFirestore.instance.collection('cafes');
 
   String place = '';
   String placeId = '';
@@ -34,6 +39,16 @@ class _DetailBodyState extends State<DetailBody> {
   String placeName = '';
   String placeUrl = '';
   String detailReload = '';
+  String countVoteRating = '';
+  String voteRating = '5';
+  String a = '';
+  double b = 0;
+  String c = '';
+  int d = 0;
+  double e = 0;
+  String f = '';
+  String g = '';
+  double rating = 0;
   getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
     if (snapshot.exists) {
@@ -50,12 +65,139 @@ class _DetailBodyState extends State<DetailBody> {
       });
     }
   }
+  getDataFromRating() async {
+    if (place == "Temple") {
+      final DocumentSnapshot getTempleRating = await templeRating.doc(placeId)
+          .get();
+      if (getTempleRating.exists) {
+        setState(() {
+          countVoteRating = getTempleRating.get('countVoteRating');
+          voteRating = getTempleRating.get('voteRating');
+        });
+      }
+    }
+    else if (place == "Beach") {
+      final DocumentSnapshot getBeachRating = await beachRating.doc(placeId)
+          .get();
+      if (getBeachRating.exists) {
+        setState(() {
+          countVoteRating = getBeachRating.get('countVoteRating');
+          voteRating = getBeachRating.get('voteRating');
+        });
+      }
+    }
+    else if (place == "Restaurant") {
+      final DocumentSnapshot getRestaurantRating = await restaurantRating.doc(
+          placeId).get();
+      if (getRestaurantRating.exists) {
+        setState(() {
+          countVoteRating = getRestaurantRating.get('countVoteRating');
+          voteRating = getRestaurantRating.get('voteRating');
+        });
+      }
+    }
+    else if (place == "Parks") {
+      final DocumentSnapshot getParkRating = await parkRating.doc(placeId)
+          .get();
+      if (getParkRating.exists) {
+        setState(() {
+          countVoteRating = getParkRating.get('countVoteRating');
+          voteRating = getParkRating.get('voteRating');
+        });
+      }
+    }
+    else {
+      final DocumentSnapshot getCafeRating = await cafeRating.doc(placeId)
+          .get();
+      if (getCafeRating.exists) {
+        setState(() {
+          countVoteRating = getCafeRating.get('countVoteRating');
+          voteRating = getCafeRating.get('voteRating');
+        });
+      }
+    }
+  }
+  final FirebaseFirestore firestoreDocument = FirebaseFirestore.instance;
+  Future<void> checkIfDocumentExists(String documentId) async {
+    if (place == "Temple") {
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('temples')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        firestoreDocument.collection('temples').doc(placeId).set(
+            {"voteRating": "0", "countVoteRating": "0"});
+        print('Document does not exist!');
+      }
+    }
+    else if (place == "Beach") {
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('beaches')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        firestoreDocument.collection('beaches').doc(placeId).set(
+            {"voteRating": "0", "countVoteRating": "0"});
+        print('Document does not exist!');
+      }
+    }
+    else if (place == "Restaurant") {
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('restaurants')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        firestoreDocument.collection('restaurants').doc(placeId).set(
+            {"voteRating": "0", "countVoteRating": "0"});
+        print('Document does not exist!');
+      }
+    }
+    else if (place == "Park") {
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('parks')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        firestoreDocument.collection('parks').doc(placeId).set(
+            {"voteRating": "0", "countVoteRating": "0"});
+        print('Document does not exist!');
+      }
+    }
+    else {
+      DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
+          .collection('cafes')
+          .doc(documentId)
+          .get();
+      if (snapshotDocument.exists) {
+        print('Document already exists!');
+      }
+      else {
+        firestoreDocument.collection('cafes').doc(placeId).set(
+            {"voteRating": "0", "countVoteRating": "0"});
+        print('Document does not exist!');
+      }
+    }
+  }
   @override
   void initState() {
     super.initState();
     getDataFromPlace();
     Future.delayed(Duration(milliseconds: 1100), () {
       getData();
+      checkIfDocumentExists(placeId);
+      getDataFromRating();
     });
     // if(detailReload == "False" && detailReload == ''){
     //   Future.delayed(Duration(seconds: 5), _reloadPage);
@@ -419,7 +561,7 @@ class _DetailBodyState extends State<DetailBody> {
                 Expanded(
                   flex: 14,
                   child: Row(
-                    children: const [
+                    children:  [
                       Icon(
                         Icons.star_rate_sharp,
                         size: 15,
@@ -428,8 +570,8 @@ class _DetailBodyState extends State<DetailBody> {
                       // SizedBox(width: 2),
                       Padding(
                         padding: EdgeInsets.only(top: 2.0),
-                        child: Text(
-                          "4.0",
+                        child: Text(voteRating,
+                          //"4.0",
                           style: TextStyle(color: Colors.black, fontSize: 12),
                         ),
                       ),
@@ -445,7 +587,7 @@ class _DetailBodyState extends State<DetailBody> {
                   style: TextStyle(fontSize: 10),
                 ),
                 RatingBar.builder(
-                  initialRating: 3,
+                  initialRating: double.parse(voteRating),
                   minRating: 1,
                   direction: Axis.horizontal,
                   // allowHalfRating: true,
@@ -458,6 +600,122 @@ class _DetailBodyState extends State<DetailBody> {
                   ),
                   onRatingUpdate: (rating) {
                     print(rating);
+                    if(place == "Temple"){
+                      c = countVoteRating;
+                      print(c);
+                      a = voteRating;
+                      print(a);
+                      b = (double.parse(a)*int.parse(c))+rating;
+                      print(b);
+                      d = int.parse(c) + 1;
+                      e = b/d;
+                      f = e.toString();
+                      g = d.toString();
+                      print(g);
+                      firestoreDocument.collection('temples').doc(placeId).update({"voteRating": f});
+                      firestoreDocument.collection('temples').doc(placeId).update({"countVoteRating": g});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            const DetailScreen(
+                              data: null,
+                            ),
+                          ));
+                    }
+                    else if(place == "Beach"){
+                      c = countVoteRating;
+                      print(c);
+                      a = voteRating;
+                      print(a);
+                      b = (double.parse(a)*int.parse(c))+rating;
+                      print(b);
+                      d = int.parse(c) + 1;
+                      e = b/d;
+                      f = e.toString();
+                      g = d.toString();
+                      print(g);
+                      firestoreDocument.collection('beaches').doc(placeId).update({"voteRating": f});
+                      firestoreDocument.collection('beaches').doc(placeId).update({"countVoteRating": g});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            const DetailScreen(
+                              data: null,
+                            ),
+                          ));
+                    }
+                    else if(place == "Restaurant"){
+                      c = countVoteRating;
+                      print(c);
+                      a = voteRating;
+                      print(a);
+                      b = (double.parse(a)*int.parse(c))+rating;
+                      print(b);
+                      d = int.parse(c) + 1;
+                      e = b/d;
+                      f = e.toString();
+                      g = d.toString();
+                      print(g);
+                      firestoreDocument.collection('restaurants').doc(placeId).update({"voteRating": f});
+                      firestoreDocument.collection('restaurants').doc(placeId).update({"countVoteRating": g});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            const DetailScreen(
+                              data: null,
+                            ),
+                          ));
+                    }
+                    else if(place == "Parks"){
+                      c = countVoteRating;
+                      print(c);
+                      a = voteRating;
+                      print(a);
+                      b = (double.parse(a)*int.parse(c))+rating;
+                      print(b);
+                      d = int.parse(c) + 1;
+                      e = b/d;
+                      f = e.toString();
+                      g = d.toString();
+                      print(g);
+                      firestoreDocument.collection('parks').doc(placeId).update({"voteRating": f});
+                      firestoreDocument.collection('parks').doc(placeId).update({"countVoteRating": g});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            const DetailScreen(
+                              data: null,
+
+                            ),
+                          ));
+                    }
+                    else{
+                      c = countVoteRating;
+                      print(c);
+                      a = voteRating;
+                      print(a);
+                      b = (double.parse(a)*int.parse(c))+rating;
+                      print(b);
+                      d = int.parse(c) + 1;
+                      e = b/d;
+                      f = e.toString();
+                      g = d.toString();
+                      print(g);
+                      firestoreDocument.collection('cafes').doc(placeId).update({"voteRating": f});
+                      firestoreDocument.collection('cafes').doc(placeId).update({"countVoteRating": g});
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                            const DetailScreen(
+                              data: null,
+                            ),
+                          ));
+                    }
                   },
                 )
               ],

@@ -31,22 +31,6 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
 
   final TextEditingController _noteController = TextEditingController();
 
-  // randomField(){
-  //   return
-  //   Timer.periodic(Duration(seconds: 30), (timer) {
-  //     //  const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  //     // Random _rnd = Random();
-  //     //
-  //     // String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-  //     //     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-  //     //String randomString = randomAlphaNumeric(10);
-  //     String generateRandomString() {
-  //       const _chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  //       Random _rnd = Random();
-  //       return String.fromCharCodes(Iterable.generate(10, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-  //     }
-  //   });
-  // }
   static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
   Random _rnd = Random();
 
@@ -61,6 +45,8 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
   String placeName = '';
   String placeUrl = '';
   String detailReload = '';
+  String voteRating = '';
+  String countVoteRating = '';
 
   getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
@@ -200,7 +186,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
         print('Document already exists!');
       }
       else {
-        //getDocument();
+        firestoreDocument.collection('temples').doc(placeId).set({"voteRating": "0","countVoteRating": "0"});
         print('Document does not exist!');
       }
     }
@@ -213,7 +199,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
         print('Document already exists!');
       }
       else {
-        //getDocument();
+        firestoreDocument.collection('beaches').doc(placeId).set({"voteRating": "0","countVoteRating": "0"});
         print('Document does not exist!');
       }
     }
@@ -226,7 +212,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
         print('Document already exists!');
       }
       else {
-        //getDocument();
+        firestoreDocument.collection('restaurants').doc(placeId).set({"voteRating": "0","countVoteRating": "0"});
         print('Document does not exist!');
       }
     }
@@ -239,7 +225,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
         print('Document already exists!');
       }
       else {
-        //getDocument();
+        firestoreDocument.collection('parks').doc(placeId).set({"voteRating": "0","countVoteRating": "0"});
         print('Document does not exist!');
       }
     }
@@ -252,7 +238,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
         print('Document already exists!');
       }
       else {
-        //getDocument();
+        firestoreDocument.collection('cafes').doc(placeId).set({"voteRating": "0","countVoteRating": "0"});
         print('Document does not exist!');
         print(loggedInUser.uid);
       }
@@ -263,9 +249,9 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
   void initState() {
     super.initState();
     getDataFromPlace();
-    // Future.delayed(Duration(milliseconds: 1100), () {
-    //checkIfDocumentExists(placeId);
-    // });
+    Future.delayed(Duration(milliseconds: 900), () {
+    checkIfDocumentExists(placeId);
+    });
     FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
@@ -301,7 +287,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                   flex: 42,
                   child: GestureDetector(
                       onTap: () async {
-                        checkIfDocumentExists(placeId);
+                        //checkIfDocumentExists(placeId);
                         final String note = _noteController.text.trim();
                         String typeSex = '';
                         //Future.delayed(Duration(milliseconds: 1100), () async {
@@ -334,7 +320,11 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                               _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
                             ]),
                             });
-                            // getDocument();
+                            // final String? a = loggedInUser.createCount;
+                            // int b = int.parse(a!) + 1;
+                            // String c = b.toString();
+                            // firestoreDocument.collection('temples').doc(placeId).update({"voteRating": a});
+                            // firestoreDocument.collection('temples').doc(placeId).update({"countVoteRating": a});
                             print('Temple Document does not exist!');
                           }
                           else if (place == "Beach") {
@@ -350,6 +340,11 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                               ]),
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
+                            });
+                            await _users.doc(loggedInUser.uid).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
                             });
                             print('Beach Document does not exist!');
                           }
@@ -368,6 +363,11 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
                             });
+                            await _users.doc(loggedInUser.uid).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
+                            });
                             print('Restaurant Document does not exist!');
                           }
                           else if (place == "Park") {
@@ -383,6 +383,11 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                               ]),
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
+                            });
+                            await _users.doc(loggedInUser.uid).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
                             });
                             print('Park Document does not exist!');
                           }
@@ -400,6 +405,11 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
                             });
+                            await _users.doc(loggedInUser.uid).update({
+                              getRandomString(10): FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              ]),
+                            });
                             print('Cafe Document does not exist!');
                           }
                         //});
@@ -408,11 +418,11 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                         String c = b.toString();
                         await _users.doc(user!.uid)
                             .update({"createCount": c});
-                        print("aaaaaaaaa"+a);
-                        print(b);
-                        print("cccccccccc"+c);
-                        print("xxxxxxxaaaaaaaa"+ note);
-                        print("xxxxxx"+ getRandomString(10));
+                        //print("aaaaaaaaa"+a);
+                        //print(b);
+                        //print("cccccccccc"+c);
+                        //print("xxxxxxxaaaaaaaa"+ note);
+                        //print("xxxxxx"+ getRandomString(10));
 
                       Navigator.push(
                       context,

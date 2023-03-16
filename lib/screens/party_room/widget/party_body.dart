@@ -61,77 +61,14 @@ class _PartyBodyState extends State<PartyBody> {
     Colors.red,
   ];
 
-  // Future<String?> fetchTempleData(String placeId) async {
-  //   DocumentSnapshot<Map<String, dynamic>> snapshotDetail =
-  //   await FirebaseFirestore.instance.collection('temples').doc(placeId).get();
-  //
-  //   //var datalength = snapshotDetail.data.length;
-  //   if (snapshotDetail.exists) {
-  //     Map<String, dynamic>? data = snapshotDetail.data();
-  //     //setState(() {
-  //        var datalength = data?.length;
-  //       data?.remove('Info');
-  //       print("Show Field");// remove the Info field
-  //       print(data);
-  //       print(data?[1]);
-  //       print(datalength);
-  //     //});
-  //
-  //
-  //
-  //   } else {
-  //     print('Document with placeId $placeId does not exist.');
-  //   }
-  //   // Map<String, dynamic>? data = snapshotDetail.data();
-  //   // var datalength = data?.length;
-  //   // return datalength;
-  // }
-  // void retrieveData(){
-  //   FirebaseFirestore.instance.collection('temples').get().then((value) =>{
-  //     value.docs.forEach((result) {
-  //       print(result.data());
-  //     })
-  //   });
-  // }
-
-  void retrieveAllData() async {
-    DocumentSnapshot<Map<String, dynamic>> snapshotDetail =
-    await FirebaseFirestore.instance.collection('temples').doc(placeId).get();
-    if (snapshotDetail.exists) {
-      Map<String, dynamic>? data = snapshotDetail.data();
-      //List<dynamic>? dataSelect = snapshotDetail.data()?['data'];
-      data?.remove('Info');
-      //String element = snapshotDetail.data()!["arrayKey"][1];
-      print("Show   REeeeee   eeeeField");
-      print(data);
-      //print(element);
-      //print(dataSelect);
-    }
-  }
-
-  // void retrieveAllData() async {
-  //   DocumentSnapshot<Map<String, dynamic>> snapshotDetail =
-  //   await FirebaseFirestore.instance.collection('temples').doc(placeId).get();
-  //   if (snapshotDetail.exists) {
-  //     List<dynamic>? data = snapshotDetail.data()?['data'];
-  //     if (data != null) {
-  //       // Retrieve only index 1 and 2 of the data array
-  //       //data?.remove('Info');
-  //       print(data);
-  //       List<dynamic> selectedData = [data[0], data[1]];
-  //       print("Selected data:");
-  //       print(selectedData);
-  //     }
-  //   }
-  // }
-
-
-
 
   @override
   void initState() {
     super.initState();
     getDataFromPlace();
+    // Future.delayed(Duration(milliseconds: 1100), () {
+    //   fetchArrayData();
+    // });
     // Future.delayed(Duration(milliseconds: 1100), () {
     //   fetchTempleData(placeId);
     // });
@@ -146,11 +83,15 @@ class _PartyBodyState extends State<PartyBody> {
       this.loggedInUser = UserModel.fromMap(value.data());
       setState(() {});
     });
-
-    Future.delayed(Duration(milliseconds: 1100), () {
-      retrieveAllData();
-    });
+    //
+    // Future.delayed(Duration(milliseconds: 1200), () {
+    //   fetchArrayData();
+    // });
+    // Future.delayed(Duration(milliseconds: 1100), () {
+    //   fetchArrayData();
+    // });
   }
+
   @override
   Widget build(BuildContext context) {
     return GridView.count(

@@ -44,6 +44,11 @@ class _LocationCardState extends State<LocationCard> {
   // String cafeDetail = "cafe";
 
   final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+  // final CollectionReference templeRating = FirebaseFirestore.instance.collection('temples');
+  // final CollectionReference restaurantRating = FirebaseFirestore.instance.collection('restaurant');
+  // final CollectionReference beachRating = FirebaseFirestore.instance.collection('beaches');
+  // final CollectionReference parkRating = FirebaseFirestore.instance.collection('parks');
+  // final CollectionReference cafeRating= FirebaseFirestore.instance.collection('cafes');
 
   String place = '';
   String placeId = '';
@@ -53,6 +58,16 @@ class _LocationCardState extends State<LocationCard> {
   String placeName = '';
   String placeUrl = '';
   String detailReload = '';
+  // String countVoteRating = '';
+  // String voteRating = '';
+  // String a = '';
+  // double b = 0;
+  // String c = '';
+  // int d = 0;
+  // double e = 0;
+  // String f = '';
+  // String g = '';
+  // double rating = 0;
    getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
 
@@ -70,7 +85,58 @@ class _LocationCardState extends State<LocationCard> {
       });
     }
   }
-
+  // getDataFromRating() async {
+  //   if (place == "Temple") {
+  //     final DocumentSnapshot getTempleRating = await templeRating.doc(placeId)
+  //         .get();
+  //     if (getTempleRating.exists) {
+  //       setState(() {
+  //         countVoteRating = getTempleRating.get('countVoteRating');
+  //         voteRating = getTempleRating.get('voteRating');
+  //       });
+  //     }
+  //   }
+  //   else if (place == "Beach") {
+  //     final DocumentSnapshot getBeachRating = await beachRating.doc(placeId)
+  //         .get();
+  //     if (getBeachRating.exists) {
+  //       setState(() {
+  //         countVoteRating = getBeachRating.get('countVoteRating');
+  //         voteRating = getBeachRating.get('voteRating');
+  //       });
+  //     }
+  //   }
+  //   else if (place == "Restaurant") {
+  //     final DocumentSnapshot getRestaurantRating = await restaurantRating.doc(
+  //         placeId).get();
+  //     if (getRestaurantRating.exists) {
+  //       setState(() {
+  //         countVoteRating = getRestaurantRating.get('countVoteRating');
+  //         voteRating = getRestaurantRating.get('voteRating');
+  //       });
+  //     }
+  //   }
+  //   else if (place == "Parks") {
+  //     final DocumentSnapshot getParkRating = await parkRating.doc(placeId)
+  //         .get();
+  //     if (getParkRating.exists) {
+  //       setState(() {
+  //         countVoteRating = getParkRating.get('countVoteRating');
+  //         voteRating = getParkRating.get('voteRating');
+  //       });
+  //     }
+  //   }
+  //   else {
+  //     final DocumentSnapshot getCafeRating = await cafeRating.doc(placeId)
+  //         .get();
+  //     if (getCafeRating.exists) {
+  //       setState(() {
+  //         countVoteRating = getCafeRating.get('countVoteRating');
+  //         voteRating = getCafeRating.get('voteRating');
+  //       });
+  //     }
+  //   }
+  // }
   @override
   void initState() {
     super.initState();
