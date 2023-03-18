@@ -99,6 +99,18 @@ class _PartyHeaderState extends State<PartyHeader> {
         ),
 
         Padding(
+          padding: const EdgeInsets.only(left: 45,right: 45),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Start Date",style: GoogleFonts.bebasNeue(fontSize: 30)),
+              Text("End Date",style: GoogleFonts.bebasNeue(fontSize: 30))
+            ],
+          ),
+        ),
+
+        Padding(
           padding: const EdgeInsets.only(left: 8.0,right: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,7 +129,7 @@ class _PartyHeaderState extends State<PartyHeader> {
                     setState(() => start_date = newdate1);
                   },
                   child: Container(
-                    height: 70,
+                    height: 50,
                     width: 80,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
@@ -128,7 +140,7 @@ class _PartyHeaderState extends State<PartyHeader> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text("${start_date.day}/${start_date.month}/${start_date.year}",
-                            style: GoogleFonts.bebasNeue(fontSize: 30)),
+                            style: GoogleFonts.bebasNeue(fontSize: 25)),
                         const SizedBox(
                           width: 5,
                         ),
@@ -141,7 +153,10 @@ class _PartyHeaderState extends State<PartyHeader> {
                   ),
                 ),
               ),
-              SizedBox(width: 15),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: SizedBox(width: 15,child: Text("-",style: GoogleFonts.bebasNeue(fontSize: 25)),),
+              ),
               Expanded(
                 flex: 50,
                 child: GestureDetector(
@@ -155,7 +170,7 @@ class _PartyHeaderState extends State<PartyHeader> {
                     setState(() => end_date = newdate2);
                   },
                   child: Container(
-                    height: 70,
+                    height: 50,
                     width: 80,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
@@ -166,7 +181,7 @@ class _PartyHeaderState extends State<PartyHeader> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text("${end_date.day}/${end_date.month}/${end_date.year}",
-                            style: GoogleFonts.bebasNeue(fontSize: 30)),
+                            style: GoogleFonts.bebasNeue(fontSize: 25)),
                         const SizedBox(
                           width: 5,
                         ),
