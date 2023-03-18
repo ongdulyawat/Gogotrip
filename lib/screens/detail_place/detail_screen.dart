@@ -40,18 +40,24 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       // background:AssetImage("assets/images/beach.png") as ImageProvider ,
       // appBar: ,
-      body: Container(
-        decoration:  BoxDecoration(
-          image: DecorationImage(
-            //image: AssetImage("assets/images/beach.png"),
-            image : NetworkImage(placeUrl),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Container(
+          decoration:  BoxDecoration(
+            image: DecorationImage(
+              //image: AssetImage("assets/images/beach.png"),
+              image : NetworkImage(placeUrl),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-          child: Column(
-            children: [DetailHeader(), SizedBox(height: 20), DetailBody()],
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+            child: Column(
+              children: [
+                DetailHeader(),
+                SizedBox(height: 20),
+                DetailBody()
+              ],
+            ),
           ),
         ),
       ),

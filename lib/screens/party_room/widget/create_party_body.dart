@@ -281,7 +281,9 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                 flex: 58,
                 child: Text(placeName,
                     style: GoogleFonts.bebasNeue(
-                        textStyle: const TextStyle(fontSize: 40))),
+                        textStyle: const TextStyle(fontSize: 25)),
+                  maxLines: 1,
+                ),
               ),
               Expanded(
                   flex: 42,

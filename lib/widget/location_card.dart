@@ -181,16 +181,16 @@ class _LocationCardState extends State<LocationCard> {
     final String apiKey = await
         "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
     var urlBeach = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=ทะเล&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=6&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=ทะเล&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     var urlTemple = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=วัด&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=6&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=วัด&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     var urlRestaurant = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=อาหาร&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=6&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=อาหาร&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
     var urlPark = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=สวนสาธารณะ&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=6&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=สวนสาธารณะ&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     var urlCafe = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=cafe&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=6&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=cafe&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
     var detailUrlBeach =  Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
@@ -625,7 +625,7 @@ class _LocationCardState extends State<LocationCard> {
     // );
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     return Container(
-      height: 260,
+      height: 220,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: data == null ? 0 : data?["result"].length,
@@ -717,7 +717,7 @@ class _LocationCardState extends State<LocationCard> {
                   child: Column(
 
                     children: [
-                      Text("${data?['result'][index]['place_id']}"),
+                      // Text("${data?['result'][index]['place_id']}"),
                       const SizedBox(
                         height: 20,
                       ),
@@ -767,61 +767,32 @@ class _LocationCardState extends State<LocationCard> {
                               children: [
                                 Text("${data?['result'][index]['destination']}",
                                     style: const TextStyle(fontSize: 16)),
-                              ],
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 8.0, right: 5),
-                                  child: Column(
-                                    children: const [
-                                      Icon(
-                                        Icons.star,
-                                        color: Colors.lime,
-                                        size: 17,
-                                      ),
-                                      Text(
-                                        "4.0",
-                                        style: TextStyle(fontSize: 17),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    // clickButton();
-                                    setState(() {
-                                      check = !check;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 5),
-                                    child: Container(
-                                      width: 35,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        color: check == false
-                                            ? Colors.white
-                                            : Colors.red,
-                                        borderRadius: BorderRadius.circular(28),
-                                        boxShadow: Styles.boxShadows,
-                                      ),
-                                      child: Icon(
-                                        Icons.favorite,
-                                        size: 20,
-                                        color: check == false
-                                            ? Colors.red
-                                            : Colors.white,
+                                const SizedBox(width: 3),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.only(top: 6.0, right: 5),
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.star,
+                                            color: Colors.lime,
+                                            size: 17,
+                                          ),
+                                          Text(
+                                            "4",
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ),
+                                  ],
+                                )
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),

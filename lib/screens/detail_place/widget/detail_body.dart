@@ -9,27 +9,34 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 import '../detail_screen.dart';
+
 class DetailBody extends StatefulWidget {
   // String? dataId;
 
   // DetailBody({super.key, required this.dataId});
 
-
   DetailBody({super.key});
+
   @override
   State<DetailBody> createState() => _DetailBodyState();
 }
 
 class _DetailBodyState extends State<DetailBody> {
-
   Map<dynamic, dynamic>? dataDetail;
+  bool check = false;
 
-  final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
-  final CollectionReference templeRating = FirebaseFirestore.instance.collection('temples');
-  final CollectionReference restaurantRating = FirebaseFirestore.instance.collection('restaurant');
-  final CollectionReference beachRating = FirebaseFirestore.instance.collection('beaches');
-  final CollectionReference parkRating = FirebaseFirestore.instance.collection('parks');
-  final CollectionReference cafeRating= FirebaseFirestore.instance.collection('cafes');
+  final CollectionReference checkCollection =
+      FirebaseFirestore.instance.collection('checks');
+  final CollectionReference templeRating =
+      FirebaseFirestore.instance.collection('temples');
+  final CollectionReference restaurantRating =
+      FirebaseFirestore.instance.collection('restaurant');
+  final CollectionReference beachRating =
+      FirebaseFirestore.instance.collection('beaches');
+  final CollectionReference parkRating =
+      FirebaseFirestore.instance.collection('parks');
+  final CollectionReference cafeRating =
+      FirebaseFirestore.instance.collection('cafes');
 
   String place = '';
   String placeId = '';
@@ -49,6 +56,7 @@ class _DetailBodyState extends State<DetailBody> {
   String f = '';
   String g = '';
   double rating = 0;
+
   getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
     if (snapshot.exists) {
@@ -65,50 +73,47 @@ class _DetailBodyState extends State<DetailBody> {
       });
     }
   }
+
   getDataFromRating() async {
     if (place == "Temple") {
-      final DocumentSnapshot getTempleRating = await templeRating.doc(placeId)
-          .get();
+      final DocumentSnapshot getTempleRating =
+          await templeRating.doc(placeId).get();
       if (getTempleRating.exists) {
         setState(() {
           countVoteRating = getTempleRating.get('countVoteRating');
           voteRating = getTempleRating.get('voteRating');
         });
       }
-    }
-    else if (place == "Beach") {
-      final DocumentSnapshot getBeachRating = await beachRating.doc(placeId)
-          .get();
+    } else if (place == "Beach") {
+      final DocumentSnapshot getBeachRating =
+          await beachRating.doc(placeId).get();
       if (getBeachRating.exists) {
         setState(() {
           countVoteRating = getBeachRating.get('countVoteRating');
           voteRating = getBeachRating.get('voteRating');
         });
       }
-    }
-    else if (place == "Restaurant") {
-      final DocumentSnapshot getRestaurantRating = await restaurantRating.doc(
-          placeId).get();
+    } else if (place == "Restaurant") {
+      final DocumentSnapshot getRestaurantRating =
+          await restaurantRating.doc(placeId).get();
       if (getRestaurantRating.exists) {
         setState(() {
           countVoteRating = getRestaurantRating.get('countVoteRating');
           voteRating = getRestaurantRating.get('voteRating');
         });
       }
-    }
-    else if (place == "Parks") {
-      final DocumentSnapshot getParkRating = await parkRating.doc(placeId)
-          .get();
+    } else if (place == "Parks") {
+      final DocumentSnapshot getParkRating =
+          await parkRating.doc(placeId).get();
       if (getParkRating.exists) {
         setState(() {
           countVoteRating = getParkRating.get('countVoteRating');
           voteRating = getParkRating.get('voteRating');
         });
       }
-    }
-    else {
-      final DocumentSnapshot getCafeRating = await cafeRating.doc(placeId)
-          .get();
+    } else {
+      final DocumentSnapshot getCafeRating =
+          await cafeRating.doc(placeId).get();
       if (getCafeRating.exists) {
         setState(() {
           countVoteRating = getCafeRating.get('countVoteRating');
@@ -117,7 +122,9 @@ class _DetailBodyState extends State<DetailBody> {
       }
     }
   }
+
   final FirebaseFirestore firestoreDocument = FirebaseFirestore.instance;
+
   Future<void> checkIfDocumentExists(String documentId) async {
     if (place == "Temple") {
       DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
@@ -126,70 +133,72 @@ class _DetailBodyState extends State<DetailBody> {
           .get();
       if (snapshotDocument.exists) {
         print('Document already exists!');
-      }
-      else {
-        firestoreDocument.collection('temples').doc(placeId).set(
-            {"voteRating": "0", "countVoteRating": "0"});
+      } else {
+        firestoreDocument
+            .collection('temples')
+            .doc(placeId)
+            .set({"voteRating": "0", "countVoteRating": "0"});
         print('Document does not exist!');
       }
-    }
-    else if (place == "Beach") {
+    } else if (place == "Beach") {
       DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
           .collection('beaches')
           .doc(documentId)
           .get();
       if (snapshotDocument.exists) {
         print('Document already exists!');
-      }
-      else {
-        firestoreDocument.collection('beaches').doc(placeId).set(
-            {"voteRating": "0", "countVoteRating": "0"});
+      } else {
+        firestoreDocument
+            .collection('beaches')
+            .doc(placeId)
+            .set({"voteRating": "0", "countVoteRating": "0"});
         print('Document does not exist!');
       }
-    }
-    else if (place == "Restaurant") {
+    } else if (place == "Restaurant") {
       DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
           .collection('restaurants')
           .doc(documentId)
           .get();
       if (snapshotDocument.exists) {
         print('Document already exists!');
-      }
-      else {
-        firestoreDocument.collection('restaurants').doc(placeId).set(
-            {"voteRating": "0", "countVoteRating": "0"});
+      } else {
+        firestoreDocument
+            .collection('restaurants')
+            .doc(placeId)
+            .set({"voteRating": "0", "countVoteRating": "0"});
         print('Document does not exist!');
       }
-    }
-    else if (place == "Park") {
+    } else if (place == "Park") {
       DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
           .collection('parks')
           .doc(documentId)
           .get();
       if (snapshotDocument.exists) {
         print('Document already exists!');
-      }
-      else {
-        firestoreDocument.collection('parks').doc(placeId).set(
-            {"voteRating": "0", "countVoteRating": "0"});
+      } else {
+        firestoreDocument
+            .collection('parks')
+            .doc(placeId)
+            .set({"voteRating": "0", "countVoteRating": "0"});
         print('Document does not exist!');
       }
-    }
-    else {
+    } else {
       DocumentSnapshot snapshotDocument = await FirebaseFirestore.instance
           .collection('cafes')
           .doc(documentId)
           .get();
       if (snapshotDocument.exists) {
         print('Document already exists!');
-      }
-      else {
-        firestoreDocument.collection('cafes').doc(placeId).set(
-            {"voteRating": "0", "countVoteRating": "0"});
+      } else {
+        firestoreDocument
+            .collection('cafes')
+            .doc(placeId)
+            .set({"voteRating": "0", "countVoteRating": "0"});
         print('Document does not exist!');
       }
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -203,25 +212,34 @@ class _DetailBodyState extends State<DetailBody> {
     //   Future.delayed(Duration(seconds: 5), _reloadPage);
     //   print("xxxx"+detailReload);
     // }
-
   }
-  void _reloadPage() {
-    firestore.collection('checks').doc('state').update({
-      'detailReload': 'True'
+
+  clickButton() {
+    setState(() {
+      check = !check;
     });
+  }
+
+  void _reloadPage() {
+    firestore
+        .collection('checks')
+        .doc('state')
+        .update({'detailReload': 'True'});
     // Use the Navigator class to reload the current page
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (BuildContext context) => DetailScreen(
-        data: null,
-      ),),
+      MaterialPageRoute(
+        builder: (BuildContext context) => DetailScreen(
+          data: null,
+        ),
+      ),
     );
-    print("WWWWWWWWW"+detailReload);
+    print("WWWWWWWWW" + detailReload);
   }
 
   Future<String> getData() async {
-    final String apiKey = await
-    "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
+    final String apiKey =
+        await "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
     // var urlBeach = await Uri.parse(
     //     'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=ทะเล&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=6&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     // var urlTemple = await Uri.parse(
@@ -235,20 +253,19 @@ class _DetailBodyState extends State<DetailBody> {
     //     'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=cafe&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=6&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
     var detailUrlBeach = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
+        'https://tatapi.tourismthailand.org/tatapi/v5/sha/' + placeId);
     var detailUrlTemple = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
+        'https://tatapi.tourismthailand.org/tatapi/v5/attraction/' + placeId);
     var detailUrlRestaurant = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
+        'https://tatapi.tourismthailand.org/tatapi/v5/sha/' + placeId);
     var detailUrlPark = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
+        'https://tatapi.tourismthailand.org/tatapi/v5/attraction/' + placeId);
     var detailUrlCafe = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/restaurant/'+placeId);
+        'https://tatapi.tourismthailand.org/tatapi/v5/restaurant/' + placeId);
 
     //print("Test"+widget.locations);
     //print("HelloTest"+place);
     if (place == "Temple") {
-
       var responseInfo = await http.get(
         detailUrlTemple,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
@@ -267,18 +284,14 @@ class _DetailBodyState extends State<DetailBody> {
       });
 
       firestore.collection('checks').doc('state').update({
-        'placeOpen': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['open']['time']}'
+        'placeOpen':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['open']['time']}'
       });
       firestore.collection('checks').doc('state').update({
-        'placeClose': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['close']['time']}'
+        'placeClose':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['close']['time']}'
       });
-
-    }
-
-    else if ( place == "Beach") {
-
+    } else if (place == "Beach") {
       var responseInfo = await http.get(
         detailUrlBeach,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
@@ -291,21 +304,19 @@ class _DetailBodyState extends State<DetailBody> {
           dataDetail = jsonResponse;
         });
       }
+      firestore
+          .collection('checks')
+          .doc('state')
+          .update({'placeInfo': '${dataDetail?['result']['sha_detail']}'});
       firestore.collection('checks').doc('state').update({
-        'placeInfo': '${dataDetail?['result']['sha_detail']}'
+        'placeOpen':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['open']['time']}'
       });
       firestore.collection('checks').doc('state').update({
-        'placeOpen': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['open']['time']}'
+        'placeClose':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['close']['time']}'
       });
-      firestore.collection('checks').doc('state').update({
-        'placeClose': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['close']['time']}'
-      });
-    }
-
-
-    else if ( place == "Restaurant") {
+    } else if (place == "Restaurant") {
       var responseInfo = await http.get(
         detailUrlRestaurant,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
@@ -318,20 +329,19 @@ class _DetailBodyState extends State<DetailBody> {
           dataDetail = jsonResponse;
         });
       }
+      firestore
+          .collection('checks')
+          .doc('state')
+          .update({'placeInfo': '${dataDetail?['result']['sha_detail']}'});
       firestore.collection('checks').doc('state').update({
-        'placeInfo': '${dataDetail?['result']['sha_detail']}'
+        'placeOpen':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['open']['time']}'
       });
       firestore.collection('checks').doc('state').update({
-        'placeOpen': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['open']['time']}'
+        'placeClose':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['close']['time']}'
       });
-      firestore.collection('checks').doc('state').update({
-        'placeClose': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['close']['time']}'
-      });
-    }
-
-    else if ( place == "Park") {
+    } else if (place == "Park") {
       var responseInfo = await http.get(
         detailUrlPark,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
@@ -345,20 +355,17 @@ class _DetailBodyState extends State<DetailBody> {
         });
       }
       firestore.collection('checks').doc('state').update({
-        'placeInfo': '${dataDetail?['result']
-        ['place_information']['detail']}'
+        'placeInfo': '${dataDetail?['result']['place_information']['detail']}'
       });
       firestore.collection('checks').doc('state').update({
-        'placeOpen': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['open']['time']}'
+        'placeOpen':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['open']['time']}'
       });
       firestore.collection('checks').doc('state').update({
-        'placeClose': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['close']['time']}'
+        'placeClose':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['close']['time']}'
       });
-    }
-
-    else{
+    } else {
       var responseInfo = await http.get(
         detailUrlCafe,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
@@ -371,24 +378,22 @@ class _DetailBodyState extends State<DetailBody> {
         });
       }
       firestore.collection('checks').doc('state').update({
-        'placeInfo': '${dataDetail?['result']
-        ['place_information']['detail']}'
+        'placeInfo': '${dataDetail?['result']['place_information']['detail']}'
       });
       firestore.collection('checks').doc('state').update({
-        'placeOpen': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['open']['time']}'
+        'placeOpen':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['open']['time']}'
       });
       firestore.collection('checks').doc('state').update({
-        'placeClose': '${dataDetail?['result']
-        ['opening_hours']['periods'][0]['close']['time']}'
+        'placeClose':
+            '${dataDetail?['result']['opening_hours']['periods'][0]['close']['time']}'
       });
     }
-    if(detailReload == "False" ){
+    if (detailReload == "False") {
       Future.delayed(Duration(milliseconds: 1), _reloadPage);
-      print("xxxx"+detailReload);
+      print("xxxx" + detailReload);
     }
     return "success";
-
   }
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -484,11 +489,12 @@ class _DetailBodyState extends State<DetailBody> {
           children: [
             Row(
               children: [
-                 Expanded(
+                Expanded(
                   flex: 70,
                   child: Text(
-                   placeName,
+                    placeName,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                    maxLines: 1,
                   ),
                 ),
                 Expanded(
@@ -560,163 +566,219 @@ class _DetailBodyState extends State<DetailBody> {
                 ),
                 Expanded(
                   flex: 14,
+                  child: GestureDetector(
+                    onTap: () {
+                      // clickButton();
+                      setState(() {
+                        check = !check;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0, right: 15),
+                      child: Container(
+                        width: 25,
+                        height: 25,
+                        decoration: BoxDecoration(
+                          color: check == false ? Colors.white : Colors.red,
+                          borderRadius: BorderRadius.circular(28),
+                          boxShadow: Styles.boxShadows,
+                        ),
+                        child: Icon(
+                          Icons.favorite,
+                          size: 15,
+                          color: check == false ? Colors.red : Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 5,),
+            Row(
+              children: [
+                Expanded(
+                  flex: 87,
                   child: Row(
-                    children:  [
+                    children: [
+                      Text(
+                        "tap here to rate: ",
+                        style: TextStyle(fontSize: 10),
+                      ),
+                      RatingBar.builder(
+                        initialRating: double.parse(voteRating),
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        // allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: 15,
+                        itemPadding: const EdgeInsets.only(right: 1),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                          if (place == "Temple") {
+                            c = countVoteRating;
+                            print(c);
+                            a = voteRating;
+                            print(a);
+                            b = (double.parse(a) * int.parse(c)) + rating;
+                            print(b);
+                            d = int.parse(c) + 1;
+                            e = b / d;
+                            f = e.toString();
+                            g = d.toString();
+                            print(g);
+                            firestoreDocument
+                                .collection('temples')
+                                .doc(placeId)
+                                .update({"voteRating": f});
+                            firestoreDocument
+                                .collection('temples')
+                                .doc(placeId)
+                                .update({"countVoteRating": g});
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DetailScreen(
+                                    data: null,
+                                  ),
+                                ));
+                          } else if (place == "Beach") {
+                            c = countVoteRating;
+                            print(c);
+                            a = voteRating;
+                            print(a);
+                            b = (double.parse(a) * int.parse(c)) + rating;
+                            print(b);
+                            d = int.parse(c) + 1;
+                            e = b / d;
+                            f = e.toString();
+                            g = d.toString();
+                            print(g);
+                            firestoreDocument
+                                .collection('beaches')
+                                .doc(placeId)
+                                .update({"voteRating": f});
+                            firestoreDocument
+                                .collection('beaches')
+                                .doc(placeId)
+                                .update({"countVoteRating": g});
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DetailScreen(
+                                    data: null,
+                                  ),
+                                ));
+                          } else if (place == "Restaurant") {
+                            c = countVoteRating;
+                            print(c);
+                            a = voteRating;
+                            print(a);
+                            b = (double.parse(a) * int.parse(c)) + rating;
+                            print(b);
+                            d = int.parse(c) + 1;
+                            e = b / d;
+                            f = e.toString();
+                            g = d.toString();
+                            print(g);
+                            firestoreDocument
+                                .collection('restaurants')
+                                .doc(placeId)
+                                .update({"voteRating": f});
+                            firestoreDocument
+                                .collection('restaurants')
+                                .doc(placeId)
+                                .update({"countVoteRating": g});
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DetailScreen(
+                                    data: null,
+                                  ),
+                                ));
+                          } else if (place == "Parks") {
+                            c = countVoteRating;
+                            print(c);
+                            a = voteRating;
+                            print(a);
+                            b = (double.parse(a) * int.parse(c)) + rating;
+                            print(b);
+                            d = int.parse(c) + 1;
+                            e = b / d;
+                            f = e.toString();
+                            g = d.toString();
+                            print(g);
+                            firestoreDocument
+                                .collection('parks')
+                                .doc(placeId)
+                                .update({"voteRating": f});
+                            firestoreDocument
+                                .collection('parks')
+                                .doc(placeId)
+                                .update({"countVoteRating": g});
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DetailScreen(
+                                    data: null,
+                                  ),
+                                ));
+                          } else {
+                            c = countVoteRating;
+                            print(c);
+                            a = voteRating;
+                            print(a);
+                            b = (double.parse(a) * int.parse(c)) + rating;
+                            print(b);
+                            d = int.parse(c) + 1;
+                            e = b / d;
+                            f = e.toString();
+                            g = d.toString();
+                            print(g);
+                            firestoreDocument
+                                .collection('cafes')
+                                .doc(placeId)
+                                .update({"voteRating": f});
+                            firestoreDocument
+                                .collection('cafes')
+                                .doc(placeId)
+                                .update({"countVoteRating": g});
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const DetailScreen(
+                                    data: null,
+                                  ),
+                                ));
+                          }
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                Expanded(
+                  flex: 13,
+                  child: Row(
+                    children: [
                       Icon(
                         Icons.star_rate_sharp,
                         size: 15,
                         color: Colors.amber,
                       ),
-                      // SizedBox(width: 2),
                       Padding(
                         padding: EdgeInsets.only(top: 2.0),
-                        child: Text(voteRating,
-                          //"4.0",
+                        child: Text(
+                          voteRating,
                           style: TextStyle(color: Colors.black, fontSize: 12),
+                          maxLines: 1,
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                const Text(
-                  "tap here to rate: ",
-                  style: TextStyle(fontSize: 10),
-                ),
-                RatingBar.builder(
-                  initialRating: double.parse(voteRating),
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  // allowHalfRating: true,
-                  itemCount: 5,
-                  itemSize: 15,
-                  itemPadding: const EdgeInsets.only(right: 1),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                    if(place == "Temple"){
-                      c = countVoteRating;
-                      print(c);
-                      a = voteRating;
-                      print(a);
-                      b = (double.parse(a)*int.parse(c))+rating;
-                      print(b);
-                      d = int.parse(c) + 1;
-                      e = b/d;
-                      f = e.toString();
-                      g = d.toString();
-                      print(g);
-                      firestoreDocument.collection('temples').doc(placeId).update({"voteRating": f});
-                      firestoreDocument.collection('temples').doc(placeId).update({"countVoteRating": g});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                            const DetailScreen(
-                              data: null,
-                            ),
-                          ));
-                    }
-                    else if(place == "Beach"){
-                      c = countVoteRating;
-                      print(c);
-                      a = voteRating;
-                      print(a);
-                      b = (double.parse(a)*int.parse(c))+rating;
-                      print(b);
-                      d = int.parse(c) + 1;
-                      e = b/d;
-                      f = e.toString();
-                      g = d.toString();
-                      print(g);
-                      firestoreDocument.collection('beaches').doc(placeId).update({"voteRating": f});
-                      firestoreDocument.collection('beaches').doc(placeId).update({"countVoteRating": g});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                            const DetailScreen(
-                              data: null,
-                            ),
-                          ));
-                    }
-                    else if(place == "Restaurant"){
-                      c = countVoteRating;
-                      print(c);
-                      a = voteRating;
-                      print(a);
-                      b = (double.parse(a)*int.parse(c))+rating;
-                      print(b);
-                      d = int.parse(c) + 1;
-                      e = b/d;
-                      f = e.toString();
-                      g = d.toString();
-                      print(g);
-                      firestoreDocument.collection('restaurants').doc(placeId).update({"voteRating": f});
-                      firestoreDocument.collection('restaurants').doc(placeId).update({"countVoteRating": g});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                            const DetailScreen(
-                              data: null,
-                            ),
-                          ));
-                    }
-                    else if(place == "Parks"){
-                      c = countVoteRating;
-                      print(c);
-                      a = voteRating;
-                      print(a);
-                      b = (double.parse(a)*int.parse(c))+rating;
-                      print(b);
-                      d = int.parse(c) + 1;
-                      e = b/d;
-                      f = e.toString();
-                      g = d.toString();
-                      print(g);
-                      firestoreDocument.collection('parks').doc(placeId).update({"voteRating": f});
-                      firestoreDocument.collection('parks').doc(placeId).update({"countVoteRating": g});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                            const DetailScreen(
-                              data: null,
-
-                            ),
-                          ));
-                    }
-                    else{
-                      c = countVoteRating;
-                      print(c);
-                      a = voteRating;
-                      print(a);
-                      b = (double.parse(a)*int.parse(c))+rating;
-                      print(b);
-                      d = int.parse(c) + 1;
-                      e = b/d;
-                      f = e.toString();
-                      g = d.toString();
-                      print(g);
-                      firestoreDocument.collection('cafes').doc(placeId).update({"voteRating": f});
-                      firestoreDocument.collection('cafes').doc(placeId).update({"countVoteRating": g});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                            const DetailScreen(
-                              data: null,
-                            ),
-                          ));
-                    }
-                  },
                 )
               ],
             ),
@@ -729,20 +791,44 @@ class _DetailBodyState extends State<DetailBody> {
                     style: TextStyle(color: Colors.grey),
                   )),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  placeInfo,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            Expanded(
+              flex: 1,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,//.horizontal
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0,bottom: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        placeInfo,
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
                 ),
-                Container()
-              ],
-            )
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+// Column(
+//   crossAxisAlignment: CrossAxisAlignment.start,
+//   mainAxisAlignment: MainAxisAlignment.center,
+//   children: <Widget>[
+//     Padding(
+//       padding: const EdgeInsets.only(right: 10.0),
+//       child: Text(
+//         placeInfo,
+//         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+//       ),
+//     ),
+//   ],
+// )
