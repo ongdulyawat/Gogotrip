@@ -14,11 +14,13 @@ class UserModel{
   String? image;
   String? createCount;
   String? joinCount;
+  String? like;
 
 
   UserModel({this.uid,this.email,this.firstname,
     this.lastname,this.username,this.password,
-  this.describe,this.instagram,this.facebook,this.line,this.image,this.createCount,this.joinCount});
+  this.describe,this.instagram,this.facebook,this.line,this.image,this.createCount
+    ,this.joinCount,this.like});
 
   factory UserModel.fromMap(map){
     return UserModel(
@@ -35,6 +37,7 @@ class UserModel{
       image: map['image'],
       createCount: map['createCount'],
       joinCount: map['joinCount'],
+      like: map['like'],
     );
   }
 
@@ -53,6 +56,7 @@ class UserModel{
       'image' : image,
       'createCount' : createCount,
       'joinCount' : joinCount,
+      'like' : like,
     };
   }
 }

@@ -95,32 +95,39 @@ class _ProfileBodyState extends State<ProfileBody> {
                                     MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text("${loggedInUser.instagram}"),
-                                      Container(
-                                        padding: const EdgeInsets.all(32),
-                                        child: TextFormField(
-                                          controller: _instagramController,
-                                          decoration: InputDecoration(
-                                              enabledBorder: const OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.transparent),
-                                                borderRadius: BorderRadius.all(Radius.circular(30)),
-                                              ),
-                                              focusedBorder: const OutlineInputBorder(
-                                                borderSide: BorderSide(color: Colors.transparent),
-                                                borderRadius: BorderRadius.all(Radius.circular(30)),
-                                              ),
-                                              prefixIcon: Image.asset(
-                                                "assets/icons/pencil.png",
-                                                width: 10,
-                                                height: 10,
-                                              ),
-                                              hintText: "IG",
-                                              filled: true,
-                                              fillColor: Styles.bgBackground
-                                          ),
-                                          validator: (value) => value != null && value.length < 1
-                                              ? 'Please enter Username'
-                                              : null,
+                                      TextFormField(
+                                        controller: _instagramController,
+                                        decoration: InputDecoration(
+                                            enabledBorder: const OutlineInputBorder(
+                                              borderSide: BorderSide(color: Colors.transparent),
+                                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                                            ),
+                                            focusedBorder: const OutlineInputBorder(
+                                              borderSide: BorderSide(color: Colors.transparent),
+                                              borderRadius: BorderRadius.all(Radius.circular(30)),
+                                            ),
+                                            prefixIcon: Image.asset(
+                                              "assets/icons/pencil.png",
+                                              width: 10,
+                                              height: 10,
+                                            ),
+                                            hintText: "IG",
+                                            filled: true,
+                                            fillColor: Styles.bgBackground
                                         ),
+                                        validator: (value) => value != null && value.length < 1
+                                            ? 'Please enter Username'
+                                            : null,
+
+                                        // validator: (value) {
+                                        //
+                                        //   if (value == null || value.isEmpty)
+                                        //   {
+                                        //     print("TTTTTTTEST");
+                                        //     return 'Please enter Username';
+                                        //   }
+                                        //   return null;
+                                        // },
                                       ),
                                       Container(
                                         padding: const EdgeInsets.all(5),

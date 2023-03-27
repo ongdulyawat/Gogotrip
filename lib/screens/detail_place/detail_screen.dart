@@ -46,6 +46,11 @@ class _DetailScreenState extends State<DetailScreen> {
             image: DecorationImage(
               //image: AssetImage("assets/images/beach.png"),
               image : NetworkImage(placeUrl),
+              // image: NetworkImage(placeUrl) != ""
+              //     ? NetworkImage(placeUrl)
+              //     : AssetImage("assets/images/beach.png")
+              // as ImageProvider,
+              //image: AssetImage('assets/images/beach.png'),
               fit: BoxFit.cover,
             ),
           ),

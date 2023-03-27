@@ -422,7 +422,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                     ),
                     Column(
                       children: [
-                        Text("123",
+                        Text("${loggedInUser.like}",
                             style: GoogleFonts.poppins(
                                 textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold,

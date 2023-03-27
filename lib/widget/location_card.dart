@@ -777,15 +777,15 @@ class _LocationCardState extends State<LocationCard> {
                                       const EdgeInsets.only(top: 6.0, right: 5),
                                       child: Row(
                                         children: const [
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.lime,
-                                            size: 17,
-                                          ),
-                                          Text(
-                                            "4",
-                                            style: TextStyle(fontSize: 12),
-                                          ),
+                                          // Icon(
+                                          //   Icons.star,
+                                          //   color: Colors.lime,
+                                          //   size: 17,
+                                          // ),
+                                          // Text(
+                                          //   "4",
+                                          //   style: TextStyle(fontSize: 12),
+                                          // ),
                                         ],
                                       ),
                                     ),

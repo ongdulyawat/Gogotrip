@@ -239,7 +239,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                     userModel.uid = user!.uid;
                     userModel.firstname = _firstnameController.text.trim();
                     userModel.lastname = _lastnameController.text.trim();
-                    userModel.email = _emailController.text.trim();
+                    //userModel.email = _emailController.text.trim();
                     userModel.username = _usernameController.text.trim();
                     userModel.password = _passwordController.text.trim();
                     userModel.describe = "-";
@@ -249,6 +249,16 @@ class _RegisterBodyState extends State<RegisterBody> {
                     userModel.image = "-";
                     userModel.createCount = "0";
                     userModel.joinCount = "0";
+                    userModel.like = "0";
+                    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+                      'join': FieldValue.arrayUnion([]),
+                    });
+                    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+                      'create': FieldValue.arrayUnion([]),
+                    });
+                    await FirebaseFirestore.instance.collection('users').doc(user!.uid).update({
+                      'favorite': FieldValue.arrayUnion([]),
+                    });
 
                     await firebaseFirestore
                         .collection("users").doc(user.uid).set(userModel.toMap());

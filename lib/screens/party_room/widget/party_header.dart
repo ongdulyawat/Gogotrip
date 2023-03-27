@@ -98,105 +98,105 @@ class _PartyHeaderState extends State<PartyHeader> {
           ],
         ),
 
-        Padding(
-          padding: const EdgeInsets.only(left: 45,right: 45),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Start Date",style: GoogleFonts.bebasNeue(fontSize: 30)),
-              Text("End Date",style: GoogleFonts.bebasNeue(fontSize: 30))
-            ],
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 45,right: 45),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: [
+        //       Text("Start Date",style: GoogleFonts.bebasNeue(fontSize: 30)),
+        //       Text("End Date",style: GoogleFonts.bebasNeue(fontSize: 30))
+        //     ],
+        //   ),
+        // ),
 
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0,right: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 50,
-                child: GestureDetector(
-                  onTap: () async {
-                    DateTime? newdate1 = await showDatePicker(
-                        context: context,
-                        initialDate: start_date,
-                        firstDate: DateTime(DateTime.now().year - 10),
-                        lastDate: DateTime(DateTime.now().year + 10));
-                    if (newdate1 == null) return;
-                    setState(() => start_date = newdate1);
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 80,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: Styles.boxShadows),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("${start_date.day}/${start_date.month}/${start_date.year}",
-                            style: GoogleFonts.bebasNeue(fontSize: 25)),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Icon(
-                          Icons.calendar_month_outlined,
-                          size: 20,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: SizedBox(width: 15,child: Text("-",style: GoogleFonts.bebasNeue(fontSize: 25)),),
-              ),
-              Expanded(
-                flex: 50,
-                child: GestureDetector(
-                  onTap: () async {
-                    DateTime? newdate2 = await showDatePicker(
-                        context: context,
-                        initialDate: end_date,
-                        firstDate: DateTime(DateTime.now().year - 10),
-                        lastDate: DateTime(DateTime.now().year + 10));
-                    if (newdate2 == null) return;
-                    setState(() => end_date = newdate2);
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 80,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                        boxShadow: Styles.boxShadows),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text("${end_date.day}/${end_date.month}/${end_date.year}",
-                            style: GoogleFonts.bebasNeue(fontSize: 25)),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Icon(
-                          Icons.calendar_month_outlined,
-                          size: 20,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        )
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 8.0,right: 8),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: [
+        //       Expanded(
+        //         flex: 50,
+        //         child: GestureDetector(
+        //           onTap: () async {
+        //             DateTime? newdate1 = await showDatePicker(
+        //                 context: context,
+        //                 initialDate: start_date,
+        //                 firstDate: DateTime(DateTime.now().year - 10),
+        //                 lastDate: DateTime(DateTime.now().year + 10));
+        //             if (newdate1 == null) return;
+        //             setState(() => start_date = newdate1);
+        //           },
+        //           child: Container(
+        //             height: 50,
+        //             width: 80,
+        //             decoration: BoxDecoration(
+        //                 borderRadius: BorderRadius.circular(15),
+        //                 color: Colors.white,
+        //                 boxShadow: Styles.boxShadows),
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               crossAxisAlignment: CrossAxisAlignment.center,
+        //               children: [
+        //                 Text("${start_date.day}/${start_date.month}/${start_date.year}",
+        //                     style: GoogleFonts.bebasNeue(fontSize: 25)),
+        //                 const SizedBox(
+        //                   width: 5,
+        //                 ),
+        //                 const Icon(
+        //                   Icons.calendar_month_outlined,
+        //                   size: 20,
+        //                 )
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //       Padding(
+        //         padding: const EdgeInsets.only(left: 8.0),
+        //         child: SizedBox(width: 15,child: Text("-",style: GoogleFonts.bebasNeue(fontSize: 25)),),
+        //       ),
+        //       Expanded(
+        //         flex: 50,
+        //         child: GestureDetector(
+        //           onTap: () async {
+        //             DateTime? newdate2 = await showDatePicker(
+        //                 context: context,
+        //                 initialDate: end_date,
+        //                 firstDate: DateTime(DateTime.now().year - 10),
+        //                 lastDate: DateTime(DateTime.now().year + 10));
+        //             if (newdate2 == null) return;
+        //             setState(() => end_date = newdate2);
+        //           },
+        //           child: Container(
+        //             height: 50,
+        //             width: 80,
+        //             decoration: BoxDecoration(
+        //                 borderRadius: BorderRadius.circular(15),
+        //                 color: Colors.white,
+        //                 boxShadow: Styles.boxShadows),
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               crossAxisAlignment: CrossAxisAlignment.center,
+        //               children: [
+        //                 Text("${end_date.day}/${end_date.month}/${end_date.year}",
+        //                     style: GoogleFonts.bebasNeue(fontSize: 25)),
+        //                 const SizedBox(
+        //                   width: 5,
+        //                 ),
+        //                 const Icon(
+        //                   Icons.calendar_month_outlined,
+        //                   size: 20,
+        //                 )
+        //               ],
+        //             ),
+        //           ),
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // )
       ],
     );
   }

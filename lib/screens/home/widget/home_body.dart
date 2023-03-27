@@ -34,10 +34,10 @@ class _HomeBodyState extends State<HomeBody> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
                       boxShadow: Styles.boxShadows),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("View all", style: TextStyle(fontSize: 14)),
-                  ),
+                  //child: const Padding(
+                    //padding: EdgeInsets.all(8.0),
+                    // child: Text("View all", style: TextStyle(fontSize: 14)),
+                  //),
                 ),
               )
             ],
@@ -61,16 +61,16 @@ class _HomeBodyState extends State<HomeBody> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
                       boxShadow: Styles.boxShadows),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("View all", style: TextStyle(fontSize: 14)),
-                  ),
+                  // child: const Padding(
+                  //   padding: EdgeInsets.all(8.0),
+                  //   child: Text("View all", style: TextStyle(fontSize: 14)),
+                  // ),
                 ),
               )
             ],
           ),
         ),
-        const Padding(
+         Padding(
           padding: EdgeInsets.only(top: 10.0, left: 15, right: 15),
           child: RecommendCard(),
         ),

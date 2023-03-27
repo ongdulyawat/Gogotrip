@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:gogotrip/constants/styles.dart';
@@ -8,6 +9,7 @@ import 'package:gogotrip/screens/party_room/party_screen.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
+import '../../../controllers/user_model.dart';
 import '../detail_screen.dart';
 
 class DetailBody extends StatefulWidget {
@@ -23,14 +25,13 @@ class DetailBody extends StatefulWidget {
 
 class _DetailBodyState extends State<DetailBody> {
   Map<dynamic, dynamic>? dataDetail;
-  bool check = false;
 
   final CollectionReference checkCollection =
       FirebaseFirestore.instance.collection('checks');
   final CollectionReference templeRating =
       FirebaseFirestore.instance.collection('temples');
   final CollectionReference restaurantRating =
-      FirebaseFirestore.instance.collection('restaurant');
+      FirebaseFirestore.instance.collection('restaurants');
   final CollectionReference beachRating =
       FirebaseFirestore.instance.collection('beaches');
   final CollectionReference parkRating =
@@ -56,8 +57,18 @@ class _DetailBodyState extends State<DetailBody> {
   String f = '';
   String g = '';
   double rating = 0;
+  String ab = '';
+  double aaa = 0;
+  String abc = '';
+  String az = '';
+
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+  final CollectionReference _users =
+  FirebaseFirestore.instance.collection('users');
 
   getDataFromPlace() async {
+
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
     if (snapshot.exists) {
       setState(() {
@@ -102,7 +113,7 @@ class _DetailBodyState extends State<DetailBody> {
           voteRating = getRestaurantRating.get('voteRating');
         });
       }
-    } else if (place == "Parks") {
+    } else if (place == "Park") {
       final DocumentSnapshot getParkRating =
           await parkRating.doc(placeId).get();
       if (getParkRating.exists) {
@@ -208,15 +219,67 @@ class _DetailBodyState extends State<DetailBody> {
       checkIfDocumentExists(placeId);
       getDataFromRating();
     });
-    // if(detailReload == "False" && detailReload == ''){
-    //   Future.delayed(Duration(seconds: 5), _reloadPage);
-    //   print("xxxx"+detailReload);
-    // }
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+    Future.delayed(Duration(milliseconds: 1100), ()
+    {
+      checkLike();
+      clickLike();
+    });
   }
 
-  clickButton() {
-    setState(() {
-      check = !check;
+  bool check = false;
+  // clickButton() {
+  //   setState(() {
+  //     check = !check;
+  //   });
+  // }
+  clickLike() {
+    final docRef = FirebaseFirestore.instance.collection('users').doc(loggedInUser.uid);
+
+    // Retrieve the document and check if the field at index 1 is "True"
+    docRef.get().then((docSnapshot) {
+      if (docSnapshot.exists) {
+        // Get the value of the field at index 1
+        List<dynamic> field = docSnapshot.data()![placeId];
+
+        bool isTrue = field.length >= 1 && field[0] == 'True';
+        // Check if the field at index 1 is "True"
+        if(isTrue){
+          check = true;
+        }
+        else{
+          check = false;
+        }
+      }
+    });
+
+  }
+
+  checkLike() async {
+    final docRef = FirebaseFirestore.instance.collection('users').doc(loggedInUser.uid);
+// Retrieve the document and check if the "fieldName" field exists
+    docRef.get().then((docSnapshot) {
+      if (docSnapshot.exists && docSnapshot.data()!.containsKey(placeId)) {
+        // The field exists
+        print('Field "fieldName" exists in document ');
+      }
+      else {
+        // The field does not exist
+         _users.doc(loggedInUser.uid).update({
+          placeId: FieldValue.arrayUnion([
+            "False","-1"
+          ]),
+        });
+        print('Field "fieldName" does not exist');
+      }
     });
   }
 
@@ -400,81 +463,6 @@ class _DetailBodyState extends State<DetailBody> {
 
   @override
   Widget build(BuildContext context) {
-    // if(place == "Temple"){
-    //   //print(placeId);
-    //   print("xxxxx"+dataDetail?['result']['place_information']['detail']);
-    //
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeInfo': '${dataDetail?['result']['place_information']['detail']}'
-    //   });
-    //
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeOpen': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['open']['time']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeClose': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['close']['time']}'
-    //   });
-    // }
-    //
-    //
-    // else if (place == "Beach") {
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeInfo': '${dataDetail?['result']['sha_detail']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeOpen': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['open']['time']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeClose': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['close']['time']}'
-    //   });
-    // }
-    //
-    // else if (place == "Restaurant") {
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeInfo': '${dataDetail?['result']['sha_detail']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeOpen': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['open']['time']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeClose': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['close']['time']}'
-    //   });
-    // }
-    //
-    // else if (place == "Park") {
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeInfo': '${dataDetail?['result']
-    //     ['place_information']['detail']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeOpen': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['open']['time']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeClose': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['close']['time']}'
-    //   });
-    // }
-    // else {
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeInfo': '${dataDetail?['result']
-    //     ['place_information']['detail']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeOpen': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['open']['time']}'
-    //   });
-    //   firestore.collection('checks').doc('state').update({
-    //     'placeClose': '${dataDetail?['result']
-    //     ['opening_hours']['periods'][0]['close']['time']}'
-    //   });
-    // }
     return Container(
       width: 378,
       height: 323,
@@ -567,10 +555,125 @@ class _DetailBodyState extends State<DetailBody> {
                 Expanded(
                   flex: 14,
                   child: GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       // clickButton();
                       setState(() {
                         check = !check;
+                      });
+
+                      final docRef = FirebaseFirestore.instance.collection('users').doc(loggedInUser.uid);
+                    // Retrieve the document and check if the field at index 1 is "True"
+                      docRef.get().then((docSnapshot) async {
+                        if (docSnapshot.exists) {
+                          // Get the value of the field at index 1
+                          List<dynamic> field = docSnapshot.data()![placeId];
+                          List<dynamic> fieldFavourite = docSnapshot.data()!['favourite'];
+                          bool isTrue = field.length >= 1 && field[0] == 'True';
+                          String? ff = field[1];
+                          // Check if the field at index 1 is "True"
+                          if (isTrue) {
+                            String? aa = loggedInUser.like;
+                            int bb = int.parse(aa!) -1;
+                            String cc = bb.toString();
+                             _users.doc(user!.uid).update({"like": cc});
+                            print('Field at index 1 is "True"');
+                            _users.doc(loggedInUser.uid).update({
+                              placeId: FieldValue.arrayRemove([field[0]]),
+                              placeId: FieldValue.arrayRemove([field[1]]),
+
+                            });
+                            _users.doc(loggedInUser.uid).update({
+                              placeId: FieldValue.arrayUnion([
+                                "False",ff
+                              ]),
+                            });
+
+                            for(int num = 0; num < fieldFavourite.length ; num++){
+                              print("IN REMOVE");
+                              if(fieldFavourite[num] == placeId) {
+                                _users.doc(loggedInUser.uid).update({
+                                'favourite': FieldValue.arrayRemove([fieldFavourite[num]])
+                              });
+                                print("IN REMOVEEEEEEEEEE");
+                            }
+                            }
+                          }
+                          else {
+                            String? aa = loggedInUser.like;
+                            int bb = int.parse(aa!) +1;
+                            String cc = bb.toString();
+                            _users.doc(user!.uid).update({"like": cc});
+                            print('Field at index 1 is not "True"');
+                            _users.doc(loggedInUser.uid).update({
+                              placeId: FieldValue.arrayRemove([field[0]]),
+                              placeId: FieldValue.arrayRemove([field[1]])
+                            });
+                            _users.doc(loggedInUser.uid).update({
+                              placeId: FieldValue.arrayUnion([
+                                "True",ff
+                              ]),
+                            });
+                            //for(int num = 0; num < fieldFavourite.length ; num++){
+                              print("IN ADD");
+                              //if(fieldFavourite[num] == placeId){
+                                _users.doc(loggedInUser.uid).update({
+                                  'favourite': FieldValue.arrayUnion([placeId])
+                                });
+                              //}
+                            //}
+                          }
+                          _users.doc(loggedInUser.uid).update({
+                          placeId: FieldValue.arrayRemove([field[0]])
+                           });
+                          print("CCCCCCCXXXXCXCXCX");
+                          print(fieldFavourite.length);
+                          //print(fieldFavourite[0]);
+                          // _users.doc(loggedInUser.uid).update({
+                          //       'favourite': FieldValue.arrayUnion(["Hello"])
+                          //     });
+                          if(place == "Temple"){
+                            await firestoreDocument.collection('temples').doc(
+                                placeId).update({
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                          }
+                          else if(place == "Restaurant"){
+                            await firestoreDocument.collection('restaurants').doc(
+                                placeId).update({
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                          }
+                          else if(place == "Beach"){
+                            await firestoreDocument.collection('beaches').doc(
+                                placeId).update({
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                          }
+                          else if(place == "Park"){
+                            await firestoreDocument.collection('parks').doc(
+                                placeId).update({
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                          }
+                          else{
+                            await firestoreDocument.collection('cafes').doc(
+                                placeId).update({
+                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                ,placeUrl]),
+                            });
+                          }
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DetailScreen(
+                                  data: null,
+                                ),
+                              ));
+                        }
                       });
                     },
                     child: Padding(
@@ -618,143 +721,325 @@ class _DetailBodyState extends State<DetailBody> {
                           color: Colors.amber,
                         ),
                         onRatingUpdate: (rating) {
-                          print(rating);
-                          if (place == "Temple") {
-                            c = countVoteRating;
-                            print(c);
-                            a = voteRating;
-                            print(a);
-                            b = (double.parse(a) * int.parse(c)) + rating;
-                            print(b);
-                            d = int.parse(c) + 1;
-                            e = b / d;
-                            f = e.toString();
-                            g = d.toString();
-                            print(g);
-                            firestoreDocument
-                                .collection('temples')
-                                .doc(placeId)
-                                .update({"voteRating": f});
-                            firestoreDocument
-                                .collection('temples')
-                                .doc(placeId)
-                                .update({"countVoteRating": g});
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const DetailScreen(
-                                    data: null,
-                                  ),
-                                ));
-                          } else if (place == "Beach") {
-                            c = countVoteRating;
-                            print(c);
-                            a = voteRating;
-                            print(a);
-                            b = (double.parse(a) * int.parse(c)) + rating;
-                            print(b);
-                            d = int.parse(c) + 1;
-                            e = b / d;
-                            f = e.toString();
-                            g = d.toString();
-                            print(g);
-                            firestoreDocument
-                                .collection('beaches')
-                                .doc(placeId)
-                                .update({"voteRating": f});
-                            firestoreDocument
-                                .collection('beaches')
-                                .doc(placeId)
-                                .update({"countVoteRating": g});
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const DetailScreen(
-                                    data: null,
-                                  ),
-                                ));
-                          } else if (place == "Restaurant") {
-                            c = countVoteRating;
-                            print(c);
-                            a = voteRating;
-                            print(a);
-                            b = (double.parse(a) * int.parse(c)) + rating;
-                            print(b);
-                            d = int.parse(c) + 1;
-                            e = b / d;
-                            f = e.toString();
-                            g = d.toString();
-                            print(g);
-                            firestoreDocument
-                                .collection('restaurants')
-                                .doc(placeId)
-                                .update({"voteRating": f});
-                            firestoreDocument
-                                .collection('restaurants')
-                                .doc(placeId)
-                                .update({"countVoteRating": g});
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const DetailScreen(
-                                    data: null,
-                                  ),
-                                ));
-                          } else if (place == "Parks") {
-                            c = countVoteRating;
-                            print(c);
-                            a = voteRating;
-                            print(a);
-                            b = (double.parse(a) * int.parse(c)) + rating;
-                            print(b);
-                            d = int.parse(c) + 1;
-                            e = b / d;
-                            f = e.toString();
-                            g = d.toString();
-                            print(g);
-                            firestoreDocument
-                                .collection('parks')
-                                .doc(placeId)
-                                .update({"voteRating": f});
-                            firestoreDocument
-                                .collection('parks')
-                                .doc(placeId)
-                                .update({"countVoteRating": g});
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const DetailScreen(
-                                    data: null,
-                                  ),
-                                ));
-                          } else {
-                            c = countVoteRating;
-                            print(c);
-                            a = voteRating;
-                            print(a);
-                            b = (double.parse(a) * int.parse(c)) + rating;
-                            print(b);
-                            d = int.parse(c) + 1;
-                            e = b / d;
-                            f = e.toString();
-                            g = d.toString();
-                            print(g);
-                            firestoreDocument
-                                .collection('cafes')
-                                .doc(placeId)
-                                .update({"voteRating": f});
-                            firestoreDocument
-                                .collection('cafes')
-                                .doc(placeId)
-                                .update({"countVoteRating": g});
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const DetailScreen(
-                                    data: null,
-                                  ),
-                                ));
-                          }
+                          final docRef = FirebaseFirestore.instance.collection('users').doc(loggedInUser.uid);
+                          // Retrieve the document and check if the field at index 1 is "True"
+                          docRef.get().then((docSnapshot) async {
+                            if (docSnapshot.exists) {
+                              // Get the value of the field at index 1
+                              List<dynamic> field = docSnapshot.data()![placeId];
+                              bool isTrue = field.length >= 1 && field[1] == '-1';
+                              if(isTrue){
+                                print(rating);
+                                if (place == "Temple") {
+                                  c = countVoteRating;
+                                  print(c);
+                                  a = voteRating;
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) + rating;
+                                  print(b);
+                                  d = int.parse(c) + 1;
+                                  e = b / d;
+                                  f = e.toString();
+                                  g = d.toString();
+                                  print(g);
+                                  firestoreDocument
+                                      .collection('temples')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                  firestoreDocument
+                                      .collection('temples')
+                                      .doc(placeId)
+                                      .update({"countVoteRating": g});
+                                  await firestoreDocument.collection('temples').doc(
+                                      placeId).update({
+                                    'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                      ,placeUrl]),
+                                  });
+
+                                } else if (place == "Beach") {
+                                  c = countVoteRating;
+                                  print(c);
+                                  a = voteRating;
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) + rating;
+                                  print(b);
+                                  d = int.parse(c) + 1;
+                                  e = b / d;
+                                  f = e.toString();
+                                  g = d.toString();
+                                  print(g);
+                                  firestoreDocument
+                                      .collection('beaches')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                  firestoreDocument
+                                      .collection('beaches')
+                                      .doc(placeId)
+                                      .update({"countVoteRating": g});
+                                  await firestoreDocument.collection('beaches').doc(
+                                      placeId).update({
+                                    'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                      ,placeUrl]),
+                                  });
+
+                                } else if (place == "Restaurant") {
+                                  c = countVoteRating;
+                                  print(c);
+                                  a = voteRating;
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) + rating;
+                                  print(b);
+                                  d = int.parse(c) + 1;
+                                  e = b / d;
+                                  f = e.toString();
+                                  g = d.toString();
+                                  print(g);
+                                  firestoreDocument
+                                      .collection('restaurants')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                  firestoreDocument
+                                      .collection('restaurants')
+                                      .doc(placeId)
+                                      .update({"countVoteRating": g});
+                                  await firestoreDocument.collection('restaurants').doc(
+                                      placeId).update({
+                                    'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                      ,placeUrl]),
+                                  });
+
+                                } else if (place == "Park") {
+                                  c = countVoteRating;
+                                  print(c);
+                                  a = voteRating;
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) + rating;
+                                  print(b);
+                                  d = int.parse(c) + 1;
+                                  e = b / d;
+                                  f = e.toString();
+                                  g = d.toString();
+                                  print(g);
+                                  firestoreDocument
+                                      .collection('parks')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                  firestoreDocument
+                                      .collection('parks')
+                                      .doc(placeId)
+                                      .update({"countVoteRating": g});
+                                  await firestoreDocument.collection('parks').doc(
+                                      placeId).update({
+                                    'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                      ,placeUrl]),
+                                  });
+                                }
+                                else {
+                                  c = countVoteRating;
+                                  print(c);
+                                  a = voteRating;
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) + rating;
+                                  print(b);
+                                  d = int.parse(c) + 1;
+                                  e = b / d;
+                                  f = e.toString();
+                                  g = d.toString();
+                                  print(g);
+                                  firestoreDocument
+                                      .collection('cafes')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                  firestoreDocument
+                                      .collection('cafes')
+                                      .doc(placeId)
+                                      .update({"countVoteRating": g});
+                                  await firestoreDocument.collection('cafes').doc(
+                                      placeId).update({
+                                    'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                      ,placeUrl]),
+                                  });
+                                }
+                                ab = rating.toString();
+                                _users.doc(loggedInUser.uid).update({
+                                  placeId: FieldValue.arrayRemove([field[1]])
+                                });
+                                _users.doc(loggedInUser.uid).update({
+                                  placeId: FieldValue.arrayUnion([
+                                    ab
+                                  ]),
+                                });
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const DetailScreen(
+                                        data: null,
+                                      ),
+                                    ));
+                              }
+                              else{
+                                print(rating);
+                                if (place == "Temple") {
+                                  az = field[1];
+                                  print("zZZZZZZZz");
+                                  print(az);
+                                  aaa = double.parse(az);
+                                  print("xXXXXX");
+                                  print(aaa);
+                                  c = countVoteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(c);
+                                  a = voteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) - aaa + rating;
+                                  print("ZZZZZxXXXXXMMMMM");
+                                  print(b);
+                                  d = int.parse(c);
+                                  e = b / d;
+                                  print("WERTT");
+                                  print(e);
+                                  f = e.toString();
+                                  //g = d.toString();
+                                  //print(g);
+                                  firestoreDocument
+                                      .collection('temples')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                  // firestoreDocument
+                                  //     .collection('temples')
+                                  //     .doc(placeId)
+                                  //     .update({"countVoteRating": g});
+
+                                }
+                                else if (place == "Beach") {
+                                  az = field[1];
+                                  print("zZZZZZZZz");
+                                  print(az);
+                                  aaa = double.parse(az);
+                                  print("xXXXXX");
+                                  print(aaa);
+                                  c = countVoteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(c);
+                                  a = voteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) - aaa + rating;
+                                  print("ZZZZZxXXXXXMMMMM");
+                                  print(b);
+                                  d = int.parse(c);
+                                  e = b / d;
+                                  print("WERTT");
+                                  print(e);
+                                  f = e.toString();
+                                  firestoreDocument
+                                      .collection('beaches')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                }
+                                else if (place == "Restaurant") {
+                                  az = field[1];
+                                  print("zZZZZZZZz");
+                                  print(az);
+                                  aaa = double.parse(az);
+                                  print("xXXXXX");
+                                  print(aaa);
+                                  c = countVoteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(c);
+                                  a = voteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) - aaa + rating;
+                                  print("ZZZZZxXXXXXMMMMM");
+                                  print(b);
+                                  d = int.parse(c);
+                                  e = b / d;
+                                  print("WERTT");
+                                  print(e);
+                                  f = e.toString();
+                                  firestoreDocument
+                                      .collection('restaurants')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+
+                                }
+                                else if (place == "Park") {
+                                  az = field[1];
+                                  print("zZZZZZZZz");
+                                  print(az);
+                                  aaa = double.parse(az);
+                                  print("xXXXXX");
+                                  print(aaa);
+                                  c = countVoteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(c);
+                                  a = voteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) - aaa + rating;
+                                  print("ZZZZZxXXXXXMMMMM");
+                                  print(b);
+                                  d = int.parse(c);
+                                  e = b / d;
+                                  print("WERTT");
+                                  print(e);
+                                  f = e.toString();
+                                  firestoreDocument
+                                      .collection('parks')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+                                }
+                                else {
+                                  az = field[1];
+                                  print("zZZZZZZZz");
+                                  print(az);
+                                  aaa = double.parse(az);
+                                  print("xXXXXX");
+                                  print(aaa);
+                                  c = countVoteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(c);
+                                  a = voteRating;
+                                  print("ZZZZZxXXXXX");
+                                  print(a);
+                                  b = (double.parse(a) * int.parse(c)) - aaa + rating;
+                                  print("ZZZZZxXXXXXMMMMM");
+                                  print(b);
+                                  d = int.parse(c);
+                                  e = b / d;
+                                  print("WERTT");
+                                  print(e);
+                                  f = e.toString();
+                                  firestoreDocument
+                                      .collection('cafes')
+                                      .doc(placeId)
+                                      .update({"voteRating": f});
+
+                                }
+                                abc = rating.toString();
+                                _users.doc(loggedInUser.uid).update({
+                                  placeId: FieldValue.arrayRemove([field[1]])
+                                });
+                                _users.doc(loggedInUser.uid).update({
+                                  placeId: FieldValue.arrayUnion([
+                                    abc
+                                  ]),
+                                });
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const DetailScreen(
+                                        data: null,
+                                      ),
+                                    ));
+                              }
+                            }
+
+                          });
                         },
                       )
                     ],

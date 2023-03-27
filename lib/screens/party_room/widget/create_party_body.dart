@@ -11,6 +11,7 @@ import 'dart:math';
 
 import '../../../controllers/user_model.dart';
 import '../../home/homepage_screen.dart';
+import '../party_screen.dart';
 
 class CreatePartyBody extends StatefulWidget {
   const CreatePartyBody({Key? key}) : super(key: key);
@@ -65,39 +66,6 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
     }
   }
 
-  // getDocument () async {
-  //   if(place == "Temple"){
-  //     await firestoreDocument.collection('temples').doc(placeId).set({
-  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-  //         ,placeUrl]),
-  //     });
-  //   }
-  //   else if(place == "Beach"){
-  //     await firestoreDocument.collection('beaches').doc(placeId).set({
-  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-  //         ,placeUrl]),
-  //     });
-  //   }
-  //   else if(place == "Restaurant"){
-  //     await firestoreDocument.collection('restaurants').doc(placeId).set({
-  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-  //         ,placeUrl]),
-  //     });
-  //   }
-  //   else if(place == "Park"){
-  //     await firestoreDocument.collection('parks').doc(placeId).set({
-  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-  //         ,placeUrl]),
-  //     });
-  //   }
-  //   else {
-  //     await firestoreDocument.collection('cafes').doc(placeId).set({
-  //       'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-  //         ,placeUrl]),
-  //     });
-  //   }
-  //
-  // }
 
   TextEditingController? controller;
   late DateTime _selectDate = DateTime.now();
@@ -144,6 +112,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
         lastDate: DateTime(2030));
     if (_pickDate != null) {
       setState(() {
+
         _selectDate = _pickDate;
 
       });
@@ -269,6 +238,10 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    // Format the current time as a string
+    String formattedTime = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+    print(formattedTime);
     return Padding(
       padding: const EdgeInsets.only(left: 18.0),
       child: Column(
@@ -311,15 +284,15 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
 
                             await firestoreDocument.collection('temples').doc(
                                 placeId).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
                             });
                             await _users.doc(loggedInUser.uid).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                              _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                              _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime,loggedInUser.uid
                             ]),
                             });
                             // final String? a = loggedInUser.createCount;
@@ -337,15 +310,15 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                 .get();
                             await firestoreDocument.collection('beaches').doc(
                                 placeId).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
                             });
                             await _users.doc(loggedInUser.uid).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                             });
                             print('Beach Document does not exist!');
@@ -359,15 +332,15 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                             await firestoreDocument.collection('restaurants')
                                 .doc(placeId)
                                 .set({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
                             });
                             await _users.doc(loggedInUser.uid).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                             });
                             print('Restaurant Document does not exist!');
@@ -380,15 +353,15 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                 .get();
                             await firestoreDocument.collection('parks').doc(
                                 placeId).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
                             });
                             await _users.doc(loggedInUser.uid).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                             });
                             print('Park Document does not exist!');
@@ -401,15 +374,15 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                 .get();
                             await firestoreDocument.collection('cafes').doc(
                                 placeId).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                               'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
                                 ,placeUrl]),
                             });
                             await _users.doc(loggedInUser.uid).update({
-                              getRandomString(10): FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note, loggedInUser.uid
+                              formattedTime: FieldValue.arrayUnion([
+                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),
                             });
                             print('Cafe Document does not exist!');
@@ -420,19 +393,19 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                         String c = b.toString();
                         await _users.doc(user!.uid)
                             .update({"createCount": c});
+                        await _users.doc(user!.uid)
+                            .update({"create": FieldValue.arrayUnion([formattedTime])});
                         //print("aaaaaaaaa"+a);
                         //print(b);
                         //print("cccccccccc"+c);
                         //print("xxxxxxxaaaaaaaa"+ note);
                         //print("xxxxxx"+ getRandomString(10));
 
-                      Navigator.push(
-                      context,
-                        MaterialPageRoute(
-                      builder: (context) =>
-                        const HomePage(
-                          ),
-                          ));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PartyScreen(),
+                            ));
 
                       },
                       child: Padding(
