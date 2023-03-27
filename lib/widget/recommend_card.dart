@@ -740,7 +740,7 @@ class _RecommendCardState extends State<RecommendCard> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("",
+                                Text("กรุงเทพมหานคร",
                                     style: const TextStyle(fontSize: 16)),
                                 const SizedBox(width: 3),
                                 Row(

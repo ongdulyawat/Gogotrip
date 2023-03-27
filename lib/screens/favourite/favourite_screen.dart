@@ -412,7 +412,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text("",
+                                          Text("กรุงเทพมหานคร",
                                               // "${data?['result'][index]['destination']}",
                                               style: const TextStyle(fontSize: 16)),
                                           const SizedBox(width: 3),
@@ -555,7 +555,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text("",
+                                          Text("กรุงเทพมหานคร",
                                               // "${data?['result'][index]['destination']}",
                                               style: const TextStyle(fontSize: 16)),
                                           const SizedBox(width: 3),
@@ -699,7 +699,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text("",
+                                          Text("กรุงเทพมหานคร",
                                               // "${data?['result'][index]['destination']}",
                                               style: const TextStyle(fontSize: 16)),
                                           const SizedBox(width: 3),
@@ -844,7 +844,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Text("",
+                                          Text("กรุงเทพมหานคร",
                                               // "${data?['result'][index]['destination']}",
                                               style: const TextStyle(fontSize: 16)),
                                           const SizedBox(width: 3),
@@ -989,7 +989,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("",
+                                  Text("กรุงเทพมหานคร",
                                       // "${data?['result'][index]['destination']}",
                                       style: const TextStyle(fontSize: 16)),
                                   const SizedBox(width: 3),

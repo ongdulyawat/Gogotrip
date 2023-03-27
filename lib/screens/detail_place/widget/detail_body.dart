@@ -739,7 +739,8 @@ class _DetailBodyState extends State<DetailBody> {
                                   print(b);
                                   d = int.parse(c) + 1;
                                   e = b / d;
-                                  f = e.toString();
+                                  f = e.toStringAsFixed(1);
+                                  //f = e.toString();
                                   g = d.toString();
                                   print(g);
                                   firestoreDocument
@@ -765,7 +766,8 @@ class _DetailBodyState extends State<DetailBody> {
                                   print(b);
                                   d = int.parse(c) + 1;
                                   e = b / d;
-                                  f = e.toString();
+                                  f = e.toStringAsFixed(1);
+                                  //f = e.toString();
                                   g = d.toString();
                                   print(g);
                                   firestoreDocument
@@ -791,7 +793,8 @@ class _DetailBodyState extends State<DetailBody> {
                                   print(b);
                                   d = int.parse(c) + 1;
                                   e = b / d;
-                                  f = e.toString();
+                                  f = e.toStringAsFixed(1);
+                                  //f = e.toString();
                                   g = d.toString();
                                   print(g);
                                   firestoreDocument
@@ -817,7 +820,8 @@ class _DetailBodyState extends State<DetailBody> {
                                   print(b);
                                   d = int.parse(c) + 1;
                                   e = b / d;
-                                  f = e.toString();
+                                  f = e.toStringAsFixed(1);
+                                  //f = e.toString();
                                   g = d.toString();
                                   print(g);
                                   firestoreDocument
@@ -843,7 +847,8 @@ class _DetailBodyState extends State<DetailBody> {
                                   print(b);
                                   d = int.parse(c) + 1;
                                   e = b / d;
-                                  f = e.toString();
+                                  f = e.toStringAsFixed(1);
+                                  //f = e.toString();
                                   g = d.toString();
                                   print(g);
                                   firestoreDocument
