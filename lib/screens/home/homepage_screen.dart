@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/controllers/user_model.dart';
+import 'package:gogotrip/screens/history/history_screen.dart';
 import 'package:gogotrip/screens/home/widget/home_body.dart';
 import 'package:gogotrip/screens/home/widget/home_footer.dart';
 import 'package:gogotrip/screens/login/login_screen.dart';
@@ -218,7 +219,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   title: const Text('History'),
                   onTap: () {
-                    //
+                    Get.to(const HistoryScreen());
                   },
                 ),
                 ListTile(

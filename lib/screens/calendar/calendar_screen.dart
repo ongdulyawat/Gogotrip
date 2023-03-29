@@ -14,17 +14,10 @@ class CalendarScreen extends StatefulWidget {
 class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  const Scaffold(
       backgroundColor: Styles.bgBackground,
-      body: SingleChildScrollView(
-          child: Column(
-            children: [
-              CalendarHeader(),
-              CalendarBody()
-            ],
-          ),
-      ),
-        bottomNavigationBar: const HomeFooter()
+      body: CalendarBody(),
+        bottomNavigationBar: HomeFooter()
     );
   }
 }
