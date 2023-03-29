@@ -38,6 +38,7 @@ class _DetailBodyState extends State<DetailBody> {
       FirebaseFirestore.instance.collection('parks');
   final CollectionReference cafeRating =
       FirebaseFirestore.instance.collection('cafes');
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   String place = '';
   String placeId = '';
@@ -47,6 +48,7 @@ class _DetailBodyState extends State<DetailBody> {
   String placeName = '';
   String placeUrl = '';
   String detailReload = '';
+  String search = '';
   String countVoteRating = '';
   String voteRating = '5';
   String a = '';
@@ -80,6 +82,7 @@ class _DetailBodyState extends State<DetailBody> {
         placeOpen = snapshot.get('placeOpen');
         placeUrl = snapshot.get('placeUrl');
         detailReload = snapshot.get('detailReload');
+        search = snapshot.get('search');
         //print("Slidesssssssssss"+place);
       });
     }
@@ -172,7 +175,8 @@ class _DetailBodyState extends State<DetailBody> {
           .get();
       if (snapshotDocument.exists) {
         print('Document already exists!');
-      } else {
+      }
+      else {
         firestoreDocument
             .collection('restaurants')
             .doc(placeId)
@@ -289,6 +293,10 @@ class _DetailBodyState extends State<DetailBody> {
         .doc('state')
         .update({'detailReload': 'True'});
     // Use the Navigator class to reload the current page
+    firestore
+        .collection('checks')
+        .doc('state')
+        .update({'search': ''});
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -459,7 +467,6 @@ class _DetailBodyState extends State<DetailBody> {
     return "success";
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {

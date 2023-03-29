@@ -163,7 +163,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                 fillColor: Styles
                                                                     .bgBackground),
 
-                                                            validator: (value) => value != null && value.length < 1
+                                                        validator: (value) => value != null && value.length < 1
                                                             ? 'Please enter Username'
                                                             : null,
                                                       ),
@@ -195,7 +195,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                           if (!isValid) return;
                                                           {
                                                             final String username = _usernameController.text.trim();
-                                                            if (username != null) {
+                                                            if (username != '') {
                                                               await _users.doc(user!.uid)
                                                               //.doc(documentSnapshot!.id)
                                                                   .update({"username": username});
@@ -209,10 +209,26 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                             const ProfileScreen(),
                                                                   ));
                                                            }
-                                                            const AlertDialog(
-                                                              title: Text('Incorrect'),
-                                                            );
-                                                            print("ERROR username");
+                                                            else{
+                                                              showDialog(
+                                                                context: context,
+                                                                builder: (BuildContext context) {
+                                                                  return AlertDialog(
+                                                                    title: Text("Alert"),
+                                                                    content: Text("Please fill username"),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () {
+                                                                          Navigator.pop(context);
+                                                                        },
+                                                                        child: Text("OK"),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+                                                              print("ERROR username");
+                                                            }
                                                           }
 
                                                           // setState(() {

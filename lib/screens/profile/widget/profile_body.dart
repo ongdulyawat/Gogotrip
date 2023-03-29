@@ -17,7 +17,7 @@ class ProfileBody extends StatefulWidget {
 class _ProfileBodyState extends State<ProfileBody> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
   void initState(){
     super.initState();
@@ -45,6 +45,10 @@ class _ProfileBodyState extends State<ProfileBody> {
   // String line = "-";
   @override
   Widget build(BuildContext context) {
+    firestore
+        .collection('checks')
+        .doc('state')
+        .update({'search': ''});
     return Container(
       width: 250,
       height: 160,

@@ -28,7 +28,7 @@ class _SlideLocationState extends State<SlideLocation> {
 
   int count = -1;
   final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
-
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   String place = '';
   getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
@@ -96,6 +96,10 @@ class _SlideLocationState extends State<SlideLocation> {
                   firestore.collection('checks').doc('state').update({
                     'place': 'Beach'
                   });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'search': ''});
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -115,6 +119,10 @@ class _SlideLocationState extends State<SlideLocation> {
                   firestore.collection('checks').doc('state').update({
                     'place': 'Temple'
                   });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'search': ''});
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -127,6 +135,10 @@ class _SlideLocationState extends State<SlideLocation> {
                   firestore.collection('checks').doc('state').update({
                   'place': 'Restaurant'
                   });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'search': ''});
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -139,6 +151,10 @@ class _SlideLocationState extends State<SlideLocation> {
                   firestore.collection('checks').doc('state').update({
                     'place': 'Park'
                   });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'search': ''});
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -151,6 +167,10 @@ class _SlideLocationState extends State<SlideLocation> {
                   firestore.collection('checks').doc('state').update({
                     'place': 'Cafe'
                   });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'search': ''});
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -159,6 +179,7 @@ class _SlideLocationState extends State<SlideLocation> {
                   print(place);
                 }
               });
+
             },
             child: Container(
               decoration: BoxDecoration(

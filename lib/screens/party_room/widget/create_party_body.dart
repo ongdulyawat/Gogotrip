@@ -48,6 +48,8 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
   String detailReload = '';
   String voteRating = '';
   String countVoteRating = '';
+  String note = '';
+  String typeSex = '';
 
   getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
@@ -263,9 +265,15 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                   child: GestureDetector(
                       onTap: () async {
                         //checkIfDocumentExists(placeId);
-                        final String note = _noteController.text.trim();
-                        String typeSex = '';
+                        // note = _noteController.text.trim();
+                        if(_noteController.text.trim() == ''){
+                          note = '-';
+                        }
+                        else{
+                          note = _noteController.text.trim();
+                        }
                         //Future.delayed(Duration(milliseconds: 1100), () async {
+
                         if(clickAny == true){
                           typeSex = "Any";
                         }
@@ -274,6 +282,9 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                         }
                         else if(clickGirl == true){
                           typeSex = "Girl";
+                        }
+                        else{
+                          typeSex = "Any";
                         }
                           if (place == "Temple") {
                             DocumentSnapshot snapshotDocument = await FirebaseFirestore
@@ -331,7 +342,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                 .get();
                             await firestoreDocument.collection('restaurants')
                                 .doc(placeId)
-                                .set({
+                                .update({
                               formattedTime: FieldValue.arrayUnion([
                                 _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
                               ]),

@@ -76,6 +76,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         detailReload = snapshot.get('detailReload');
       });
     }
+    firestore
+        .collection('checks')
+        .doc('state')
+        .update({'search': ''});
   }
   getFavourite() async {
     final docRef = FirebaseFirestore.instance.collection('users').doc(loggedInUser.uid);
@@ -259,7 +263,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
       setState(() {});
     });
     startTimer();
-
   }
 
   // Widget _buildLoadingWidget() {

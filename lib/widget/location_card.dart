@@ -35,7 +35,7 @@ class _LocationCardState extends State<LocationCard> {
   // String park = "สวนสาธารณะ";
   // String cafe = "cafe";
 
-  Map<dynamic, dynamic>? dataDetail;
+  Map<dynamic, dynamic>? dataDetailSearch;
   // List<bool> checkDetail = [false];
   // String BeachDetail = "ทะเล";
   // String templeDetail = "วัด";
@@ -44,6 +44,7 @@ class _LocationCardState extends State<LocationCard> {
   // String cafeDetail = "cafe";
 
   final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
   // final CollectionReference templeRating = FirebaseFirestore.instance.collection('temples');
   // final CollectionReference restaurantRating = FirebaseFirestore.instance.collection('restaurant');
   // final CollectionReference beachRating = FirebaseFirestore.instance.collection('beaches');
@@ -58,6 +59,7 @@ class _LocationCardState extends State<LocationCard> {
   String placeName = '';
   String placeUrl = '';
   String detailReload = '';
+  String search = '';
   // String countVoteRating = '';
   // String voteRating = '';
   // String a = '';
@@ -81,9 +83,16 @@ class _LocationCardState extends State<LocationCard> {
         placeOpen = snapshot.get('placeOpen');
         placeUrl = snapshot.get('placeUrl');
         detailReload = snapshot.get('detailReload');
+        search = snapshot.get('search');
         print("Testtt"+place);
       });
     }
+  }
+  deleteSearch(){
+    firestore
+        .collection('checks')
+        .doc('state')
+        .update({'search': ''});
   }
   // getDataFromRating() async {
   //   if (place == "Temple") {
@@ -143,7 +152,11 @@ class _LocationCardState extends State<LocationCard> {
     getDataFromPlace();
     Future.delayed(Duration(milliseconds: 1000), () {
       getData();
+      getSearchData();
    });
+    Future.delayed(Duration(milliseconds: 1300), () {
+      deleteSearch();
+    });
     // FirebaseFirestore.instance
     //     .collection('temples')
     //     .doc()
@@ -192,18 +205,30 @@ class _LocationCardState extends State<LocationCard> {
     var urlCafe = await Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=cafe&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
-    var detailUrlBeach =  Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
-    var detailUrlTemple =  Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
-    var detailUrlRestaurant =  Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
-    var detailUrlPark =  Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
-    var detailUrlCafe =  Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/restaurant/'+placeId);
+    // var detailUrlBeach =  Uri.parse(
+    //     'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
+    // var detailUrlTemple =  Uri.parse(
+    //     'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
+    // var detailUrlRestaurant =  Uri.parse(
+    //     'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
+    // var detailUrlPark =  Uri.parse(
+    //     'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
+    // var detailUrlCafe =  Uri.parse(
+    //     'https://tatapi.tourismthailand.org/tatapi/v5/restaurant/'+placeId);
 
+    var urlSearchBeach = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchTemple = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchRestaurant = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+
+    var urlSearchPark = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchCafe = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     //print("Test"+widget.locations);
+
     print("HelloTest"+place);
     if (place == "Temple") {
       print("qqqqqqqq");
@@ -212,8 +237,8 @@ class _LocationCardState extends State<LocationCard> {
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
-      var responseInfo = await http.get(
-        detailUrlTemple,
+      var responseSearch = await http.get(
+        urlSearchTemple,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
@@ -224,11 +249,11 @@ class _LocationCardState extends State<LocationCard> {
         data = jsonResponse;
       });
     }
-      if (responseInfo.statusCode == 200) {
-        var jsonResponse = await convert.jsonDecode(responseInfo.body);
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
         print(jsonResponse);
         setState(() {
-          dataDetail = jsonResponse;
+          dataDetailSearch = jsonResponse;
         });
       }
     }
@@ -240,8 +265,8 @@ class _LocationCardState extends State<LocationCard> {
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
-      var responseInfo = await http.get(
-        detailUrlBeach,
+      var responseSearch = await http.get(
+        urlSearchBeach,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
@@ -252,11 +277,11 @@ class _LocationCardState extends State<LocationCard> {
           data = jsonResponse;
         });
       }
-      if (responseInfo.statusCode == 200) {
-        var jsonResponse = await convert.jsonDecode(responseInfo.body);
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
         print(jsonResponse);
         setState(() {
-          dataDetail = jsonResponse;
+          dataDetailSearch = jsonResponse;
         });
       }
     }
@@ -267,8 +292,8 @@ class _LocationCardState extends State<LocationCard> {
         urlRestaurant,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
-      var responseInfo = await http.get(
-        detailUrlRestaurant,
+      var responseSearch = await http.get(
+        urlSearchRestaurant,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
@@ -279,11 +304,11 @@ class _LocationCardState extends State<LocationCard> {
           data = jsonResponse;
         });
       }
-      if (responseInfo.statusCode == 200) {
-        var jsonResponse = await convert.jsonDecode(responseInfo.body);
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
         print(jsonResponse);
         setState(() {
-          dataDetail = jsonResponse;
+          dataDetailSearch = jsonResponse;
         });
       }
     }
@@ -295,8 +320,8 @@ class _LocationCardState extends State<LocationCard> {
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
-      var responseInfo = await http.get(
-        detailUrlPark,
+      var responseSearch = await http.get(
+        urlSearchPark,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
@@ -308,11 +333,11 @@ class _LocationCardState extends State<LocationCard> {
         });
       }
 
-      if (response.statusCode == 200) {
-        var jsonResponse = await convert.jsonDecode(responseInfo.body);
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
         print(jsonResponse);
         setState(() {
-          dataDetail = jsonResponse;
+          dataDetailSearch = jsonResponse;
         });
       }
     }
@@ -323,8 +348,8 @@ class _LocationCardState extends State<LocationCard> {
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
-      var responseInfo = await http.get(
-        detailUrlCafe,
+      var responseSearch = await http.get(
+        urlSearchCafe,
         headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
       );
 
@@ -335,17 +360,123 @@ class _LocationCardState extends State<LocationCard> {
           data = jsonResponse;
         });
       }
-      if (responseInfo.statusCode == 200) {
-        var jsonResponse = await convert.jsonDecode(responseInfo.body);
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
         print(jsonResponse);
         setState(() {
-          dataDetail = jsonResponse;
+          dataDetailSearch = jsonResponse;
         });
       }
     }
 
     return "success";
   }
+  getSearchData() async{
+    final String apiKey = await
+    "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
+
+    var urlSearchBeach = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchTemple = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchRestaurant = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+
+    var urlSearchPark = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchCafe = await Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    //print("Test"+widget.locations);
+
+    print("HelloTest"+place);
+    if (place == "Temple") {
+
+      var responseSearch = await http.get(
+        urlSearchTemple,
+        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+      );
+
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
+        print(jsonResponse);
+        setState(() {
+          dataDetailSearch = jsonResponse;
+        });
+      }
+    }
+
+    else if ( place == "Beach") {
+      print("kkkkkkkkkkkk");
+
+
+      var responseSearch = await http.get(
+        urlSearchBeach,
+        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+      );
+
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
+        print(jsonResponse);
+        setState(() {
+          dataDetailSearch = jsonResponse;
+        });
+      }
+    }
+
+
+    else if ( place == "Restaurant") {
+
+      var responseSearch = await http.get(
+        urlSearchRestaurant,
+        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+      );
+
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
+        print(jsonResponse);
+        setState(() {
+          dataDetailSearch = jsonResponse;
+        });
+      }
+    }
+
+
+    else if ( place == "Park") {
+
+
+      var responseSearch = await http.get(
+        urlSearchPark,
+        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+      );
+
+
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
+        print(jsonResponse);
+        setState(() {
+          dataDetailSearch = jsonResponse;
+        });
+      }
+    }
+    else{
+      print("cafe"+place);
+
+      var responseSearch = await http.get(
+        urlSearchCafe,
+        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+      );
+
+      if (responseSearch.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(responseSearch.body);
+        print(jsonResponse);
+        setState(() {
+          dataDetailSearch = jsonResponse;
+        });
+      }
+    }
+    return dataDetailSearch;
+  }
+
 
   //FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
@@ -624,7 +755,7 @@ class _LocationCardState extends State<LocationCard> {
     //   ],
     // );
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    return Container(
+    return search == ''?Container(
       height: 220,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -766,6 +897,136 @@ class _LocationCardState extends State<LocationCard> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text("${data?['result'][index]['destination']}",
+                                    style: const TextStyle(fontSize: 16)),
+                                const SizedBox(width: 3),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.only(top: 6.0, right: 5),
+                                      child: Row(
+                                        children: const [
+                                          // Icon(
+                                          //   Icons.star,
+                                          //   color: Colors.lime,
+                                          //   size: 17,
+                                          // ),
+                                          // Text(
+                                          //   "4",
+                                          //   style: TextStyle(fontSize: 12),
+                                          // ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }),
+    ):Container(
+      height: 220,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: dataDetailSearch == null ? 0 : dataDetailSearch?["result"].length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 5.0, right: 5),
+              child: InkWell(
+
+                onTap: ()
+                {
+                  firestore.collection('checks').doc('state').update({
+                    'detailReload': 'False'
+                  });
+                  firestore.collection('checks').doc('state').update({
+                    'placeId': '${dataDetailSearch?['result'][index]['place_id']}'
+                  });
+                  firestore.collection('checks').doc('state').update({
+                    'placeName': '${dataDetailSearch?['result'][index]['place_name']}'
+                  });
+                  firestore.collection('checks').doc('state').update({
+                    'placeUrl': '${dataDetailSearch?['result'][index]['thumbnail_url']}'
+                  });
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                        const DetailScreen(
+                          data: null,
+                          // data: "${_data?['result'][index]['place_id']}"
+                        ),
+                      ));
+
+                },
+                child: Container(
+                  width: 165,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                      boxShadow: Styles.boxShadows),
+                  child: Column(
+
+                    children: [
+                      // Text("${data?['result'][index]['place_id']}"),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        height: 105,
+                        width: 125,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: dataDetailSearch?['result'][index]
+                                ['thumbnail_url'] !=
+                                    ''
+                                    ? NetworkImage(
+                                  "${dataDetailSearch?['result'][index]['thumbnail_url']}",
+                                )
+                                    : AssetImage("assets/images/beach.png")
+                                as ImageProvider,
+                                fit: BoxFit.fill),
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: Styles.boxShadows),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3.0, right: 3),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: Text(
+                                "${dataDetailSearch?['result'][index]['place_name']}",
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.clip,
+                                maxLines: 1,
+                                softWrap: true,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("${dataDetailSearch?['result'][index]['destination']}",
                                     style: const TextStyle(fontSize: 16)),
                                 const SizedBox(width: 3),
                                 Row(
