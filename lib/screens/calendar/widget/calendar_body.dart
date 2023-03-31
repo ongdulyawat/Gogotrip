@@ -13,18 +13,18 @@ class _CalendarBodyState extends State<CalendarBody> {
   DateTime? selectedDay;
   late List<CleanCalendarEvent> selectedEvents;
 
-  final Map<DateTime, List<CleanCalendarEvent>> events =
-  {
-    // DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day): [
-    //   CleanCalendarEvent('Location: ครัวสนั่น',
-    //       location: "Bangkok",
-    //       startTime: DateTime(DateTime.now().year, DateTime.now().month,
-    //           DateTime.now().day, 10, 0),
-    //       endTime: DateTime(DateTime.now().year, DateTime.now().month,
-    //           DateTime.now().day, 12, 0),
-    //       description: 'restaurant',
-    //       color: Colors.orange),
-    // ],
+
+  final Map<DateTime, List<CleanCalendarEvent>> events = {
+    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day): [
+      CleanCalendarEvent('Location: ครัวสนั่น',
+          location: "Bangkok",
+          startTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 10, 0),
+          endTime: DateTime(DateTime.now().year, DateTime.now().month,
+              DateTime.now().day, 12, 0),
+          description: 'restaurant',
+          color: Colors.orange),
+    ],
     DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2):
         [
       CleanCalendarEvent('Location: แพน คาเฟ่',
@@ -56,6 +56,7 @@ class _CalendarBodyState extends State<CalendarBody> {
   @override
   void initState() {
     selectedEvents = events[selectedDay] ?? [];
+
     super.initState();
   }
 

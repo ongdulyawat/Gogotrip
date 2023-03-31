@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
+import 'package:gogotrip/screens/test_page/test1.dart';
+import 'package:gogotrip/screens/test_page/test2.dart';
 
 class testOng extends StatefulWidget {
   const testOng({Key? key}) : super(key: key);
@@ -9,78 +11,81 @@ class testOng extends StatefulWidget {
   State<testOng> createState() => _testOngState();
 }
 
-class _testOngState extends State<testOng> {
-  DateTime? selectedDay;
-  late List<CleanCalendarEvent> selectedEvents;
-
-  final Map<DateTime, List<CleanCalendarEvent>> events = {
-    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day): [
-      CleanCalendarEvent('Event A',
-          location: "Bangkok",
-          startTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 10, 0),
-          endTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 12, 0),
-          description: 'Test 1',
-          color: Colors.blue),
-    ],
-    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 2):
-        [
-      CleanCalendarEvent('Event B',
-          startTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day + 2, 10, 0),
-          endTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day + 2, 12, 0),
-          color: Colors.orange),
-      CleanCalendarEvent('Event C',
-          startTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day + 2, 14, 30),
-          endTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day + 2, 17, 0),
-          color: Colors.pink),
-    ],
-  };
-
-  void _handleData(date) {
-    setState(() {
-      selectedDay = date;
-      selectedEvents = events[selectedDay] ?? [];
-    });
-  }
+class _testOngState extends State<testOng> with SingleTickerProviderStateMixin {
+  late TabController tabController;
 
   @override
   void initState() {
-    selectedEvents = events[selectedDay] ?? [];
+    tabController = TabController(length: 2, vsync: this);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Test calendar"),
+        title: Text('Tab bar Without Appbar'),
       ),
-      body: SafeArea(
-        child: Calendar(
-          startOnMonday: true,
-          selectedColor: Colors.blue,
-          todayColor: Colors.red,
-          eventColor: Colors.purple,
-          eventDoneColor: Colors.amber,
-          bottomBarColor: Colors.deepOrange,
-          onDateSelected: (date) {
-            return _handleData(date);
-          },
-          events: events,
-          isExpanded: true,
-          dayOfWeekStyle: TextStyle(
-              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w100),
-          bottomBarTextStyle: TextStyle(
-            color: Colors.black12,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                SizedBox(height: 50),
+                Container(
+                  // height: 50,
+                  width: MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(5),
+                        child: TabBar(
+                          unselectedLabelColor: Colors.white,
+                          labelColor: Colors.black,
+                          indicatorColor: Colors.white,
+                          indicatorWeight: 2,
+                          indicator: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          controller: tabController,
+                          tabs: [
+                            Tab(
+                              text: 'Coming',
+                            ),
+                            Tab(
+                              text: 'Finish',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: [
+                      Test1(),
+                      Test2()
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-          hideBottomBar: false,
-          hideArrows: false,
-          weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
         ),
       ),
     );

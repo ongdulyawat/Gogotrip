@@ -63,6 +63,20 @@ class _HomePageState extends State<HomePage> {
       getaddress();
     });
   }
+  Future<Position> determinePosition() async {
+    LocationPermission permission;
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location Permissions are denied');
+      }
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
 
   Future<void> getaddress() async {
     List<Placemark> placemark = await placemarkFromCoordinates(lat!, long!);
@@ -70,6 +84,7 @@ class _HomePageState extends State<HomePage> {
       street = placemark[0].street!;
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
