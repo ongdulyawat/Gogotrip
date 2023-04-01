@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -32,10 +33,20 @@ class _PartyBodyState extends State<PartyBody> {
   String placeUrl = '';
   String detailReload = '';
   List<MapEntry<String, dynamic>> dataList = [];
+  int dataCheck = 0;
   int dataLength = 0;
   int dataValueLength = 0;
   String formattedDateTime = '';
   int countJoined  = 0;
+  String usernameJoin = '';
+  String describeJoin = '';
+  String instagramJoin = '';
+  String facebookJoin = '';
+  String lineJoin = '';
+  String createCountJoin = '';
+  String joinCountJoin = '';
+  String likeJoin = '';
+  String imageJoin = '';
   //Map data = [];
   //List testList = [];
 
@@ -112,16 +123,35 @@ class _PartyBodyState extends State<PartyBody> {
           //dataList = data?.entries.toList() ?? [];
           print("Show Field");
           print(dataList);
-          dataLength = dataList.length;
-          for(int i = 0; i < dataLength; i++){
+          dataCheck = dataList.length;
+          for(int i = dataCheck-1 ; i >= 0; i--){
+            // print("New I");
+            // for(int j = 0; j < dataList[i].value.length; j++){
+            //   print(dataList[i].value[j]);
+            //   print("Finish J");
+            // }
             print("New I");
-            for(int j = 0; j < dataList[i].value.length; j++){
-              print(dataList[i].value[j]);
-              print("Finish J");
+            DateTime now = DateTime.now();
+            String formattedTime = DateFormat('h:mm').format(now);
+            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+
+            DateTime timestamp = dataList[i].value[0].toDate();
+            DateTime parsedTime = DateFormat('h:mm').parse(dataList[i].value[2]);
+
+            if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+              if(parsedTime.isBefore(timeNow)){
+                print("Same day but furture");
+                dataList.removeAt(i);
+              }
+            }
+            else if(timestamp.isBefore(now)){
+              print("Furture");
+              dataList.removeAt(i);
             }
           }
         });
       }
+      dataLength = dataList.length;
     }
     else if(place == "Restaurant"){
       DocumentSnapshot<Map<String, dynamic>> snapshot =
@@ -137,16 +167,35 @@ class _PartyBodyState extends State<PartyBody> {
           dataList = data?.entries.toList() ?? [];
           print("Show Field");
           print(dataList);
-          dataLength = dataList.length;
-          for(int i = 0; i < dataLength; i++){
+          dataCheck = dataList.length;
+          for(int i = dataCheck-1 ; i >= 0; i--){
+            // print("New I");
+            // for(int j = 0; j < dataList[i].value.length; j++){
+            //   print(dataList[i].value[j]);
+            //   print("Finish J");
+            // }
             print("New I");
-            for(int j = 0; j < dataList[i].value.length; j++){
-              print(dataList[i].value[j]);
-              print("Finish J");
+            DateTime now = DateTime.now();
+            String formattedTime = DateFormat('h:mm').format(now);
+            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+
+            DateTime timestamp = dataList[i].value[0].toDate();
+            DateTime parsedTime = DateFormat('h:mm').parse(dataList[i].value[2]);
+
+            if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+              if(parsedTime.isBefore(timeNow)){
+                print("Same day but furture");
+                dataList.removeAt(i);
+              }
+            }
+            else if(timestamp.isBefore(now)){
+              print("Furture");
+              dataList.removeAt(i);
             }
           }
         });
       }
+      dataLength = dataList.length;
     }
     else if(place == "Beach"){
       DocumentSnapshot<Map<String, dynamic>> snapshot =
@@ -162,16 +211,35 @@ class _PartyBodyState extends State<PartyBody> {
           dataList = data?.entries.toList() ?? [];
           print("Show Field");
           print(dataList);
-          dataLength = dataList.length;
-          for(int i = 0; i < dataLength; i++){
+          dataCheck = dataList.length;
+          for(int i = dataCheck-1 ; i >= 0; i--){
+            // print("New I");
+            // for(int j = 0; j < dataList[i].value.length; j++){
+            //   print(dataList[i].value[j]);
+            //   print("Finish J");
+            // }
             print("New I");
-            for(int j = 0; j < dataList[i].value.length; j++){
-              print(dataList[i].value[j]);
-              print("Finish J");
+            DateTime now = DateTime.now();
+            String formattedTime = DateFormat('h:mm').format(now);
+            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+
+            DateTime timestamp = dataList[i].value[0].toDate();
+            DateTime parsedTime = DateFormat('h:mm').parse(dataList[i].value[2]);
+
+            if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+              if(parsedTime.isBefore(timeNow)){
+                print("Same day but furture");
+                dataList.removeAt(i);
+              }
+            }
+            else if(timestamp.isBefore(now)){
+              print("Furture");
+              dataList.removeAt(i);
             }
           }
         });
       }
+      dataLength = dataList.length;
     }
     else if(place == "Park"){
       DocumentSnapshot<Map<String, dynamic>> snapshot =
@@ -187,16 +255,35 @@ class _PartyBodyState extends State<PartyBody> {
           dataList = data?.entries.toList() ?? [];
           print("Show Field");
           print(dataList);
-          dataLength = dataList.length;
-          for(int i = 0; i < dataLength; i++){
+          dataCheck = dataList.length;
+          for(int i = dataCheck-1 ; i >= 0; i--){
+            // print("New I");
+            // for(int j = 0; j < dataList[i].value.length; j++){
+            //   print(dataList[i].value[j]);
+            //   print("Finish J");
+            // }
             print("New I");
-            for(int j = 0; j < dataList[i].value.length; j++){
-              print(dataList[i].value[j]);
-              print("Finish J");
+            DateTime now = DateTime.now();
+            String formattedTime = DateFormat('h:mm').format(now);
+            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+
+            DateTime timestamp = dataList[i].value[0].toDate();
+            DateTime parsedTime = DateFormat('h:mm').parse(dataList[i].value[2]);
+
+            if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+              if(parsedTime.isBefore(timeNow)){
+                print("Same day but furture");
+                dataList.removeAt(i);
+              }
+            }
+            else if(timestamp.isBefore(now)){
+              print("Furture");
+              dataList.removeAt(i);
             }
           }
         });
       }
+      dataLength = dataList.length;
     }
     else {
       DocumentSnapshot<Map<String, dynamic>> snapshot =
@@ -212,17 +299,31 @@ class _PartyBodyState extends State<PartyBody> {
           dataList = data?.entries.toList() ?? [];
           print("Show Field");
           print(dataList);
-          dataLength = dataList.length;
-          for(int i = 0; i < dataLength; i++){
+          dataCheck = dataList.length;
+          //dataList.removeAt(1);
+          for(int i = dataCheck-1 ; i >= 0; i--){
             print("New I");
-            for(int j = 0; j < dataList[i].value.length; j++){
-              //print(dataList[i].value.length);
-              print(dataList[i].value[j]);
-              print("Finish J");
+            DateTime now = DateTime.now();
+            String formattedTime = DateFormat('h:mm').format(now);
+            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+
+            DateTime timestamp = dataList[i].value[0].toDate();
+            DateTime parsedTime = DateFormat('h:mm').parse(dataList[i].value[2]);
+
+            if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+              if(parsedTime.isBefore(timeNow)){
+                print("Same day but furture");
+                dataList.removeAt(i);
+              }
+            }
+            else if(timestamp.isBefore(now)){
+              print("Furture");
+              dataList.removeAt(i);
             }
           }
         });
       }
+      dataLength = dataList.length;
     }
     
 
@@ -608,24 +709,7 @@ class _PartyBodyState extends State<PartyBody> {
                                   }
                                 }
                                 if(countJoined == dataList[num].value.length-8){
-                                  print("Joining");
-                                  // showDialog(
-                                  //   context: context,
-                                  //   builder: (BuildContext context) {
-                                  //     return AlertDialog(
-                                  //       title: Text("Alert"),
-                                  //       content: Text("Joining"),
-                                  //       actions: [
-                                  //         TextButton(
-                                  //           onPressed: () {
-                                  //             Navigator.pop(context);
-                                  //           },
-                                  //           child: Text("OK"),
-                                  //         ),
-                                  //       ],
-                                  //     );
-                                  //   },
-                                  // );
+
                                   final String? a = loggedInUser.joinCount;
                                   int b = int.parse(a!) + 1;
                                   String c = b.toString();
@@ -654,12 +738,35 @@ class _PartyBodyState extends State<PartyBody> {
                                       await FirebaseFirestore.instance.collection('cafes').doc(placeId)..update({
                                       dataList[num].value[6]: FieldValue.arrayUnion([loggedInUser.uid])});
                                   }
-                                  print("Joining");
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const PartyScreen(),
-                                      ));
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text("Alert"),
+                                        content: Text("Joining"),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              print("Joining");
+                                              Navigator.pop(context);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => const PartyScreen(),
+                                                  ));
+                                            },
+                                            child: Text("OK"),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                  //print("Joining");
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (context) => const PartyScreen(),
+                                  //     ));
                                 }
                               }
                             }
@@ -757,18 +864,101 @@ class _PartyBodyState extends State<PartyBody> {
                               for (int count = 0; count < dataList[num].value.length-8; count++)
                                 Padding(
                                   padding: const EdgeInsets.only(left: 5.0),
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    decoration: BoxDecoration(
-                                      color: colorUser[count],
-                                      borderRadius: BorderRadius.circular(24),
-                                      boxShadow: Styles.boxShadows,
-                                    ),
-                                    child: const Icon(
-                                      Icons.person_2_outlined,
-                                      size: 12,
-                                      color: Colors.white,
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(dataList[num].value[count+8])
+                                          .get()
+                                          .then((DocumentSnapshot documentSnapshot) {
+                                            usernameJoin = documentSnapshot.get('username');
+                                            describeJoin = documentSnapshot.get('describe');
+                                            instagramJoin = documentSnapshot.get('instagram');
+                                            facebookJoin = documentSnapshot.get('facebook');
+                                            lineJoin = documentSnapshot.get('line');
+                                            createCountJoin = documentSnapshot.get('createCount');
+                                            joinCountJoin = documentSnapshot.get('joinCount');
+                                            likeJoin = documentSnapshot.get('like');
+                                            imageJoin = documentSnapshot.get('image');
+                                          });
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Expanded(
+                                                  child: Align(
+                                                    alignment: Alignment.centerLeft,
+                                                    child: Text(
+                                                      "Participant",
+                                                      style: TextStyle(fontSize: 20),
+                                                    ),
+                                                  ),
+                                                ),
+                                                CircleAvatar(
+                                                  backgroundImage: NetworkImage(imageJoin),
+                                                  radius: 35,
+                                                ),
+                                              ],
+                                            ),
+                                            content: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(usernameJoin,
+                                                  style: TextStyle(fontSize: 23)),
+                                                SizedBox(height: 10),
+                                                Text("Describe: " + describeJoin,
+                                                    style: TextStyle(fontSize: 21)),
+                                                SizedBox(height: 10),
+                                                Text("Instagram: " + instagramJoin,
+                                                    style: TextStyle(fontSize: 21)),
+                                                SizedBox(height: 10),
+                                                Text("Facebook: " + facebookJoin,
+                                                    style: TextStyle(fontSize: 21)),
+                                                SizedBox(height: 10),
+                                                Text("Line: " + lineJoin,
+                                                    style: TextStyle(fontSize: 21)),
+                                                SizedBox(height: 10),
+                                                Text("Create: " + createCountJoin,
+                                                    style: TextStyle(fontSize: 21)),
+                                                SizedBox(height: 10),
+                                                Text("Join: " + joinCountJoin,
+                                                    style: TextStyle(fontSize: 21)),
+                                                SizedBox(height: 10),
+                                                Text("Like: " + likeJoin,
+                                                    style: TextStyle(fontSize: 21)),
+                                                SizedBox(height: 10),
+                                              ],
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("OK"),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    child: Container(
+
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                        color: colorUser[count],
+                                        borderRadius: BorderRadius.circular(24),
+                                        boxShadow: Styles.boxShadows,
+                                      ),
+                                      child: const Icon(
+                                        Icons.person_2_outlined,
+                                        size: 12,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),

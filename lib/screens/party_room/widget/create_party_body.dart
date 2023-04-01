@@ -71,7 +71,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
 
   TextEditingController? controller;
   late DateTime _selectDate = DateTime.now();
-  String _endTime = "9.30 PM";
+  String _endTime = "9:30 PM";
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
   bool clickBoy = false;
   bool clickGirl = false;
