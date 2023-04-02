@@ -12,44 +12,26 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 class LocationCard extends StatefulWidget {
-
-  LocationCard({Key? key}) : super(key: key);
+  const LocationCard({Key? key}) : super(key: key);
 
   @override
   State<LocationCard> createState() => _LocationCardState();
-
 }
 
 class _LocationCardState extends State<LocationCard> {
-
-  //TempleCheck? templeCheck = FirebaseFirestore.instance;
   TempleModel sameTempleCheck = TempleModel();
-  ParkModel   sameParkCheck = ParkModel();
-  CafeModel   sameCafeCheck = CafeModel();
+  ParkModel sameParkCheck = ParkModel();
+  CafeModel sameCafeCheck = CafeModel();
 
   Map<dynamic, dynamic>? data;
   bool check = false;
-  // String Beach = "ทะเล";
-  // String temple = "วัด";
-  // String restaurant = "อาหาร";
-  // String park = "สวนสาธารณะ";
-  // String cafe = "cafe";
+
 
   Map<dynamic, dynamic>? dataDetailSearch;
-  // List<bool> checkDetail = [false];
-  // String BeachDetail = "ทะเล";
-  // String templeDetail = "วัด";
-  // String restaurantDetail = "อาหาร";
-  // String parkDetail = "สวนสาธารณะ";
-  // String cafeDetail = "cafe";
 
-  final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+  final CollectionReference checkCollection =
+      FirebaseFirestore.instance.collection('checks');
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  // final CollectionReference templeRating = FirebaseFirestore.instance.collection('temples');
-  // final CollectionReference restaurantRating = FirebaseFirestore.instance.collection('restaurant');
-  // final CollectionReference beachRating = FirebaseFirestore.instance.collection('beaches');
-  // final CollectionReference parkRating = FirebaseFirestore.instance.collection('parks');
-  // final CollectionReference cafeRating= FirebaseFirestore.instance.collection('cafes');
 
   String place = '';
   String placeId = '';
@@ -60,17 +42,8 @@ class _LocationCardState extends State<LocationCard> {
   String placeUrl = '';
   String detailReload = '';
   String search = '';
-  // String countVoteRating = '';
-  // String voteRating = '';
-  // String a = '';
-  // double b = 0;
-  // String c = '';
-  // int d = 0;
-  // double e = 0;
-  // String f = '';
-  // String g = '';
-  // double rating = 0;
-   getDataFromPlace() async {
+
+  getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
 
     if (snapshot.exists) {
@@ -84,250 +57,135 @@ class _LocationCardState extends State<LocationCard> {
         placeUrl = snapshot.get('placeUrl');
         detailReload = snapshot.get('detailReload');
         search = snapshot.get('search');
-        print("Testtt"+place);
       });
     }
   }
-  deleteSearch(){
-    firestore
-        .collection('checks')
-        .doc('state')
-        .update({'search': ''});
+
+  deleteSearch() {
+    firestore.collection('checks').doc('state').update({'search': ''});
   }
-  // getDataFromRating() async {
-  //   if (place == "Temple") {
-  //     final DocumentSnapshot getTempleRating = await templeRating.doc(placeId)
-  //         .get();
-  //     if (getTempleRating.exists) {
-  //       setState(() {
-  //         countVoteRating = getTempleRating.get('countVoteRating');
-  //         voteRating = getTempleRating.get('voteRating');
-  //       });
-  //     }
-  //   }
-  //   else if (place == "Beach") {
-  //     final DocumentSnapshot getBeachRating = await beachRating.doc(placeId)
-  //         .get();
-  //     if (getBeachRating.exists) {
-  //       setState(() {
-  //         countVoteRating = getBeachRating.get('countVoteRating');
-  //         voteRating = getBeachRating.get('voteRating');
-  //       });
-  //     }
-  //   }
-  //   else if (place == "Restaurant") {
-  //     final DocumentSnapshot getRestaurantRating = await restaurantRating.doc(
-  //         placeId).get();
-  //     if (getRestaurantRating.exists) {
-  //       setState(() {
-  //         countVoteRating = getRestaurantRating.get('countVoteRating');
-  //         voteRating = getRestaurantRating.get('voteRating');
-  //       });
-  //     }
-  //   }
-  //   else if (place == "Parks") {
-  //     final DocumentSnapshot getParkRating = await parkRating.doc(placeId)
-  //         .get();
-  //     if (getParkRating.exists) {
-  //       setState(() {
-  //         countVoteRating = getParkRating.get('countVoteRating');
-  //         voteRating = getParkRating.get('voteRating');
-  //       });
-  //     }
-  //   }
-  //   else {
-  //     final DocumentSnapshot getCafeRating = await cafeRating.doc(placeId)
-  //         .get();
-  //     if (getCafeRating.exists) {
-  //       setState(() {
-  //         countVoteRating = getCafeRating.get('countVoteRating');
-  //         voteRating = getCafeRating.get('voteRating');
-  //       });
-  //     }
-  //   }
-  // }
+
   @override
   void initState() {
     super.initState();
     getDataFromPlace();
-    Future.delayed(Duration(milliseconds: 1000), () {
+    Future.delayed(const Duration(milliseconds: 1000), () {
       getData();
       getSearchData();
-   });
-    Future.delayed(Duration(milliseconds: 1300), () {
+    });
+    Future.delayed(const Duration(milliseconds: 1300), () {
       deleteSearch();
     });
-    // FirebaseFirestore.instance
-    //     .collection('temples')
-    //     .doc()
-    //     //.where('placeId',isEqualTo : data?['result'][index]['place_id'])
-    //     .get()
-    //     .then((value) {
-    //   this.sameTempleCheck = TempleModel.fromMap(value.data());
-    //   setState(() {});
-    // });
-    // FirebaseFirestore.instance
-    //     .collection('parks')
-    //     .doc()
-    //     .get()
-    //     .then((value) {
-    //   this.sameParkCheck = ParkModel.fromMap(value.data());
-    //   setState(() {});
-    // });
   }
-
-  clickButton() {
-    // setState(() {
-    //   check[num] = !check[num];
-    // });
-  }
-
-
-  // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  // Future<void> getPlaceValue() async {
-  //   DocumentSnapshot snapshot = await firebaseFirestore.collection('checks').doc('state').get();
-  //   String place = snapshot.get('place');
-  //   print(place);
-  // }
 
   Future<String> getData() async {
-    final String apiKey = await
+    const String apiKey =
         "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
-    var urlBeach = await Uri.parse(
+    var urlBeach = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=ทะเล&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlTemple = await Uri.parse(
+    var urlTemple = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=วัด&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlRestaurant = await Uri.parse(
+    var urlRestaurant = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=อาหาร&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
-    var urlPark = await Uri.parse(
+    var urlPark = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=สวนสาธารณะ&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlCafe = await Uri.parse(
+    var urlCafe = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=cafe&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
-    // var detailUrlBeach =  Uri.parse(
-    //     'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
-    // var detailUrlTemple =  Uri.parse(
-    //     'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
-    // var detailUrlRestaurant =  Uri.parse(
-    //     'https://tatapi.tourismthailand.org/tatapi/v5/sha/'+placeId);
-    // var detailUrlPark =  Uri.parse(
-    //     'https://tatapi.tourismthailand.org/tatapi/v5/attraction/'+placeId);
-    // var detailUrlCafe =  Uri.parse(
-    //     'https://tatapi.tourismthailand.org/tatapi/v5/restaurant/'+placeId);
 
-    var urlSearchBeach = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlSearchTemple = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlSearchRestaurant = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchBeach = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchTemple = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchRestaurant = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
-    var urlSearchPark = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlSearchCafe = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    //print("Test"+widget.locations);
-
-    print("HelloTest"+place);
+    var urlSearchPark = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchCafe = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     if (place == "Temple") {
-      print("qqqqqqqq");
       var response = await http.get(
         urlTemple,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       var responseSearch = await http.get(
         urlSearchTemple,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
-    if (response.statusCode == 200) {
-      var jsonResponse = await convert.jsonDecode(response.body);
-      print(jsonResponse);
-      setState(() {
-        data = jsonResponse;
-      });
-    }
+      if (response.statusCode == 200) {
+        var jsonResponse = await convert.jsonDecode(response.body);
+        setState(() {
+          data = jsonResponse;
+        });
+      }
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-
-    else if ( place == "Beach") {
-      print("kkkkkkkkkkkk");
+    } else if (place == "Beach") {
       var response = await http.get(
         urlBeach,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       var responseSearch = await http.get(
         urlSearchBeach,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (response.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(response.body);
-        print(jsonResponse);
         setState(() {
           data = jsonResponse;
         });
       }
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-
-
-    else if ( place == "Restaurant") {
+    } else if (place == "Restaurant") {
       var response = await http.get(
         urlRestaurant,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
       var responseSearch = await http.get(
         urlSearchRestaurant,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (response.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(response.body);
-        print(jsonResponse);
         setState(() {
           data = jsonResponse;
         });
       }
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-
-
-    else if ( place == "Park") {
+    } else if (place == "Park") {
       var response = await http.get(
         urlPark,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       var responseSearch = await http.get(
         urlSearchPark,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (response.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(response.body);
-        print(jsonResponse);
         setState(() {
           data = jsonResponse;
         });
@@ -335,34 +193,29 @@ class _LocationCardState extends State<LocationCard> {
 
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-    else{
-      print("cafe"+place);
+    } else {
       var response = await http.get(
         urlCafe,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       var responseSearch = await http.get(
         urlSearchCafe,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (response.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(response.body);
-        print(jsonResponse);
         setState(() {
           data = jsonResponse;
         });
       }
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
@@ -371,104 +224,79 @@ class _LocationCardState extends State<LocationCard> {
 
     return "success";
   }
-  getSearchData() async{
-    final String apiKey = await
-    "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
 
-    var urlSearchBeach = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlSearchTemple = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlSearchRestaurant = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+  getSearchData() async {
+    const String apiKey =
+        "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
 
-    var urlSearchPark = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    var urlSearchCafe = await Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword='+search+'&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
-    //print("Test"+widget.locations);
+    var urlSearchBeach = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchTemple = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchRestaurant = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
-    print("HelloTest"+place);
+    var urlSearchPark = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=ATTRACTION&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+    var urlSearchCafe = Uri.parse(
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=$search&location=13.6904831,100.5226014&categorycodes=RESTAURANT&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+
     if (place == "Temple") {
-
       var responseSearch = await http.get(
         urlSearchTemple,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-
-    else if ( place == "Beach") {
-      print("kkkkkkkkkkkk");
-
-
+    } else if (place == "Beach") {
       var responseSearch = await http.get(
         urlSearchBeach,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-
-
-    else if ( place == "Restaurant") {
-
+    } else if (place == "Restaurant") {
       var responseSearch = await http.get(
         urlSearchRestaurant,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-
-
-    else if ( place == "Park") {
-
-
+    } else if (place == "Park") {
       var responseSearch = await http.get(
         urlSearchPark,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
-
 
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
       }
-    }
-    else{
-      print("cafe"+place);
-
+    } else {
       var responseSearch = await http.get(
         urlSearchCafe,
-        headers: {'Authorization': "Bearer ${apiKey}", 'Accept-Language': 'TH'},
+        headers: {'Authorization': "Bearer $apiKey", 'Accept-Language': 'TH'},
       );
 
       if (responseSearch.statusCode == 200) {
         var jsonResponse = await convert.jsonDecode(responseSearch.body);
-        print(jsonResponse);
         setState(() {
           dataDetailSearch = jsonResponse;
         });
@@ -477,592 +305,250 @@ class _LocationCardState extends State<LocationCard> {
     return dataDetailSearch;
   }
 
-
-  //FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
   @override
   Widget build(BuildContext context) {
-
-    //   return Container(
-    //     height: 200,
-    //     child: ListView(
-    //       scrollDirection: Axis.horizontal,
-    //       children: <Widget>[
-    //         _buildListItem('Kasetsart', 'assets/images/beach.png', 'Bangkhen',
-    //             '4.0', Colors.white),
-    //         _buildListItem('Kasetsart', 'assets/images/beach.png', 'Bangkhen',
-    //             '4.0', Colors.white),
-    //         _buildListItem('Kasetsart', 'assets/images/beach.png', 'Bangken',
-    //             '4.0', Colors.white)
-    //       ],
-    //     ),
-    //   );
-    // }
-    //
-    // _buildListItem(String locationName, String imgPath, String map, String rating,
-    //     Color cardColor) {
-    //   return Padding(
-    //     padding: const EdgeInsets.only(left: 15),
-    //     child: InkWell(
-    //       onTap: () {
-    //         Navigator.push(
-    //             context,
-    //             MaterialPageRoute(
-    //               builder: (context) => const DetailScreen(),
-    //             ));
-    //       },
-    //       child: Container(
-    //         height: 175,
-    //         width: 150,
-    //         decoration: BoxDecoration(
-    //             borderRadius: BorderRadius.circular(15),
-    //             color: cardColor,
-    //             boxShadow: Styles.boxShadows),
-    //         child: Column(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: <Widget>[
-    //             Hero(
-    //                 tag: locationName,
-    //                 child: Container(
-    //                   height: 95,
-    //                   width: 95,
-    //                   decoration: BoxDecoration(
-    //                       image: DecorationImage(
-    //                           image: AssetImage(imgPath), fit: BoxFit.fill),
-    //                       color: Colors.white,
-    //                       shape: BoxShape.rectangle,
-    //                       borderRadius: BorderRadius.circular(15),
-    //                       boxShadow: Styles.boxShadows),
-    //                 )),
-    //             const SizedBox(height: 10),
-    //             Padding(
-    //               padding: const EdgeInsets.only(left: 16.0),
-    //               child: Row(
-    //                 children: [
-    //                   Expanded(
-    //                     flex: 65,
-    //                     child: Text(
-    //                       locationName,
-    //                       style: const TextStyle(fontSize: 17),
-    //                     ),
-    //                   ),
-    //                   Expanded(
-    //                     flex: 35,
-    //                     child: GestureDetector(
-    //                       onTap: () {},
-    //                       child: Padding(
-    //                         padding: const EdgeInsets.all(8.0),
-    //                         child: Container(
-    //                           // padding: const EdgeInsets.all(8),
-    //                           width: 30,
-    //                           height: 30,
-    //                           decoration: BoxDecoration(
-    //                             color: Colors.red,
-    //                             borderRadius: BorderRadius.circular(28),
-    //                             boxShadow: Styles.boxShadows,
-    //                           ),
-    //                           child: const Icon(
-    //                             Icons.heart_broken,
-    //                             size: 15,
-    //                             color: Colors.white,
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //             ),
-    //             Padding(
-    //               padding: const EdgeInsets.only(left: 15.0),
-    //               child: Row(
-    //                 children: [
-    //                   Expanded(
-    //                     flex: 65,
-    //                     child: Text(
-    //                       map,
-    //                       style: const TextStyle(fontSize: 17),
-    //                     ),
-    //                   ),
-    //                   Expanded(
-    //                     flex: 35,
-    //                     child: Row(
-    //                       children: [
-    //                         const Icon(
-    //                           Icons.star,
-    //                           size: 15,
-    //                         ),
-    //                         Text(
-    //                           rating,
-    //                           style: const TextStyle(fontSize: 17),
-    //                         ),
-    //                       ],
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
-    //........................................................................
-    // return ListView(
-    //   scrollDirection: Axis.horizontal,
-    //   children: [
-    //     for (int count = 0; count < _data?["result"].length; count++)
-    //       Padding(
-    //         padding: const EdgeInsets.only(left: 15),
-    //         child: InkWell(
-    //           onTap: () {
-    //             Navigator.push(
-    //                 context,
-    //                 MaterialPageRoute(
-    //                   builder: (context) => const DetailScreen(),
-    //                 ));
-    //           },
-    //           child: Container(
-    //             height: 175,
-    //             width: 150,
-    //             decoration: BoxDecoration(
-    //                 borderRadius: BorderRadius.circular(15),
-    //                 color: Colors.white,
-    //                 boxShadow: Styles.boxShadows),
-    //             child: Column(
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: <Widget>[
-    //                 Hero(
-    //                     tag: Text("${_data?['result'][count]['place_name']}"),
-    //                     child: Container(
-    //                       height: 95,
-    //                       width: 95,
-    //                       decoration: BoxDecoration(
-    //                           image: DecorationImage(
-    //                               image: NetworkImage(
-    //                                   "${_data?['result'][count]['thumbnail_url']}"),
-    //                               fit: BoxFit.fill),
-    //                           color: Colors.white,
-    //                           shape: BoxShape.rectangle,
-    //                           borderRadius: BorderRadius.circular(15),
-    //                           boxShadow: Styles.boxShadows),
-    //                     )),
-    //                 const SizedBox(height: 10),
-    //                 Padding(
-    //                   padding: const EdgeInsets.only(left: 16.0),
-    //                   child: Row(
-    //                     children: [
-    //                       Expanded(
-    //                         flex: 65,
-    //                         child: Text(
-    //                           "${_data?['result'][count]['place_name']}",
-    //                           style: const TextStyle(fontSize: 17),
-    //                         ),
-    //                       ),
-    //                       Expanded(
-    //                         flex: 35,
-    //                         child: GestureDetector(
-    //                           onTap: () {},
-    //                           child: Padding(
-    //                             padding: const EdgeInsets.all(8.0),
-    //                             child: Container(
-    //                               // padding: const EdgeInsets.all(8),
-    //                               width: 30,
-    //                               height: 30,
-    //                               decoration: BoxDecoration(
-    //                                 color: Colors.red,
-    //                                 borderRadius: BorderRadius.circular(28),
-    //                                 boxShadow: Styles.boxShadows,
-    //                               ),
-    //                               child: const Icon(
-    //                                 Icons.heart_broken,
-    //                                 size: 15,
-    //                                 color: Colors.white,
-    //                               ),
-    //                             ),
-    //                           ),
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 ),
-    //                 Padding(
-    //                   padding: const EdgeInsets.only(left: 15.0),
-    //                   child: Row(
-    //                     children: [
-    //                       Expanded(
-    //                         flex: 65,
-    //                         child: Text(
-    //                           "${_data?['result'][count]['location']}",
-    //                           style: const TextStyle(fontSize: 17),
-    //                         ),
-    //                       ),
-    //                       Expanded(
-    //                         flex: 35,
-    //                         child: Row(
-    //                           children: [
-    //                             const Icon(
-    //                               Icons.star,
-    //                               size: 15,
-    //                             ),
-    //                             Text(
-    //                               "4",
-    //                               style: const TextStyle(fontSize: 17),
-    //                             ),
-    //                           ],
-    //                         ),
-    //                       ),
-    //                     ],
-    //                   ),
-    //                 )
-    //               ],
-    //             ),
-    //           ),
-    //         ),
-    //       )
-    //   ],
-    // );
-
-    // return Column(
-    //   children: [
-    //     for (int count = 0; count < _data?["result"].length; count++)
-    //     ListTile(
-    //       title: Text("${_data?['result'][count]['place_id']}"),
-    //       subtitle: Text("${_data?['result'][count]['place_name']}"),
-    //     ),
-    //     // Image.network("${_data?['result'][count]['thumbnail_url']}")
-    //   ],
-    // );
-
-    // return ListView(
-    //   scrollDirection: Axis.horizontal,
-    //   children: [
-    //     for (int count = 0; count < _data?["result"].length; count++)
-    //     Container(
-    //       height: 175,
-    //       width: 150,
-    //       decoration: BoxDecoration(
-    //           borderRadius: BorderRadius.circular(15),
-    //           color: Colors.white,
-    //           boxShadow: Styles.boxShadows),
-    //       child: Column(
-    //         children: [
-    //             Text("${_data?['result'][count]['place_id']}")
-    //         ],
-    //       ),
-    //     ),
-    //   ],
-    // );
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    return search == ''?Container(
-      height: 220,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: data == null ? 0 : data?["result"].length,
-          //itemCount: dataDetail == null ? 0 : dataDetail?["result"].length,
-          itemBuilder: (context, index) {
-            // if({sameTempleCheck.placeId} != data?['result'][index]['place_id']){
-            // TempleModel templeModel = TempleModel();
-            // //templeModel.description = data?['result'][index]['place_id'];
-            // templeModel.destination = data?['result'][index]['destination'];
-            // templeModel.placeId = data?['result'][index]['place_id'];
-            // templeModel.placeName = data?['result'][index]['place_name'];
-            // templeModel.thumbnailUrl = data?['result'][index]['thumbnail_url'];
-            // firebaseFirestore.collection("temples").doc().set(templeModel.toMap());
-            // print("Hello+${sameTempleCheck.placeId}");
-            // }
-            // else if(!=data?['result'][index]['place_id'] && (restaurant == "อาหาร")){
-              //RestaurantModel restaurantModel = RestaurantModel();
-              //templeModel.description = data?['result'][index]['place_id'];
-              // restaurantModel.destination = data?['result'][index]['destination'];
-              // restaurantModel.placeId = data?['result'][index]['place_id'];
-              // restaurantModel.placeName = data?['result'][index]['place_name'];
-              // restaurantModel.thumbnailUrl = data?['result'][index]['thumbnail_url'];
-              // firebaseFirestore.collection("restaurants").doc().set(restaurantModel.toMap());
-            // }
-            // else if(!=data?['result'][index]['place_id'] && (Beach == "ทะเล")){
-            // BeachModel beachModel = BeachModel();
-            // //templeModel.description = data?['result'][index]['place_id'];
-            // beachModel.destination = data?['result'][index]['destination'];
-            // beachModel.placeId = data?['result'][index]['place_id'];
-            // beachModel.placeName = data?['result'][index]['place_name'];
-            // beachModel.thumbnailUrl = data?['result'][index]['thumbnail_url'];
-            // firebaseFirestore.collection("beaches").doc().set(beachModel.toMap());
-            // }
-            // else if({sameParkCheck.placeId}!=data?['result'][index]['place_id'] ){
-            // ParkModel parkModel = ParkModel();
-            // //templeModel.description = data?['result'][index]['place_id'];
-            // parkModel.destination = data?['result'][index]['destination'];
-            // parkModel.placeId = data?['result'][index]['place_id'];
-            // parkModel.placeName = data?['result'][index]['place_name'];
-            // parkModel.thumbnailUrl = data?['result'][index]['thumbnail_url'];
-            // firebaseFirestore.collection("parks").doc().set(parkModel.toMap());
-            // }
-            // else if(!=data?['result'][index]['place_id'] && (cafe == "cafe")){
-            // CafeModel cafeModel = CafeModel();
-            // //templeModel.description = data?['result'][index]['place_id'];
-            // cafeModel.destination = data?['result'][index]['destination'];
-            // cafeModel.placeId = data?['result'][index]['place_id'];
-            // cafeModel.placeName = data?['result'][index]['place_name'];
-            // cafeModel.thumbnailUrl = data?['result'][index]['thumbnail_url'];
-            // firebaseFirestore.collection("cafes").doc().set(cafeModel.toMap());
-            // }
-            return Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 5),
-              child: InkWell(
+    return search == ''
+        ? SizedBox(
+            height: 220,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: data == null ? 0 : data?["result"].length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5),
+                    child: InkWell(
+                      onTap: () {
+                        firestore
+                            .collection('checks')
+                            .doc('state')
+                            .update({'detailReload': 'False'});
+                        firestore.collection('checks').doc('state').update({
+                          'placeId': '${data?['result'][index]['place_id']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeName': '${data?['result'][index]['place_name']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeUrl':
+                              '${data?['result'][index]['thumbnail_url']}'
+                        });
 
-                onTap: ()
-              {
-                firestore.collection('checks').doc('state').update({
-                  'detailReload': 'False'
-                });
-              firestore.collection('checks').doc('state').update({
-                'placeId': '${data?['result'][index]['place_id']}'
-              });
-              firestore.collection('checks').doc('state').update({
-                'placeName': '${data?['result'][index]['place_name']}'
-              });
-              firestore.collection('checks').doc('state').update({
-                'placeUrl': '${data?['result'][index]['thumbnail_url']}'
-              });
-
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                      const DetailScreen(
-                        data: null,
-                        // data: "${_data?['result'][index]['place_id']}"
-                      ),
-                    ));
-
-                },
-                child: Container(
-                  width: 165,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                      boxShadow: Styles.boxShadows),
-                  child: Column(
-
-                    children: [
-                      // Text("${data?['result'][index]['place_id']}"),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 105,
-                        width: 125,
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DetailScreen(
+                                data: null,
+                              ),
+                            ));
+                      },
+                      child: Container(
+                        width: 165,
                         decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: data?['result'][index]
-                                            ['thumbnail_url'] !=
-                                        ''
-                                    ? NetworkImage(
-                                        "${data?['result'][index]['thumbnail_url']}",
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                            boxShadow: Styles.boxShadows),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: 105,
+                              width: 125,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: data?['result'][index]['thumbnail_url'] != ''
+                                          ? NetworkImage(
+                                              "${data?['result'][index]['thumbnail_url']}",
+                                            )
+                                          :
+                                      const AssetImage("assets/images/no-pictures.png") as ImageProvider,
+                                      fit: BoxFit.fill),
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: Styles.boxShadows),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 3.0, right: 3),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "${data?['result'][index]['place_name']}",
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.clip,
+                                    maxLines: 1,
+                                    softWrap: true,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                          "${data?['result'][index]['destination']}",
+                                          style: const TextStyle(fontSize: 16)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          )
+        : SizedBox(
+            height: 220,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: dataDetailSearch == null
+                    ? 0
+                    : dataDetailSearch?["result"].length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5),
+                    child: InkWell(
+                      onTap: () {
+                        firestore
+                            .collection('checks')
+                            .doc('state')
+                            .update({'detailReload': 'False'});
+                        firestore.collection('checks').doc('state').update({
+                          'placeId':
+                              '${dataDetailSearch?['result'][index]['place_id']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeName':
+                              '${dataDetailSearch?['result'][index]['place_name']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeUrl':
+                              '${dataDetailSearch?['result'][index]['thumbnail_url']}'
+                        });
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DetailScreen(
+                                data: null,
+                                // data: "${_data?['result'][index]['place_id']}"
+                              ),
+                            ));
+                      },
+                      child: Container(
+                        width: 165,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                            boxShadow: Styles.boxShadows),
+                        child: Column(
+                          children: [
+                            // Text("${data?['result'][index]['place_id']}"),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              height: 105,
+                              width: 125,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: dataDetailSearch?['result'][index]
+                                                  ['thumbnail_url'] !=
+                                              ''
+                                          ? NetworkImage(
+                                              "${dataDetailSearch?['result'][index]['thumbnail_url']}",
+                                            )
+                                          : const AssetImage(
+                                                  "assets/images/beach.png")
+                                              as ImageProvider,
+                                      fit: BoxFit.fill),
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.circular(15),
+                                  boxShadow: Styles.boxShadows),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 3.0, right: 3),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      "${dataDetailSearch?['result'][index]['place_name']}",
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 1,
+                                      softWrap: true,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                          "${dataDetailSearch?['result'][index]['destination']}",
+                                          style: const TextStyle(fontSize: 16)),
+                                      const SizedBox(width: 3),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 6.0, right: 5),
+                                            child: Row(
+                                              children: const [
+                                                // Icon(
+                                                //   Icons.star,
+                                                //   color: Colors.lime,
+                                                //   size: 17,
+                                                // ),
+                                                // Text(
+                                                //   "4",
+                                                //   style: TextStyle(fontSize: 12),
+                                                // ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       )
-                                    : AssetImage("assets/images/beach.png")
-                                        as ImageProvider,
-                                fit: BoxFit.fill),
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: Styles.boxShadows),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3.0, right: 3),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              child: Text(
-                                "${data?['result'][index]['place_name']}",
-                                style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                softWrap: true,
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("${data?['result'][index]['destination']}",
-                                    style: const TextStyle(fontSize: 16)),
-                                const SizedBox(width: 3),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 6.0, right: 5),
-                                      child: Row(
-                                        children: const [
-                                          // Icon(
-                                          //   Icons.star,
-                                          //   color: Colors.lime,
-                                          //   size: 17,
-                                          // ),
-                                          // Text(
-                                          //   "4",
-                                          //   style: TextStyle(fontSize: 12),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
-    ):Container(
-      height: 220,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: dataDetailSearch == null ? 0 : dataDetailSearch?["result"].length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 5),
-              child: InkWell(
-
-                onTap: ()
-                {
-                  firestore.collection('checks').doc('state').update({
-                    'detailReload': 'False'
-                  });
-                  firestore.collection('checks').doc('state').update({
-                    'placeId': '${dataDetailSearch?['result'][index]['place_id']}'
-                  });
-                  firestore.collection('checks').doc('state').update({
-                    'placeName': '${dataDetailSearch?['result'][index]['place_name']}'
-                  });
-                  firestore.collection('checks').doc('state').update({
-                    'placeUrl': '${dataDetailSearch?['result'][index]['thumbnail_url']}'
-                  });
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                        const DetailScreen(
-                          data: null,
-                          // data: "${_data?['result'][index]['place_id']}"
-                        ),
-                      ));
-
-                },
-                child: Container(
-                  width: 165,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                      boxShadow: Styles.boxShadows),
-                  child: Column(
-
-                    children: [
-                      // Text("${data?['result'][index]['place_id']}"),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        height: 105,
-                        width: 125,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: dataDetailSearch?['result'][index]
-                                ['thumbnail_url'] !=
-                                    ''
-                                    ? NetworkImage(
-                                  "${dataDetailSearch?['result'][index]['thumbnail_url']}",
-                                )
-                                    : AssetImage("assets/images/beach.png")
-                                as ImageProvider,
-                                fit: BoxFit.fill),
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: Styles.boxShadows),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 3.0, right: 3),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              child: Text(
-                                "${dataDetailSearch?['result'][index]['place_name']}",
-                                style: const TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                softWrap: true,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("${dataDetailSearch?['result'][index]['destination']}",
-                                    style: const TextStyle(fontSize: 16)),
-                                const SizedBox(width: 3),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 6.0, right: 5),
-                                      child: Row(
-                                        children: const [
-                                          // Icon(
-                                          //   Icons.star,
-                                          //   color: Colors.lime,
-                                          //   size: 17,
-                                          // ),
-                                          // Text(
-                                          //   "4",
-                                          //   style: TextStyle(fontSize: 12),
-                                          // ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
-    );
+                    ),
+                  );
+                }),
+          );
   }
 }

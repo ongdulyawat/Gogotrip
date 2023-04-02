@@ -132,8 +132,6 @@ class _HomePageState extends State<HomePage> {
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 14.0),
                           ),
-                          // Text("${lat} , ",style: const TextStyle(color: Colors.white, fontSize: 10.0),),
-                          // Text(" ${long}",style: const TextStyle(color: Colors.white, fontSize: 10.0),),
                         ],
                       )
                     ],

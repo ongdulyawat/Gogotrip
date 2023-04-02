@@ -644,18 +644,12 @@ class _RecommendCardState extends State<RecommendCard> {
 
   @override
   Widget build(BuildContext context) {
-    print("TTTTTTTEEESTTTINDEX");
-    //print(ids);
-    print(countRec);
-    print(ids);
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     return _timerFinished ? Container(
       height: 220,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: countRec,
-          // itemCount: field == null ? 0 : field.length,
-          //itemCount: dataDetail == null ? 0 : dataDetail?["result"].length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(left: 5.0, right: 5),
@@ -682,7 +676,6 @@ class _RecommendCardState extends State<RecommendCard> {
                         builder: (context) =>
                         const DetailScreen(
                           data: null,
-                          // data: "${_data?['result'][index]['place_id']}"
                         ),
                       ));
 
@@ -697,7 +690,6 @@ class _RecommendCardState extends State<RecommendCard> {
 
 
                     children: [
-                      // Text("${data?['result'][index]['place_id']}"),
                       const SizedBox(
                         height: 20,
                       ),
@@ -706,7 +698,7 @@ class _RecommendCardState extends State<RecommendCard> {
                         width: 125,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(ids[(5*index)+4]) != ''
+                                image: NetworkImage(ids[(5*index)+4]) != ""
                                     ? NetworkImage(ids[(5*index)+4])
                                     : AssetImage("assets/images/beach.png")
                                 as ImageProvider,

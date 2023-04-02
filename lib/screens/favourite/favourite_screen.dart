@@ -113,7 +113,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 rateTem;
               });
             });
-            //RESTAURANT
             FirebaseFirestore.instance.collection('restaurants')
                 .get().then((value){
               for ( var r in value.docs){
@@ -140,7 +139,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 rateRes;
               });
             });
-            //BEACH
             FirebaseFirestore.instance.collection('beaches')
                 .get().then((value){
               for ( var b in value.docs){
@@ -167,7 +165,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 rateBea;
               });
             });
-            //PARK
             FirebaseFirestore.instance.collection('parks')
                 .get().then((value){
               for ( var p in value.docs){
@@ -194,7 +191,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                 ratePark;
               });
             });
-          //CAFE
             FirebaseFirestore.instance.collection('cafes')
                 .get().then((value){
               for ( var c in value.docs){
@@ -224,17 +220,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
         }
       }
     });
-    //_timerFinished = true;
   }
-  // Show(){
-  //   FirebaseFirestore.instance.collection('temples')
-  //       .get().then((value){
-  //     for ( var x in value.docs){
-  //       print(x.id);
-  //       print("TESTTTTTTT");
-  //     }
-  //   });
-  // }
 
   void startTimer() {
     Future.delayed(Duration(seconds: 6), () {
@@ -247,13 +233,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   void initState() {
     super.initState();
     getDataFromPlace();
-    // Future.delayed(Duration(milliseconds: 900), () {
-    //   fetchTempleData(placeId);
-    // });
     Future.delayed(Duration(milliseconds: 400), () async {
       await getFavourite();
     });
-    //Show();
     FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
@@ -265,25 +247,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     startTimer();
   }
 
-  // Widget _buildLoadingWidget() {
-  //   return Container(
-  //     key: ValueKey('loading'),
-  //     alignment: Alignment.center,
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: [
-  //         AnimatedIcon(
-  //           icon: AnimatedIcons.favorite,
-  //           size: 48,
-  //           color: Colors.red,
-  //           progress: AlwaysStoppedAnimation(0.5),
-  //         ),
-  //         SizedBox(height: 16),
-  //         Text('Loading...'),
-  //       ],
-  //     ),
-  //   );
-  // }
   @override
   Widget build(BuildContext context) {
   print("DDSDADAS");
@@ -319,14 +282,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
-              //LocationCard(locations: location)
-              Container(
+             Container(
                 height: 220,
-                child: ListView.builder(
+                child:  ids.length != 0 ?ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: countFav,
-                    //itemCount: data == null ? 0 : data?["result"].length,
-                    //itemCount: dataDetail == null ? 0 : dataDetail?["result"].length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 5.0, right: 5),
@@ -357,7 +317,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   builder: (context) =>
                                   const DetailScreen(
                                     data: null,
-                                    // data: "${_data?['result'][index]['place_id']}"
                                   ),
                                 ));
 
@@ -371,7 +330,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                             child: Column(
 
                               children: [
-                                // Text("${data?['result'][index]['place_id']}"),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -400,7 +358,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                     children: [
                                       Container(
                                         child: Text(ids[(5*index)+3],
-                                          //"${data?['result'][index]['place_name']}",
                                           style: const TextStyle(
                                               fontSize: 14, fontWeight: FontWeight.bold),
                                           overflow: TextOverflow.clip,
@@ -416,7 +373,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text("กรุงเทพมหานคร",
-                                              // "${data?['result'][index]['destination']}",
                                               style: const TextStyle(fontSize: 16)),
                                           const SizedBox(width: 3),
                                           Row(
@@ -451,11 +407,9 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           ),
                         ),
                       );
-                    }),
+                    }):Text('Test'),
               ),
-
-
-
+              
               Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 45, bottom: 20),
                 child: Text(
@@ -463,14 +417,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
-              //LocationCard(locations: location)
               Container(
                 height: 220,
-                child: ListView.builder(
+                child: idsBea.isNotEmpty ?ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: countFavBea,
-                    //itemCount: data == null ? 0 : data?["result"].length,
-                    //itemCount: dataDetail == null ? 0 : dataDetail?["result"].length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 5.0, right: 5),
@@ -594,7 +545,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           ),
                         ),
                       );
-                    }),
+                    }):Text("test2"),
               ),
 
 
@@ -606,14 +557,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
               ),
-              //LocationCard(locations: location)
               Container(
                 height: 220,
-                child: ListView.builder(
+                child: idsRes.length != 0 ?ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: countFavRes,
-                    //itemCount: data == null ? 0 : data?["result"].length,
-                    //itemCount: dataDetail == null ? 0 : dataDetail?["result"].length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 5.0, right: 5),
@@ -644,7 +592,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   builder: (context) =>
                                   const DetailScreen(
                                     data: null,
-                                    // data: "${_data?['result'][index]['place_id']}"
                                   ),
                                 ));
 
@@ -738,7 +685,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           ),
                         ),
                       );
-                    }),
+                    }):Text("test3"),
               ),
 
 
@@ -754,7 +701,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               //LocationCard(locations: location)
               Container(
                 height: 220,
-                child: ListView.builder(
+                child: idsCafe.length != 0 ?ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: countFavCafe,
                     //itemCount: data == null ? 0 : data?["result"].length,
@@ -883,7 +830,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           ),
                         ),
                       );
-                    }),
+                    }):Text("test4"),
               ),
 
 
@@ -899,7 +846,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
               //LocationCard(locations: location)
       Container(
         height: 220,
-        child: ListView.builder(
+        child: idsPark.length != 0 ?ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: countFavPark,
             //itemCount: data == null ? 0 : data?["result"].length,
@@ -934,7 +881,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           builder: (context) =>
                           const DetailScreen(
                             data: null,
-                            // data: "${_data?['result'][index]['place_id']}"
                           ),
                         ));
 
@@ -948,7 +894,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                     child: Column(
 
                       children: [
-                        // Text("${data?['result'][index]['place_id']}"),
                         const SizedBox(
                           height: 20,
                         ),
@@ -977,7 +922,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                             children: [
                               Container(
                                 child: Text(idsPark[(5*index)+3],
-                                  //"${data?['result'][index]['place_name']}",
                                   style: const TextStyle(
                                       fontSize: 14, fontWeight: FontWeight.bold),
                                   overflow: TextOverflow.clip,
@@ -993,7 +937,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text("กรุงเทพมหานคร",
-                                      // "${data?['result'][index]['destination']}",
                                       style: const TextStyle(fontSize: 16)),
                                   const SizedBox(width: 3),
                                   Row(
@@ -1028,14 +971,13 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                   ),
                 ),
               );
-            }),
+            }):Text("test5"),
       )
 
             ],
           ),
         ),
         bottomNavigationBar: const HomeFooter()
-        // bottomNavigationBar:
         ): Container(
             width: 80,
             height: 80,
@@ -1046,12 +988,10 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             height: 50,
             child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.pink),
-            strokeWidth: 5, // set the thickness of the indicator line
+            strokeWidth: 5,
           ),
         ),
       ),
     );
-    //Center(child: CircularProgressIndicator());
-
   }
 }
