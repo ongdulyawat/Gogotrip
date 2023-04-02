@@ -34,10 +34,6 @@ class _HomeBodyState extends State<HomeBody> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
                       boxShadow: Styles.boxShadows),
-                  //child: const Padding(
-                    //padding: EdgeInsets.all(8.0),
-                    // child: Text("View all", style: TextStyle(fontSize: 14)),
-                  //),
                 ),
               )
             ],

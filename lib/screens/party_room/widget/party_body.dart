@@ -364,6 +364,7 @@ class _PartyBodyState extends State<PartyBody> {
     getDataFromPlace();
     Future.delayed(const Duration(milliseconds: 900), () {
       fetchTempleData(placeId);
+      print(dataLength);
     });
 
     FirebaseFirestore.instance
@@ -378,7 +379,7 @@ class _PartyBodyState extends State<PartyBody> {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
+    return dataLength >0?GridView.count(
       childAspectRatio: 1.9,
       physics: const NeverScrollableScrollPhysics(),
       crossAxisCount: 1,
@@ -387,7 +388,7 @@ class _PartyBodyState extends State<PartyBody> {
         for (int num = 0; num < dataLength; num++)
           Padding(
             padding: const EdgeInsets.only(left: 15.0, right: 15, bottom: 20),
-            child: Container(
+            child:Container(
               width: 315,
               height: 160,
               decoration: BoxDecoration(
@@ -1118,10 +1119,10 @@ class _PartyBodyState extends State<PartyBody> {
                   )
                 ],
               ),
-            ),
+            )
           ),
       ],
-    );
+    ):Text("test");
   }
 }
 

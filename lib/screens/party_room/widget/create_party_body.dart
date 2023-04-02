@@ -299,7 +299,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                             && (resultPickEnd.isAfter(dateNow)||resultPickEnd == dateNow)){
                           print("Current or Future");
                           if(startTime.isBefore(endTime)){
-                            if(pickStart.isAfter(startTime) && pickEnd.isAfter(endTime)){
+                            if(pickStart.isAfter(startTime) && pickEnd.isBefore(endTime)){
                               print("Correct1");
                               if(_noteController.text.trim() == ''){
                                 note = '-';
@@ -432,7 +432,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                   return AlertDialog(
                                     title: const Text("Alert"),
                                     content:Text(
-                                        "Close on Open at"+placeOpen),
+                                        "Open at"+placeOpen),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
@@ -979,7 +979,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                   return AlertDialog(
                                     title: const Text("Alert"),
                                     content:Text(
-                                        "Close on Open at"+placeOpen),
+                                        "Open at"+placeOpen),
                                     actions: [
                                       TextButton(
                                         onPressed: () {
@@ -1000,7 +1000,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                                   return AlertDialog(
                                     title: const Text("Alert"),
                                     content:Text(
-                                        "Close on Open at"+placeOpen),
+                                        "Open at"+placeOpen),
                                     actions: [
                                       TextButton(
                                         onPressed: () {

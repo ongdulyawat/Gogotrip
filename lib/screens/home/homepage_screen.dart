@@ -17,7 +17,7 @@ import 'package:gogotrip/widget/search.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
-  //const HomePage({Key? key}) : super(key: key);
+
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -27,11 +27,8 @@ void signUserOut() {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Firestore
   User? user = FirebaseAuth.instance.currentUser;
 
-  // Authentication
-  //final user = FirebaseAuth.instance.currentUser!;
   UserModel loggedInUser = UserModel();
   double? lat;
   double? long;
@@ -63,6 +60,7 @@ class _HomePageState extends State<HomePage> {
       getaddress();
     });
   }
+
   Future<Position> determinePosition() async {
     LocationPermission permission;
 
@@ -85,7 +83,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       "${loggedInUser.username}",
                       style:
-                      const TextStyle(color: Colors.white, fontSize: 16.0),
+                          const TextStyle(color: Colors.white, fontSize: 16.0),
                       overflow: TextOverflow.clip,
                       maxLines: 1,
                       softWrap: true,
@@ -123,16 +120,22 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.white,
                         size: 14,
                       ),
-                      Row(
-                        children: [
-                          Text(street == null ?
-                          "Getting Address.."
-                              :
-                          "${street}",
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 14.0),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: SizedBox(
+                          width: 230,
+                          height: 25,
+                          child: Text(
+                            street == null
+                                ? "Getting Address.."
+                                : "${street}",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 14.0),
+                            maxLines: 1,
+                            overflow: TextOverflow.clip,
+                            softWrap: true,
                           ),
-                        ],
+                        ),
                       )
                     ],
                   )
@@ -142,24 +145,22 @@ class _HomePageState extends State<HomePage> {
                 height: 35,
                 width: 35,
                 decoration: '${loggedInUser.image}' == '-'
-
-                    ?BoxDecoration(
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/user.png'),
-                        fit: BoxFit.fill),
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: Styles.boxShadows)
-
-                    :BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage('${loggedInUser.image}'),
-                        fit: BoxFit.fill),
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: Styles.boxShadows),
+                    ? BoxDecoration(
+                        image: const DecorationImage(
+                            image: AssetImage('assets/images/user.png'),
+                            fit: BoxFit.fill),
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: Styles.boxShadows)
+                    : BoxDecoration(
+                        image: DecorationImage(
+                            image: NetworkImage('${loggedInUser.image}'),
+                            fit: BoxFit.fill),
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: Styles.boxShadows),
               )
             ],
           ),
@@ -167,12 +168,7 @@ class _HomePageState extends State<HomePage> {
         // appBar: AppBar(
         body: SingleChildScrollView(
           child: Column(
-            children: const [
-              // HomeHeader(),
-              SizedBox(height: 20),
-              SearchBar(),
-              HomeBody()
-            ],
+            children: const [SizedBox(height: 20), SearchBar(), HomeBody()],
           ),
         ),
         drawer: Drawer(
@@ -184,56 +180,16 @@ class _HomePageState extends State<HomePage> {
                   decoration: const BoxDecoration(color: Styles.buttonColor),
                   accountName: Text(
                       "${loggedInUser.firstname} ${loggedInUser.lastname}"),
-                  //accountEmail: Text(""),
-                  // accountEmail: Text(user.email!),
                   accountEmail: Text("${loggedInUser.email}"),
-                  //currentAccountPicture: CircleAvatar(
-                  //foregroundImage: AssetImage('assets/images/beach.png')),
-                  // if ('${loggedInUser.image}' == "-"){
-                  //     AssetImage("assets/images/user.png"),
-                  // }
-                  // else{
-                  //   foregroundImage: NetworkImage('${loggedInUser.image}'),
-                  // }
-                  //   '${loggedInUser.image}' == '-'
-                  //     ? AssetImage('assets/images/user.png')
-                  //     : foregroundImage: NetworkImage('${loggedInUser.image}'),
 
                   currentAccountPicture: '${loggedInUser.image}' == '-'
                       ? const CircleAvatar(
-                      foregroundImage: AssetImage('assets/images/user.png')
-                  )
+                          foregroundImage: AssetImage('assets/images/user.png'))
                       : CircleAvatar(
-                    foregroundImage: NetworkImage('${loggedInUser.image}'),
-                  ),
+                          foregroundImage:
+                              NetworkImage('${loggedInUser.image}'),
+                        ),
                   //),
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.book_online_outlined,
-                  ),
-                  title: const Text('Test'),
-                  onTap: () {
-                    Get.to(const TestPage());
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.book_online_outlined,
-                  ),
-                  title: const Text('Testong'),
-                  onTap: () {
-                    Get.to(const testOng());
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.menu_book,
-                  ),
-                  title: const Text('History'),
-                  onTap: () {
-                    Get.to(const HistoryScreen());
-                  },
                 ),
                 ListTile(
                   leading: const Icon(
@@ -254,4 +210,3 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: const HomeFooter());
   }
 }
-

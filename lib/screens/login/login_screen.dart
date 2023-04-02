@@ -1,5 +1,6 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:gogotrip/constants/styles.dart';
 
 import 'package:gogotrip/screens/login/widget/login_body.dart';
 import 'package:gogotrip/screens/login/widget/login_footer.dart';
@@ -16,10 +17,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.bgBackground,
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/login_wallpaper.png")
+                  as ImageProvider,
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
@@ -28,13 +36,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 LoginHeader(),
                 SizedBox(
-                  height: 30,
+                  height: 90,
                 ),
                 LoginBody(),
                 SizedBox(
-                  height: 25,
+                  height: 100,
                 ),
-                LoginFooter()
+                LoginFooter(),
+                SizedBox(
+                  height: 100,
+                ),
               ],
             ),
           ),

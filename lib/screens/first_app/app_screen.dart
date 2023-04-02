@@ -20,21 +20,21 @@ class _AppScreenState extends State<AppScreen> {
     Timer(const Duration(seconds: 3), () {
       Get.to(const LoginScreen());
     });
-    // Timer(const Duration(seconds: 3), () {
-    //   Get.to(const HomePage());
-    // });
-    return const Scaffold(
-      backgroundColor: Styles.buttonColor,
-      body: Center(
-        child: Text(
-          "Gogotrip",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 35,
-              color: Colors.white
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+                "assets/images/main_wallpaper.png"),
+            fit: BoxFit.cover,
           ),
         ),
+        // child: BackdropFilter(
+        //   filter: ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+        // ),
       ),
     );
   }
 }
+
+

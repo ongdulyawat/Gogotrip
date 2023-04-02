@@ -11,28 +11,32 @@ class LoginHeader extends StatefulWidget {
 class _LoginHeaderState extends State<LoginHeader> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Icon(
-          Icons.beach_access,
-          size: 75,
-        ),
-        const SizedBox(
-          height: 35,
-        ),
-        Text(
-          "Hello Again!",
-          // style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-          style: GoogleFonts.bebasNeue(fontSize: 52),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        const Text(
-          "Welcome back, let\'s sign for enjoy the travel!",
-          style: TextStyle(fontSize: 16),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 195.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            "Let's travel",
+            style: GoogleFonts.kranky(fontSize: 32,color: Colors.white,fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "with",
+            style: GoogleFonts.kranky(fontSize: 30,color: Colors.white,fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Gogotrip!",
+            style: GoogleFonts.kranky(fontSize: 25,color: Colors.white,fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
     );
   }
 }
