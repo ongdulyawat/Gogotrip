@@ -264,250 +264,802 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                   flex: 42,
                   child: GestureDetector(
                       onTap: () async {
-                        // String convertStart = placeOpen.substring(0, 2) + ':' + placeOpen.substring(2);
-                        // String convertClose = placeClose.substring(0, 2) + ':' + placeClose.substring(2);
-                        // DateTime startTime = DateFormat('HH:mm').parseStrict(convertStart);
-                        // DateTime endTime = DateFormat('HH:mm').parseStrict(convertClose);
-                        // DateTime pickStart = DateFormat('h:mm a').parse(_startTime);
-                        // DateTime pickEnd = DateFormat('h:mm a').parse(_endTime);
-                        // print(startTime);
-                        // print(endTime);
-                        // print(pickStart);
-                        // print(pickEnd);
-                          // if(endTime.isAfter(startTime)){
-                          //   if(pickStart.isAfter(pickEnd)){
-                          //     if (pickStart.isBefore(startTime) && pickEnd.isBefore(endTime)) {
-                          //
-                          //       print("Correct timea");
-                          //     }
-                          //     else if(pickStart.isAfter(startTime) && pickEnd.isAfter(endTime)){
-                          //       print("Correct timeb");
-                          //     }
-                          //     else if(pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)){
-                          //       print("Correct timec");
-                          //     }
-                          //     else{
-                          //       print("Out of timed");
-                          //     }
-                          //   }
-                          //   else{
-                          //     if (pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)) {
-                          //
-                          //       print("Correct timee");
-                          //     }
-                          //     else{
-                          //       print("Out of timef");
-                          //     }
-                          //   }
-                          //
-                          // }
-                          // else{
-                          //   if(pickStart.isAfter(pickEnd)){
-                          //     if (pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)) {
-                          //
-                          //       print("Correct timeg");
-                          //     }
-                          //     else{
-                          //       print("Out of timeh");
-                          //     }
-                          //   }
-                          //   else{
-                          //     print("Error timei");
-                          //   }
-                          //
-                        //   // }
-                        // if(endTime.isBefore(startTime)){//เวลาที่ปิดปกติ
-                        //   if(pickStart.isAfter(pickEnd)){//เวลาปกติ
-                        //     if(pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)){
-                        //       print("Correct timea");
-                        //     }
-                        //     else{
-                        //       print("Out of timeb");
-                        //     }
-                        //   }
-                        //   else{
-                        //     print("Out of timec");
-                        //   }
-                        // }
-                        // else{//เวลาปิดดึก
-                        //   if(pickStart.isAfter(pickEnd)){
-                        //     if(pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)){
-                        //       print("Correct timed");
-                        //     }
-                        //     else if(pickStart.isAfter(startTime) && pickEnd.isAfter(endTime)){
-                        //       print("Correct timee");
-                        //     }
-                        //     else{
-                        //       print("out of time f");
-                        //     }
-                        //   }
-                        //   else{
-                        //     if(pickStart.isBefore(startTime) && pickEnd.isBefore(endTime)){
-                        //     print("Correct timeg");
-                        //     }
-                        //     else{
-                        //       print("out of time h");
-                        //     }
-                        //   }
-                        //   print("Error i");
-                        // }
+                        String convertStart = placeOpen.substring(0, 2) + ':' + placeOpen.substring(2);
+                        String convertClose = placeClose.substring(0, 2) + ':' + placeClose.substring(2);
+                        DateTime startTime = DateFormat('HH:mm').parseStrict(convertStart);
+                        DateTime endTime = DateFormat('HH:mm').parseStrict(convertClose);
+                        DateTime pickStart = DateFormat('h:mm a').parse(_startTime);
+                        DateTime pickEnd = DateFormat('h:mm a').parse(_endTime);
+                        DateTime dateNow = DateTime.now();
 
+                        //String formattedTimeDate = DateFormat('h:mm').format(dateNow);
+                        //DateTime timeNow = DateFormat('hh:mm').parse(formattedTimeDate);
+
+                        DateFormat formatterNow = DateFormat('yyyy-MM-dd');
+                        String formattedDatee = formatterNow.format(dateNow);
+                        DateTime formatterDateNow = DateFormat('yyyy-MM-dd').parse(formattedDatee);
+
+                        DateTime resultPickStart = DateTime(_selectDate.year, _selectDate.month,_selectDate.day, pickStart.hour, pickStart.minute, pickStart.second, pickStart.millisecond);
+                        DateTime resultPickEnd = DateTime(_selectDate.year, _selectDate.month,_selectDate.day, pickEnd.hour, pickEnd.minute, pickEnd.second, pickEnd.millisecond);
+
+                        print("_____");
+                        print(_selectDate);
+                        print("_____");
+                        print(formatterDateNow);
+                        print("_____");
+                        print(dateNow);
+                        print("_____");
+                        print(resultPickStart);
+                        print(resultPickEnd);
+                        print("_____");
+                        print(startTime);
+                        print(endTime);
+                        if((_selectDate.isAfter(formatterDateNow)||_selectDate == formatterDateNow)
+                            && (resultPickStart.isAfter(dateNow)||resultPickStart == dateNow)
+                            && (resultPickEnd.isAfter(dateNow)||resultPickEnd == dateNow)){
+                          print("Current or Future");
+                          if(startTime.isBefore(endTime)){
+                            if(pickStart.isAfter(startTime) && pickEnd.isAfter(endTime)){
+                              print("Correct1");
+                              if(_noteController.text.trim() == ''){
+                                note = '-';
+                              }
+                              else{
+                                note = _noteController.text.trim();
+                              }
+                              //Future.delayed(Duration(milliseconds: 1100), () async {
+
+                              if(clickAny == true){
+                                typeSex = "Any";
+                              }
+                              else if(clickBoy == true){
+                                typeSex = "Boy";
+                              }
+                              else if(clickGirl == true){
+                                typeSex = "Girl";
+                              }
+                              else{
+                                typeSex = "Any";
+                              }
+
+                              if (place == "Temple") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('temples')
+                                    .doc(placeId)
+                                    .get();
+
+                                await firestoreDocument.collection('temples').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Temple Document does not exist!');
+                              }
+                              else if (place == "Beach") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('beaches')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('beaches').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Beach Document does not exist!');
+                              }
+                              else if (place == "Restaurant") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('restaurants')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('restaurants')
+                                    .doc(placeId)
+                                    .update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Restaurant Document does not exist!');
+                              }
+                              else if (place == "Park") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('parks')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('parks').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Park Document does not exist!');
+                              }
+                              else {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('cafes')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('cafes').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Cafe Document does not exist!');
+                              }
+                              //});
+                              final String? a = loggedInUser.createCount;
+                              int b = int.parse(a!) + 1;
+                              String c = b.toString();
+                              await _users.doc(user!.uid)
+                                  .update({"createCount": c});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayUnion([formattedTime])});
+
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PartyScreen(),
+                                  ));
+                            }
+                            else{
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Alert"),
+                                    content:Text(
+                                        "Close on Open at"+placeOpen),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          }
+                          else{
+                            if(pickStart.isAfter(startTime) && pickEnd.isAfter(endTime) && pickStart.isBefore(pickEnd)){
+                              print("Correct3");
+                              if(_noteController.text.trim() == ''){
+                                note = '-';
+                              }
+                              else{
+                                note = _noteController.text.trim();
+                              }
+                              //Future.delayed(Duration(milliseconds: 1100), () async {
+
+                              if(clickAny == true){
+                                typeSex = "Any";
+                              }
+                              else if(clickBoy == true){
+                                typeSex = "Boy";
+                              }
+                              else if(clickGirl == true){
+                                typeSex = "Girl";
+                              }
+                              else{
+                                typeSex = "Any";
+                              }
+
+                              if (place == "Temple") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('temples')
+                                    .doc(placeId)
+                                    .get();
+
+                                await firestoreDocument.collection('temples').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Temple Document does not exist!');
+                              }
+                              else if (place == "Beach") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('beaches')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('beaches').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Beach Document does not exist!');
+                              }
+                              else if (place == "Restaurant") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('restaurants')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('restaurants')
+                                    .doc(placeId)
+                                    .update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Restaurant Document does not exist!');
+                              }
+                              else if (place == "Park") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('parks')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('parks').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Park Document does not exist!');
+                              }
+                              else {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('cafes')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('cafes').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Cafe Document does not exist!');
+                              }
+                              //});
+                              final String? a = loggedInUser.createCount;
+                              int b = int.parse(a!) + 1;
+                              String c = b.toString();
+                              await _users.doc(user!.uid)
+                                  .update({"createCount": c});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayUnion([formattedTime])});
+
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PartyScreen(),
+                                  ));
+                            }
+                            else if(pickStart.isAfter(startTime) && pickEnd.isBefore(endTime)){
+                              print("Correct4");
+                              if(_noteController.text.trim() == ''){
+                                note = '-';
+                              }
+                              else{
+                                note = _noteController.text.trim();
+                              }
+                              //Future.delayed(Duration(milliseconds: 1100), () async {
+
+                              if(clickAny == true){
+                                typeSex = "Any";
+                              }
+                              else if(clickBoy == true){
+                                typeSex = "Boy";
+                              }
+                              else if(clickGirl == true){
+                                typeSex = "Girl";
+                              }
+                              else{
+                                typeSex = "Any";
+                              }
+
+                              if (place == "Temple") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('temples')
+                                    .doc(placeId)
+                                    .get();
+
+                                await firestoreDocument.collection('temples').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Temple Document does not exist!');
+                              }
+                              else if (place == "Beach") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('beaches')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('beaches').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Beach Document does not exist!');
+                              }
+                              else if (place == "Restaurant") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('restaurants')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('restaurants')
+                                    .doc(placeId)
+                                    .update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Restaurant Document does not exist!');
+                              }
+                              else if (place == "Park") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('parks')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('parks').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Park Document does not exist!');
+                              }
+                              else {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('cafes')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('cafes').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Cafe Document does not exist!');
+                              }
+                              //});
+                              final String? a = loggedInUser.createCount;
+                              int b = int.parse(a!) + 1;
+                              String c = b.toString();
+                              await _users.doc(user!.uid)
+                                  .update({"createCount": c});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayUnion([formattedTime])});
+
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PartyScreen(),
+                                  ));
+                            }
+                            else if(pickStart.isAfter(startTime) && pickEnd.isBefore(startTime)){
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Alert"),
+                                    content: const Text(
+                                        "Please select correct time"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+
+                            }
+                            else if(pickStart.isBefore(startTime) && pickEnd.isBefore(endTime)){
+                              print("Correct6");
+                              if(_noteController.text.trim() == ''){
+                                note = '-';
+                              }
+                              else{
+                                note = _noteController.text.trim();
+                              }
+                              //Future.delayed(Duration(milliseconds: 1100), () async {
+
+                              if(clickAny == true){
+                                typeSex = "Any";
+                              }
+                              else if(clickBoy == true){
+                                typeSex = "Boy";
+                              }
+                              else if(clickGirl == true){
+                                typeSex = "Girl";
+                              }
+                              else{
+                                typeSex = "Any";
+                              }
+
+                              if (place == "Temple") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('temples')
+                                    .doc(placeId)
+                                    .get();
+
+                                await firestoreDocument.collection('temples').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Temple Document does not exist!');
+                              }
+                              else if (place == "Beach") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('beaches')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('beaches').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Beach Document does not exist!');
+                              }
+                              else if (place == "Restaurant") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('restaurants')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('restaurants')
+                                    .doc(placeId)
+                                    .update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Restaurant Document does not exist!');
+                              }
+                              else if (place == "Park") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('parks')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('parks').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Park Document does not exist!');
+                              }
+                              else {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('cafes')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('cafes').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Cafe Document does not exist!');
+                              }
+                              //});
+                              final String? a = loggedInUser.createCount;
+                              int b = int.parse(a!) + 1;
+                              String c = b.toString();
+                              await _users.doc(user!.uid)
+                                  .update({"createCount": c});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayUnion([formattedTime])});
+
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PartyScreen(),
+                                  ));
+                            }
+                            else if(pickStart.isBefore(startTime) && pickEnd.isBefore(startTime) && pickEnd.isBefore(endTime)){
+                              print("Correct77");
+                              if(_noteController.text.trim() == ''){
+                                note = '-';
+                              }
+                              else{
+                                note = _noteController.text.trim();
+                              }
+                              //Future.delayed(Duration(milliseconds: 1100), () async {
+
+                              if(clickAny == true){
+                                typeSex = "Any";
+                              }
+                              else if(clickBoy == true){
+                                typeSex = "Boy";
+                              }
+                              else if(clickGirl == true){
+                                typeSex = "Girl";
+                              }
+                              else{
+                                typeSex = "Any";
+                              }
+
+                              if (place == "Temple") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('temples')
+                                    .doc(placeId)
+                                    .get();
+
+                                await firestoreDocument.collection('temples').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Temple Document does not exist!');
+                              }
+                              else if (place == "Beach") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('beaches')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('beaches').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Beach Document does not exist!');
+                              }
+                              else if (place == "Restaurant") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('restaurants')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('restaurants')
+                                    .doc(placeId)
+                                    .update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Restaurant Document does not exist!');
+                              }
+                              else if (place == "Park") {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('parks')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('parks').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Park Document does not exist!');
+                              }
+                              else {
+                                DocumentSnapshot snapshotDocument = await FirebaseFirestore
+                                    .instance
+                                    .collection('cafes')
+                                    .doc(placeId)
+                                    .get();
+                                await firestoreDocument.collection('cafes').doc(
+                                    placeId).update({
+                                  formattedTime: FieldValue.arrayUnion([
+                                    _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
+                                  ]),
+                                  'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
+                                    ,placeUrl]),
+                                });
+
+                                print('Cafe Document does not exist!');
+                              }
+                              //});
+                              final String? a = loggedInUser.createCount;
+                              int b = int.parse(a!) + 1;
+                              String c = b.toString();
+                              await _users.doc(user!.uid)
+                                  .update({"createCount": c});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayUnion([formattedTime])});
+
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const PartyScreen(),
+                                  ));
+                            }
+                            else if(pickStart.isBefore(startTime) && pickEnd.isBefore(startTime)){
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Alert"),
+                                    content:Text(
+                                        "Close on Open at"+placeOpen),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                            else if(pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)){
+                              print("Close8");
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Alert"),
+                                    content:Text(
+                                        "Close on Open at"+placeOpen),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                            else{
+                              print("Errror time9");
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Alert"),
+                                    content: const Text(
+                                        "Please select correct time"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        }
+                        else{
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Alert"),
+                                content: const Text(
+                                    "Please select correct time"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("OK"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        }
 
 
                         //checkIfDocumentExists(placeId);
                         // note = _noteController.text.trim();
-                        if(_noteController.text.trim() == ''){
-                          note = '-';
-                        }
-                        else{
-                          note = _noteController.text.trim();
-                        }
-                        //Future.delayed(Duration(milliseconds: 1100), () async {
-
-                        if(clickAny == true){
-                          typeSex = "Any";
-                        }
-                        else if(clickBoy == true){
-                          typeSex = "Boy";
-                        }
-                        else if(clickGirl == true){
-                          typeSex = "Girl";
-                        }
-                        else{
-                          typeSex = "Any";
-                        }
-
-                          if (place == "Temple") {
-                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
-                                .instance
-                                .collection('temples')
-                                .doc(placeId)
-                                .get();
-
-                            await firestoreDocument.collection('temples').doc(
-                                placeId).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-                                ,placeUrl]),
-                            });
-                            await _users.doc(loggedInUser.uid).update({
-                              formattedTime: FieldValue.arrayUnion([
-                              _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime,loggedInUser.uid
-                            ]),
-                            });
-                            // final String? a = loggedInUser.createCount;
-                            // int b = int.parse(a!) + 1;
-                            // String c = b.toString();
-                            // firestoreDocument.collection('temples').doc(placeId).update({"voteRating": a});
-                            // firestoreDocument.collection('temples').doc(placeId).update({"countVoteRating": a});
-                            print('Temple Document does not exist!');
-                          }
-                          else if (place == "Beach") {
-                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
-                                .instance
-                                .collection('beaches')
-                                .doc(placeId)
-                                .get();
-                            await firestoreDocument.collection('beaches').doc(
-                                placeId).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-                                ,placeUrl]),
-                            });
-                            await _users.doc(loggedInUser.uid).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                            });
-                            print('Beach Document does not exist!');
-                          }
-                          else if (place == "Restaurant") {
-                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
-                                .instance
-                                .collection('restaurants')
-                                .doc(placeId)
-                                .get();
-                            await firestoreDocument.collection('restaurants')
-                                .doc(placeId)
-                                .update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-                                ,placeUrl]),
-                            });
-                            await _users.doc(loggedInUser.uid).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                            });
-                            print('Restaurant Document does not exist!');
-                          }
-                          else if (place == "Park") {
-                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
-                                .instance
-                                .collection('parks')
-                                .doc(placeId)
-                                .get();
-                            await firestoreDocument.collection('parks').doc(
-                                placeId).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime, typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-                                ,placeUrl]),
-                            });
-                            await _users.doc(loggedInUser.uid).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                            });
-                            print('Park Document does not exist!');
-                          }
-                          else {
-                            DocumentSnapshot snapshotDocument = await FirebaseFirestore
-                                .instance
-                                .collection('cafes')
-                                .doc(placeId)
-                                .get();
-                            await firestoreDocument.collection('cafes').doc(
-                                placeId).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                              'Info': FieldValue.arrayUnion([placeClose, placeOpen, placeId, placeInfo, placeName
-                                ,placeUrl]),
-                            });
-                            await _users.doc(loggedInUser.uid).update({
-                              formattedTime: FieldValue.arrayUnion([
-                                _selectDate, _startTime, _endTime,typeSex, _selectMember, note,formattedTime, loggedInUser.uid
-                              ]),
-                            });
-                            print('Cafe Document does not exist!');
-                          }
-                        //});
-                        final String? a = loggedInUser.createCount;
-                        int b = int.parse(a!) + 1;
-                        String c = b.toString();
-                        await _users.doc(user!.uid)
-                            .update({"createCount": c});
-                        await _users.doc(user!.uid)
-                            .update({"create": FieldValue.arrayUnion([formattedTime])});
-                        //print("aaaaaaaaa"+a);
-                        //print(b);
-                        //print("cccccccccc"+c);
-                        //print("xxxxxxxaaaaaaaa"+ note);
-                        //print("xxxxxx"+ getRandomString(10));
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PartyScreen(),
-                            ));
 
                       },
                       child: Padding(

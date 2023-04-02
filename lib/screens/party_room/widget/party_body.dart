@@ -20,10 +20,16 @@ class _PartyBodyState extends State<PartyBody> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   final CollectionReference _users =
-      FirebaseFirestore.instance.collection('users');
+  FirebaseFirestore.instance.collection('users');
 
   final CollectionReference checkCollection =
-      FirebaseFirestore.instance.collection('checks');
+  FirebaseFirestore.instance.collection('checks');
+
+  final CollectionReference userCollection =
+  FirebaseFirestore.instance.collection('users');
+
+  final FirebaseFirestore firestoreDocument = FirebaseFirestore.instance;
+
   String place = '';
   String placeId = '';
   String placeInfo = '';
@@ -47,6 +53,7 @@ class _PartyBodyState extends State<PartyBody> {
   String joinCountJoin = '';
   String likeJoin = '';
   String imageJoin = '';
+  String joinCount = '';
 
   //Map data = [];
   //List testList = [];
@@ -140,7 +147,7 @@ class _PartyBodyState extends State<PartyBody> {
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+            DateFormat('h:mm').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -188,7 +195,7 @@ class _PartyBodyState extends State<PartyBody> {
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+            DateFormat('h:mm').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -236,7 +243,7 @@ class _PartyBodyState extends State<PartyBody> {
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+            DateFormat('h:mm').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -284,7 +291,7 @@ class _PartyBodyState extends State<PartyBody> {
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+            DateFormat('h:mm').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -328,7 +335,7 @@ class _PartyBodyState extends State<PartyBody> {
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+            DateFormat('h:mm').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -396,38 +403,162 @@ class _PartyBodyState extends State<PartyBody> {
                         padding: const EdgeInsets.only(top: 15.0, left: 30),
                         child: dataList[num].value[7] == loggedInUser.uid
                             ? GestureDetector(
-                                onTap: () {
-                                  //
-                                },
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  decoration: BoxDecoration(
-                                      boxShadow: Styles.boxShadows,
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(24)),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(
-                                        Icons.restore_from_trash,
-                                        size: 15,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
+                          onTap: () async {
+                            //
+                            if(place == "Temple"){
+                              await firestoreDocument.collection('temples').doc(placeId).update({
+                                dataList[num].value[6] : FieldValue.delete(),});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayRemove([dataList[num].value[6]]),});
+                              for(int xx = 8; xx < dataList[num].value.length; xx++){
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "join" : FieldValue.arrayRemove([dataList[num].value[6]]),});
+                                // final CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
+                                // final DocumentReference userRef = usersCollection.doc(dataList[num].value[xx]);
+                                // userRef.get().then((DocumentSnapshot documentSnapshot) {
+                                // if (documentSnapshot.exists) {
+                                //   final data = documentSnapshot.data();
+                                //   final joinCount = data['joinCount'];
+                                // }
+                                // });
+                                final DocumentSnapshot snapshotUser = await userCollection.doc(dataList[num].value[xx]).get();
+                                if (snapshotUser.exists) {
+                                  setState(() {
+                                    joinCount = snapshotUser.get('joinCount');
+                                  });
+                                }
+                                String ab = joinCount;
+                                int abb = int.parse(ab!) - 1;
+                                String abc = abb.toString();
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "joinCount" : abc});
+                              }
+                            }
+                            else if(place == "Restaurant"){
+                              await firestoreDocument.collection('restaurants').doc(placeId).update({
+                                dataList[num].value[6] : FieldValue.delete(),});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayRemove([dataList[num].value[6]]),});
+                              for(int xx = 8; xx < dataList[num].value.length; xx++){
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "join" : FieldValue.arrayRemove([dataList[num].value[6]]),});
+                                final DocumentSnapshot snapshotUser = await userCollection.doc(dataList[num].value[xx]).get();
+                                if (snapshotUser.exists) {
+                                  setState(() {
+                                    joinCount = snapshotUser.get('joinCount');
+                                  });
+                                }
+                                String ab = joinCount;
+                                int abb = int.parse(ab!) - 1;
+                                String abc = abb.toString();
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "joinCount" : abc});
+                              }
+                            }
+                            else if(place == "Beach"){
+                              await firestoreDocument.collection('beaches').doc(placeId).update({
+                                dataList[num].value[6] : FieldValue.delete(),});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayRemove([dataList[num].value[6]]),});
+                              for(int xx = 8; xx < dataList[num].value.length; xx++){
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "join" : FieldValue.arrayRemove([dataList[num].value[6]]),});
+                                final DocumentSnapshot snapshotUser = await userCollection.doc(dataList[num].value[xx]).get();
+                                if (snapshotUser.exists) {
+                                  setState(() {
+                                    joinCount = snapshotUser.get('joinCount');
+                                  });
+                                }
+                                String ab = joinCount;
+                                int abb = int.parse(ab!) - 1;
+                                String abc = abb.toString();
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "joinCount" : abc});
+                              }
+                            }
+                            else if(place == "Park"){
+                              await firestoreDocument.collection('parks').doc(placeId).update({
+                                dataList[num].value[6] : FieldValue.delete(),});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayRemove([dataList[num].value[6]]),});
+                              for(int xx = 8; xx < dataList[num].value.length; xx++){
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "join" : FieldValue.arrayRemove([dataList[num].value[6]]),});
+                                final DocumentSnapshot snapshotUser = await userCollection.doc(dataList[num].value[xx]).get();
+                                if (snapshotUser.exists) {
+                                  setState(() {
+                                    joinCount = snapshotUser.get('joinCount');
+                                  });
+                                }
+                                String ab = joinCount;
+                                int abb = int.parse(ab!) - 1;
+                                String abc = abb.toString();
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "joinCount" : abc});
+                              }
+                            }
+                            else{
+                              await firestoreDocument.collection('cafes').doc(placeId).update({
+                                dataList[num].value[6] : FieldValue.delete(),});
+                              await _users.doc(user!.uid)
+                                  .update({"create": FieldValue.arrayRemove([dataList[num].value[6]]),});
+                              for(int xx = 8; xx < dataList[num].value.length; xx++){
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "join" : FieldValue.arrayRemove([dataList[num].value[6]]),});
+                                final DocumentSnapshot snapshotUser = await userCollection.doc(dataList[num].value[xx]).get();
+                                if (snapshotUser.exists) {
+                                  setState(() {
+                                    joinCount = snapshotUser.get('joinCount');
+                                  });
+                                }
+                                String ab = joinCount;
+                                int abb = int.parse(ab!) - 1;
+                                String abc = abb.toString();
+                                await firestoreDocument.collection('users').doc(dataList[num].value[xx]).update({
+                                  "joinCount" : abc});
+                              }
+                            }
+                            final String? a = loggedInUser.createCount;
+                            int b = int.parse(a!) - 1;
+                            String c = b.toString();
+                            await _users.doc(user!.uid)
+                                .update({"createCount": c});
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const PartyScreen(),
+                                ));
+                          },
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                boxShadow: Styles.boxShadows,
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(24)),
+                            child: Row(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Icon(
+                                  Icons.restore_from_trash,
+                                  size: 15,
+                                  color: Colors.white,
                                 ),
-                              )
+                              ],
+                            ),
+                          ),
+                        )
                             : GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: 30,
-                                  height: 30,
-                                  color: Colors.transparent,
-                                ),
-                              ),
+                          onTap: () {},
+                          child: Container(
+                            width: 30,
+                            height: 30,
+                            color: Colors.transparent,
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 210),
                       Padding(
@@ -475,8 +606,8 @@ class _PartyBodyState extends State<PartyBody> {
                                 );
                               } else {
                                 for (int xx = 8;
-                                    xx < dataList[num].value.length;
-                                    xx++) {
+                                xx < dataList[num].value.length;
+                                xx++) {
                                   if (loggedInUser.uid ==
                                       dataList[num].value[xx]) {
                                     showDialog(
@@ -520,8 +651,8 @@ class _PartyBodyState extends State<PartyBody> {
                                         .doc(placeId)
                                       ..update({
                                         dataList[num].value[6]:
-                                            FieldValue.arrayUnion(
-                                                [loggedInUser.uid])
+                                        FieldValue.arrayUnion(
+                                            [loggedInUser.uid])
                                       });
                                   } else if (place == "Restaurant") {
                                     await FirebaseFirestore.instance
@@ -529,8 +660,8 @@ class _PartyBodyState extends State<PartyBody> {
                                         .doc(placeId)
                                       ..update({
                                         dataList[num].value[6]:
-                                            FieldValue.arrayUnion(
-                                                [loggedInUser.uid])
+                                        FieldValue.arrayUnion(
+                                            [loggedInUser.uid])
                                       });
                                   } else if (place == "Beach") {
                                     await FirebaseFirestore.instance
@@ -538,8 +669,8 @@ class _PartyBodyState extends State<PartyBody> {
                                         .doc(placeId)
                                       ..update({
                                         dataList[num].value[6]:
-                                            FieldValue.arrayUnion(
-                                                [loggedInUser.uid])
+                                        FieldValue.arrayUnion(
+                                            [loggedInUser.uid])
                                       });
                                   } else if (place == "Park") {
                                     await FirebaseFirestore.instance
@@ -547,8 +678,8 @@ class _PartyBodyState extends State<PartyBody> {
                                         .doc(placeId)
                                       ..update({
                                         dataList[num].value[6]:
-                                            FieldValue.arrayUnion(
-                                                [loggedInUser.uid])
+                                        FieldValue.arrayUnion(
+                                            [loggedInUser.uid])
                                       });
                                   } else {
                                     await FirebaseFirestore.instance
@@ -556,8 +687,8 @@ class _PartyBodyState extends State<PartyBody> {
                                         .doc(placeId)
                                       ..update({
                                         dataList[num].value[6]:
-                                            FieldValue.arrayUnion(
-                                                [loggedInUser.uid])
+                                        FieldValue.arrayUnion(
+                                            [loggedInUser.uid])
                                       });
                                   }
                                   showDialog(
@@ -575,7 +706,7 @@ class _PartyBodyState extends State<PartyBody> {
                                                   context,
                                                   MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const PartyScreen(),
+                                                    const PartyScreen(),
                                                   ));
                                             },
                                             child: const Text("OK"),
@@ -682,8 +813,8 @@ class _PartyBodyState extends State<PartyBody> {
                           child: Row(
                             children: [
                               for (int count = 0;
-                                  count < dataList[num].value.length - 8;
-                                  count++)
+                              count < dataList[num].value.length - 8;
+                              count++)
                                 Padding(
                                   padding: EdgeInsets.only(left: 5.0),
                                   child: GestureDetector(
@@ -693,7 +824,7 @@ class _PartyBodyState extends State<PartyBody> {
                                           .doc(dataList[num].value[count + 8])
                                           .get()
                                           .then((DocumentSnapshot
-                                              documentSnapshot) {
+                                      documentSnapshot) {
                                         usernameJoin =
                                             documentSnapshot.get('username');
                                         describeJoin =
@@ -723,17 +854,17 @@ class _PartyBodyState extends State<PartyBody> {
                                               height: 250,
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.all(20.0),
+                                                const EdgeInsets.all(20.0),
                                                 child: Column(
                                                   children: [
                                                     CircleAvatar(
                                                       backgroundColor:
-                                                          Styles.buttonColor,
+                                                      Styles.buttonColor,
                                                       radius: 108,
                                                       child: CircleAvatar(
                                                         backgroundImage:
-                                                            NetworkImage(
-                                                                imageJoin),
+                                                        NetworkImage(
+                                                            imageJoin),
                                                         //NetworkImage
                                                         radius: 100,
                                                       ), //CircleAvatar
@@ -746,9 +877,9 @@ class _PartyBodyState extends State<PartyBody> {
                                                       style: TextStyle(
                                                         fontSize: 30,
                                                         color:
-                                                            Colors.green[900],
+                                                        Colors.green[900],
                                                         fontWeight:
-                                                            FontWeight.w500,
+                                                        FontWeight.w500,
                                                       ), //Textstyle
                                                     ), //Text
                                                     const SizedBox(
@@ -756,21 +887,21 @@ class _PartyBodyState extends State<PartyBody> {
                                                     ), //SizedBox
                                                     Column(
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
+                                                      CrossAxisAlignment
+                                                          .start,
                                                       children: [
                                                         Align(
                                                           alignment:
-                                                              Alignment.center,
+                                                          Alignment.center,
                                                           child: Column(
                                                             children: [
                                                               Text(
                                                                 usernameJoin,
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
+                                                                  FontWeight
+                                                                      .bold,
                                                                   fontSize: 25,
                                                                   color: Styles
                                                                       .buttonColor,
@@ -782,7 +913,7 @@ class _PartyBodyState extends State<PartyBody> {
                                                               Text(
                                                                 describeJoin,
                                                                 style:
-                                                                    TextStyle(
+                                                                TextStyle(
                                                                   fontSize: 20,
                                                                   color: Styles
                                                                       .buttonColor,
@@ -893,13 +1024,13 @@ class _PartyBodyState extends State<PartyBody> {
                                                         },
                                                         style: ButtonStyle(
                                                             backgroundColor:
-                                                                MaterialStateProperty
-                                                                    .all(Styles
-                                                                        .buttonColor)),
+                                                            MaterialStateProperty
+                                                                .all(Styles
+                                                                .buttonColor)),
                                                         child: Padding(
                                                           padding:
-                                                              const EdgeInsets
-                                                                  .all(4),
+                                                          const EdgeInsets
+                                                              .all(4),
                                                           child: Row(
                                                             children: const [
                                                               Icon(Icons
@@ -948,8 +1079,8 @@ class _PartyBodyState extends State<PartyBody> {
                                   color: dataList[num].value[3] == "Boy"
                                       ? Colors.blueAccent
                                       : dataList[num].value[3] == "Girl"
-                                          ? Colors.pinkAccent
-                                          : Colors.purpleAccent,
+                                      ? Colors.pinkAccent
+                                      : Colors.purpleAccent,
                                   borderRadius: BorderRadius.circular(16)),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -993,3 +1124,4 @@ class _PartyBodyState extends State<PartyBody> {
     );
   }
 }
+
