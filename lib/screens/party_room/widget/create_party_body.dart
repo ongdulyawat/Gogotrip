@@ -264,6 +264,96 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                   flex: 42,
                   child: GestureDetector(
                       onTap: () async {
+                        // String convertStart = placeOpen.substring(0, 2) + ':' + placeOpen.substring(2);
+                        // String convertClose = placeClose.substring(0, 2) + ':' + placeClose.substring(2);
+                        // DateTime startTime = DateFormat('HH:mm').parseStrict(convertStart);
+                        // DateTime endTime = DateFormat('HH:mm').parseStrict(convertClose);
+                        // DateTime pickStart = DateFormat('h:mm a').parse(_startTime);
+                        // DateTime pickEnd = DateFormat('h:mm a').parse(_endTime);
+                        // print(startTime);
+                        // print(endTime);
+                        // print(pickStart);
+                        // print(pickEnd);
+                          // if(endTime.isAfter(startTime)){
+                          //   if(pickStart.isAfter(pickEnd)){
+                          //     if (pickStart.isBefore(startTime) && pickEnd.isBefore(endTime)) {
+                          //
+                          //       print("Correct timea");
+                          //     }
+                          //     else if(pickStart.isAfter(startTime) && pickEnd.isAfter(endTime)){
+                          //       print("Correct timeb");
+                          //     }
+                          //     else if(pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)){
+                          //       print("Correct timec");
+                          //     }
+                          //     else{
+                          //       print("Out of timed");
+                          //     }
+                          //   }
+                          //   else{
+                          //     if (pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)) {
+                          //
+                          //       print("Correct timee");
+                          //     }
+                          //     else{
+                          //       print("Out of timef");
+                          //     }
+                          //   }
+                          //
+                          // }
+                          // else{
+                          //   if(pickStart.isAfter(pickEnd)){
+                          //     if (pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)) {
+                          //
+                          //       print("Correct timeg");
+                          //     }
+                          //     else{
+                          //       print("Out of timeh");
+                          //     }
+                          //   }
+                          //   else{
+                          //     print("Error timei");
+                          //   }
+                          //
+                        //   // }
+                        // if(endTime.isBefore(startTime)){//เวลาที่ปิดปกติ
+                        //   if(pickStart.isAfter(pickEnd)){//เวลาปกติ
+                        //     if(pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)){
+                        //       print("Correct timea");
+                        //     }
+                        //     else{
+                        //       print("Out of timeb");
+                        //     }
+                        //   }
+                        //   else{
+                        //     print("Out of timec");
+                        //   }
+                        // }
+                        // else{//เวลาปิดดึก
+                        //   if(pickStart.isAfter(pickEnd)){
+                        //     if(pickStart.isBefore(startTime) && pickEnd.isAfter(endTime)){
+                        //       print("Correct timed");
+                        //     }
+                        //     else if(pickStart.isAfter(startTime) && pickEnd.isAfter(endTime)){
+                        //       print("Correct timee");
+                        //     }
+                        //     else{
+                        //       print("out of time f");
+                        //     }
+                        //   }
+                        //   else{
+                        //     if(pickStart.isBefore(startTime) && pickEnd.isBefore(endTime)){
+                        //     print("Correct timeg");
+                        //     }
+                        //     else{
+                        //       print("out of time h");
+                        //     }
+                        //   }
+                        //   print("Error i");
+                        // }
+
+
+
                         //checkIfDocumentExists(placeId);
                         // note = _noteController.text.trim();
                         if(_noteController.text.trim() == ''){
@@ -286,6 +376,7 @@ class _CreatePartyBodyState extends State<CreatePartyBody> {
                         else{
                           typeSex = "Any";
                         }
+
                           if (place == "Temple") {
                             DocumentSnapshot snapshotDocument = await FirebaseFirestore
                                 .instance
