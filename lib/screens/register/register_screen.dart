@@ -1,7 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/screens/register/widget/register_body.dart';
-import 'package:gogotrip/screens/register/widget/register_footer.dart';
 import 'package:gogotrip/screens/register/widget/register_header.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,10 +15,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Styles.bgBackground,
       body: SingleChildScrollView(
-        child: SafeArea(
-          child: Center(
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/resister_wallpaper.png"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
@@ -30,7 +36,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   height: 25,
                 ),
-                RegisterFooter()
               ],
             ),
           ),

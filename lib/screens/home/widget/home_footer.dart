@@ -11,6 +11,6 @@ class HomeFooter extends StatefulWidget {
 class _HomeFooterState extends State<HomeFooter> {
   @override
   Widget build(BuildContext context) {
-    return const FooterBar();
+    return  FooterBar();
   }
 }

@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../screens/profile/profile_screen.dart';
 
 class SlideLocation extends StatefulWidget {
-
   SlideLocation({Key? key}) : super(key: key);
 
   @override
@@ -25,17 +24,27 @@ class _SlideLocationState extends State<SlideLocation> {
     "Cafe",
   ];
 
+  final List<String> IconLocationlists = [
+
+    "assets/icons/cafe.png",
+    "assets/icons/park.png", //
+    "assets/icons/beach.png",  //
+    "assets/icons/temple.png", //
+    "assets/icons/restaurant.png", //
+    "assets/icons/cafe.png",
+  ];
 
   int count = -1;
-  final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+  final CollectionReference checkCollection =
+      FirebaseFirestore.instance.collection('checks');
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   String place = '';
+
   getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
     if (snapshot.exists) {
       setState(() {
         place = snapshot.get('place');
-        print("Slidesssssssssss"+place);
       });
     }
   }
@@ -46,15 +55,15 @@ class _SlideLocationState extends State<SlideLocation> {
     getDataFromPlace();
   }
 
-  String selectItem = '' ;
+  String selectItem = '';
+
   @override
   Widget build(BuildContext context) {
-    print('slideeeeeeeeeeeee'+place);
     selectItem = place;
     return Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
       child: Container(
-        color: Styles.bgBackground,
+        color: Styles.bgBackground1,
         width: MediaQuery.of(context).size.width - 20.0,
         height: 55.0,
         child: ListView(
@@ -76,49 +85,37 @@ class _SlideLocationState extends State<SlideLocation> {
   }
 
   Widget _buildTypes(location, count) {
-
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.only(left: 15),
       child: Column(
         children: [
           GestureDetector(
             onTap: () {
               setState(() {
-                //location = widget.location;
-                //print('a'+widget.locations);
-                //widget.locations = location;
-                //print('b'+widget.locations);
                 selectItem = location;
-                //selectItem = place;
-                if (location == 'Beach'){
-                  selectItem = 'Beach';
-                  firestore.collection('checks').doc('state').update({
-                    'place': 'Beach'
-                  });
-                  firestore
-                      .collection('checks')
-                      .doc('state')
-                      .update({'search': ''});
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomePage(),
-                      ));
-                  print(place);
-                  //print('c'+location);
-                  //location = 'Beach';
-                  // print('d'+location);
 
-                  // Navigator.of(context).push(MaterialPageRoute
-                  //   (builder: (context) => LocationCard(location: location),
-                  // ));
-                }
-                else if(location == 'Temple'){
+                if (location == 'Beach') {
+                  selectItem = 'Beach';
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'place': 'Beach'});
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'search': ''});
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const HomePage(),
+                      ));
+                } else if (location == 'Temple') {
                   selectItem = 'Temple';
-                  firestore.collection('checks').doc('state').update({
-                    'place': 'Temple'
-                  });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'place': 'Temple'});
                   firestore
                       .collection('checks')
                       .doc('state')
@@ -128,13 +125,12 @@ class _SlideLocationState extends State<SlideLocation> {
                       MaterialPageRoute(
                         builder: (context) => const HomePage(),
                       ));
-                  print(place);
-                }
-                else if(location == 'Restaurant'){
+                } else if (location == 'Restaurant') {
                   selectItem = 'Restaurant';
-                  firestore.collection('checks').doc('state').update({
-                  'place': 'Restaurant'
-                  });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'place': 'Restaurant'});
                   firestore
                       .collection('checks')
                       .doc('state')
@@ -144,13 +140,12 @@ class _SlideLocationState extends State<SlideLocation> {
                       MaterialPageRoute(
                         builder: (context) => const HomePage(),
                       ));
-                  print(place);
-                }
-                else if(location == 'Park'){
+                } else if (location == 'Park') {
                   selectItem = 'Park';
-                  firestore.collection('checks').doc('state').update({
-                    'place': 'Park'
-                  });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'place': 'Park'});
                   firestore
                       .collection('checks')
                       .doc('state')
@@ -160,13 +155,12 @@ class _SlideLocationState extends State<SlideLocation> {
                       MaterialPageRoute(
                         builder: (context) => const HomePage(),
                       ));
-                  print(place);
-                }
-                else{
+                } else {
                   selectItem = 'Cafe';
-                  firestore.collection('checks').doc('state').update({
-                    'place': 'Cafe'
-                  });
+                  firestore
+                      .collection('checks')
+                      .doc('state')
+                      .update({'place': 'Cafe'});
                   firestore
                       .collection('checks')
                       .doc('state')
@@ -176,10 +170,8 @@ class _SlideLocationState extends State<SlideLocation> {
                       MaterialPageRoute(
                         builder: (context) => const HomePage(),
                       ));
-                  print(place);
                 }
               });
-
             },
             child: Container(
               decoration: BoxDecoration(
@@ -201,7 +193,7 @@ class _SlideLocationState extends State<SlideLocation> {
                       height: 25,
                       child: Center(
                         child: Image.asset(
-                          'assets/icons/beach.png',
+                          IconLocationlists[count+1],
                           height: 25,
                           width: 25,
                           fit: BoxFit.fill,
@@ -213,14 +205,14 @@ class _SlideLocationState extends State<SlideLocation> {
                     ),
                     Text(
                       location,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.deliusUnicase(
                           color: location == selectItem
                               ? Colors.white
                               : Colors.black,
                           fontWeight: location == selectItem
                               ? FontWeight.bold
                               : FontWeight.w500,
-                          fontSize: 14),
+                          fontSize: 11),
                     ),
                   ],
                 ),

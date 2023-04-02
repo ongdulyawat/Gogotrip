@@ -7,13 +7,11 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/controllers/user_model.dart';
-import 'package:gogotrip/screens/history/history_screen.dart';
 import 'package:gogotrip/screens/home/widget/home_body.dart';
 import 'package:gogotrip/screens/home/widget/home_footer.dart';
 import 'package:gogotrip/screens/login/login_screen.dart';
-import 'package:gogotrip/screens/test_page/test_screen.dart';
-import 'package:gogotrip/screens/test_page/test_screenOng.dart';
 import 'package:gogotrip/widget/search.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -86,9 +84,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Styles.bgBackground,
+        backgroundColor: Styles.bgBackground1,
         appBar: AppBar(
-          backgroundColor: Styles.buttonColor,
+
+          backgroundColor: Styles.bgBackground1,
           shadowColor: Colors.transparent,
           iconTheme: const IconThemeData(color: Colors.white),
           centerTitle: true,
@@ -102,8 +101,7 @@ class _HomePageState extends State<HomePage> {
                     width: 250,
                     child: Text(
                       "${loggedInUser.username}",
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 16.0),
+                      style: GoogleFonts.deliusUnicase(textStyle: TextStyle(color: Colors.black, fontSize: 16.0)),
                       overflow: TextOverflow.clip,
                       maxLines: 1,
                       softWrap: true,
@@ -117,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       const Icon(
                         Icons.location_on_outlined,
-                        color: Colors.white,
+                        color: Colors.black,
                         size: 14,
                       ),
                       Padding(
@@ -126,11 +124,10 @@ class _HomePageState extends State<HomePage> {
                           width: 230,
                           height: 25,
                           child: Text(
-                            street == null
-                                ? "Getting Address.."
-                                : "${street}",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 14.0),
+                            street == null ? "Getting Address.." : "${street}",
+                            style: GoogleFonts.deliusUnicase(
+                                textStyle: TextStyle(
+                                    color: Colors.black, fontSize: 14.0)),
                             maxLines: 1,
                             overflow: TextOverflow.clip,
                             softWrap: true,
@@ -173,7 +170,7 @@ class _HomePageState extends State<HomePage> {
         ),
         drawer: Drawer(
           child: Container(
-            color: Styles.bgBackground,
+            color: Styles.bgBackground1,
             child: ListView(
               children: [
                 UserAccountsDrawerHeader(
@@ -200,7 +197,6 @@ class _HomePageState extends State<HomePage> {
                     // signUserOut();
                     FirebaseAuth.instance.signOut();
                     Get.to(const LoginScreen());
-                    print("Sign out");
                   },
                 )
               ],

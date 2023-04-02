@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:gogotrip/screens/login/widget/login_body.dart';
-import 'package:gogotrip/screens/login/widget/login_footer.dart';
 import 'package:gogotrip/screens/login/widget/login_header.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -36,15 +35,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 LoginHeader(),
                 SizedBox(
-                  height: 90,
+                  height: 60,
                 ),
                 LoginBody(),
                 SizedBox(
-                  height: 100,
-                ),
-                LoginFooter(),
-                SizedBox(
-                  height: 100,
+                  height: 80,
+                  width: 400,
                 ),
               ],
             ),

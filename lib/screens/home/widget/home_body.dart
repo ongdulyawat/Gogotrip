@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/widget/location_card.dart';
 import 'package:gogotrip/widget/recommend_card.dart';
 import 'package:gogotrip/widget/slide_location.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeBody extends StatefulWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -24,8 +24,11 @@ class _HomeBodyState extends State<HomeBody> {
           padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
           child: Row(
             children: <Widget>[
-              const Text('Location',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Text('Location',
+                  style: GoogleFonts.deliusUnicase(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold)),
               const Spacer(),
               GestureDetector(
                 onTap: () {},
@@ -39,7 +42,7 @@ class _HomeBodyState extends State<HomeBody> {
             ],
           ),
         ),
-         Padding(
+         const Padding(
           padding: EdgeInsets.only(top: 10.0, left: 15, right: 15),
           child: LocationCard(),
         ),
@@ -47,8 +50,11 @@ class _HomeBodyState extends State<HomeBody> {
           padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
           child: Row(
             children: <Widget>[
-              const Text('Recommend',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+             Text('Recommend',
+                  style: GoogleFonts.deliusUnicase(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold)),
               const Spacer(),
               GestureDetector(
                 onTap: () {},
@@ -57,17 +63,13 @@ class _HomeBodyState extends State<HomeBody> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.white,
                       boxShadow: Styles.boxShadows),
-                  // child: const Padding(
-                  //   padding: EdgeInsets.all(8.0),
-                  //   child: Text("View all", style: TextStyle(fontSize: 14)),
-                  // ),
                 ),
               )
             ],
           ),
         ),
          Padding(
-          padding: EdgeInsets.only(top: 10.0, left: 15, right: 15),
+          padding: const EdgeInsets.only(top: 10.0, left: 15, right: 15,bottom: 10),
           child: RecommendCard(),
         ),
       ],
