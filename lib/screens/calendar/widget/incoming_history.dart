@@ -39,25 +39,32 @@ class _IncomingHistoryState extends State<IncomingHistory> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   final CollectionReference _users =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
   void getUserCreate() async {
     DocumentSnapshot<Map<String, dynamic>> snapshotUser =
-    await FirebaseFirestore.instance.collection('users').doc(loggedInUser.uid).get();
-    if(snapshotUser.exists){
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(loggedInUser.uid)
+            .get();
+    if (snapshotUser.exists) {
       Map<String, dynamic>? dataUser = snapshotUser.data();
       dynamic createValue = dataUser?['create'];
       dynamic joinValue = dataUser?['join'];
       userCreateJoin = [createValue, joinValue];
     }
   }
+
   void getHistoryCafe() async {
-    for(int i = 0; i < 2 ; i++){
-      for(int j = 0; j < userCreateJoin[i].length ; j++){
-        await FirebaseFirestore.instance.collection('cafes')
-            .get().then((value) async {
-          for(var cafe in value.docs){
-            final cafeRef = FirebaseFirestore.instance.collection('cafes').doc(cafe.id);
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < userCreateJoin[i].length; j++) {
+        await FirebaseFirestore.instance
+            .collection('cafes')
+            .get()
+            .then((value) async {
+          for (var cafe in value.docs) {
+            final cafeRef =
+                FirebaseFirestore.instance.collection('cafes').doc(cafe.id);
             cafeRef.get().then((cafeSnapshot) async {
               Map<String, dynamic> dataCafe = cafeSnapshot.data() ?? {};
               if (dataCafe.containsKey(userCreateJoin[i][j])) {
@@ -65,24 +72,30 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 DateTime now = DateTime.now();
                 DateTime timestamp = fieldCafe[0].toDate();
 
-                if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+                if (timestamp.year == now.year &&
+                    timestamp.month == now.month &&
+                    timestamp.day == now.day) {
                   DateTime parsedTime = DateFormat('h:mm').parse(fieldCafe[2]);
 
                   String formattedTime = DateFormat('h:mm').format(now);
                   DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
 
-
-                  if(parsedTime.isAfter(timeNow)){
-                    for(int a = 0; a < 7; a++ ) {
-                      if(a == 0){
-                        allHistory.add(DateFormat.yMMMMd().format(fieldCafe[a].toDate()));
+                  if (parsedTime.isAfter(timeNow)) {
+                    for (int a = 0; a < 7; a++) {
+                      if (a == 0) {
+                        allHistory.add(
+                            DateFormat.yMMMMd().format(fieldCafe[a].toDate()));
                         //fieldCafeInfo.add(DateFormat.yMMMMd().format(fieldCafe[a].toDate()));
-                      }
-                      else if(a == 6 ){
+                      } else if (a == 6) {
                         allHistory.add(fieldCafe[a]);
                         //fieldCafeInfo.add(fieldCafe[a]);
-                        DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('cafes').doc(cafe.id).get();
-                        Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                        DocumentSnapshot snapshot = await FirebaseFirestore
+                            .instance
+                            .collection('cafes')
+                            .doc(cafe.id)
+                            .get();
+                        Map<String, dynamic>? dataMap =
+                            snapshot.data() as Map<String, dynamic>?;
                         if (dataMap != null) {
                           List<dynamic>? infoList = dataMap['Info'];
                           if (infoList != null) {
@@ -94,25 +107,28 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                             //fieldCafeInfo.add(infoAtIndex);
                           }
                         }
-                      }
-                      else{
+                      } else {
                         allHistory.add(fieldCafe[a]);
                         //fieldCafeInfo.add(fieldCafe[a]);
                       }
                     }
                   }
-                }
-                else if(timestamp.isAfter(now)){
-                  for(int a = 0; a < 7; a++ ) {
-                    if(a == 0){
-                      allHistory.add(DateFormat.yMMMMd().format(fieldCafe[a].toDate()));
+                } else if (timestamp.isAfter(now)) {
+                  for (int a = 0; a < 7; a++) {
+                    if (a == 0) {
+                      allHistory.add(
+                          DateFormat.yMMMMd().format(fieldCafe[a].toDate()));
                       //fieldCafeInfo.add(DateFormat.yMMMMd().format(fieldCafe[a].toDate()));
-                    }
-                    else if(a == 6 ){
+                    } else if (a == 6) {
                       allHistory.add(fieldCafe[a]);
                       //fieldCafeInfo.add(fieldCafe[a]);
-                      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('cafes').doc(cafe.id).get();
-                      Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                      DocumentSnapshot snapshot = await FirebaseFirestore
+                          .instance
+                          .collection('cafes')
+                          .doc(cafe.id)
+                          .get();
+                      Map<String, dynamic>? dataMap =
+                          snapshot.data() as Map<String, dynamic>?;
                       if (dataMap != null) {
                         List<dynamic>? infoList = dataMap['Info'];
                         if (infoList != null) {
@@ -124,8 +140,7 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                           //fieldCafeInfo.add(infoAtIndex);
                         }
                       }
-                    }
-                    else {
+                    } else {
                       allHistory.add(fieldCafe[a]);
                       //fieldCafeInfo.add(fieldCafe[a]);
                     }
@@ -140,12 +155,15 @@ class _IncomingHistoryState extends State<IncomingHistory> {
   }
 
   getHistoryTemple() async {
-    for(int i = 0; i < 2 ; i++){
-      for(int j = 0; j < userCreateJoin[i].length ; j++){
-        await FirebaseFirestore.instance.collection('temples')
-            .get().then((value) async {
-          for(var tem in value.docs){
-            final temRef = FirebaseFirestore.instance.collection('temples').doc(tem.id);
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < userCreateJoin[i].length; j++) {
+        await FirebaseFirestore.instance
+            .collection('temples')
+            .get()
+            .then((value) async {
+          for (var tem in value.docs) {
+            final temRef =
+                FirebaseFirestore.instance.collection('temples').doc(tem.id);
             temRef.get().then((temSnapshot) async {
               Map<String, dynamic> dataTem = temSnapshot.data() ?? {};
               if (dataTem.containsKey(userCreateJoin[i][j])) {
@@ -153,23 +171,30 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 DateTime now = DateTime.now();
                 DateTime timestamp = fieldTem[0].toDate();
 
-                if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+                if (timestamp.year == now.year &&
+                    timestamp.month == now.month &&
+                    timestamp.day == now.day) {
                   DateTime parsedTime = DateFormat('h:mm').parse(fieldTem[2]);
 
                   String formattedTime = DateFormat('h:mm').format(now);
                   DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
 
-                  if(parsedTime.isAfter(timeNow)){
-                    for(int a = 0; a < 7; a++ ) {
-                      if(a == 0){
-                        allHistory.add(DateFormat.yMMMMd().format(fieldTem[a].toDate()));
+                  if (parsedTime.isAfter(timeNow)) {
+                    for (int a = 0; a < 7; a++) {
+                      if (a == 0) {
+                        allHistory.add(
+                            DateFormat.yMMMMd().format(fieldTem[a].toDate()));
                         //fieldTemInfo.add(DateFormat.yMMMMd().format(fieldTem[a].toDate()));
-                      }
-                      else if(a == 6 ){
+                      } else if (a == 6) {
                         allHistory.add(fieldTem[a]);
                         //fieldTemInfo.add(fieldTem[a]);
-                        DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('temples').doc(tem.id).get();
-                        Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                        DocumentSnapshot snapshot = await FirebaseFirestore
+                            .instance
+                            .collection('temples')
+                            .doc(tem.id)
+                            .get();
+                        Map<String, dynamic>? dataMap =
+                            snapshot.data() as Map<String, dynamic>?;
                         if (dataMap != null) {
                           List<dynamic>? infoList = dataMap['Info'];
                           if (infoList != null) {
@@ -181,25 +206,28 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                             //fieldTemInfo.add(infoAtIndex);
                           }
                         }
-                      }
-                      else{
+                      } else {
                         allHistory.add(fieldTem[a]);
                         //fieldTemInfo.add(fieldTem[a]);
                       }
                     }
                   }
-                }
-                else if(timestamp.isAfter(now)){
-                  for(int a = 0; a < 7; a++ ) {
-                    if(a == 0){
-                      allHistory.add(DateFormat.yMMMMd().format(fieldTem[a].toDate()));
+                } else if (timestamp.isAfter(now)) {
+                  for (int a = 0; a < 7; a++) {
+                    if (a == 0) {
+                      allHistory.add(
+                          DateFormat.yMMMMd().format(fieldTem[a].toDate()));
                       //fieldTemInfo.add(DateFormat.yMMMMd().format(fieldTem[a].toDate()));
-                    }
-                    else if(a == 6 ){
+                    } else if (a == 6) {
                       allHistory.add(fieldTem[a]);
                       //fieldTemInfo.add(fieldTem[a]);
-                      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('temples').doc(tem.id).get();
-                      Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                      DocumentSnapshot snapshot = await FirebaseFirestore
+                          .instance
+                          .collection('temples')
+                          .doc(tem.id)
+                          .get();
+                      Map<String, dynamic>? dataMap =
+                          snapshot.data() as Map<String, dynamic>?;
                       if (dataMap != null) {
                         List<dynamic>? infoList = dataMap['Info'];
                         if (infoList != null) {
@@ -211,8 +239,7 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                           //fieldTemInfo.add(infoAtIndex);
                         }
                       }
-                    }
-                    else {
+                    } else {
                       allHistory.add(fieldTem[a]);
                       //fieldTemInfo.add(fieldTem[a]);
                     }
@@ -225,13 +252,17 @@ class _IncomingHistoryState extends State<IncomingHistory> {
       }
     }
   }
+
   getHistoryBeach() async {
-    for(int i = 0; i < 2 ; i++){
-      for(int j = 0; j < userCreateJoin[i].length ; j++){
-        await FirebaseFirestore.instance.collection('beaches')
-            .get().then((value) async {
-          for(var bea in value.docs){
-            final beaRef = FirebaseFirestore.instance.collection('beaches').doc(bea.id);
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < userCreateJoin[i].length; j++) {
+        await FirebaseFirestore.instance
+            .collection('beaches')
+            .get()
+            .then((value) async {
+          for (var bea in value.docs) {
+            final beaRef =
+                FirebaseFirestore.instance.collection('beaches').doc(bea.id);
             beaRef.get().then((beaSnapshot) async {
               Map<String, dynamic> dataBea = beaSnapshot.data() ?? {};
               if (dataBea.containsKey(userCreateJoin[i][j])) {
@@ -239,23 +270,30 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 DateTime now = DateTime.now();
                 DateTime timestamp = fieldBea[0].toDate();
 
-                if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+                if (timestamp.year == now.year &&
+                    timestamp.month == now.month &&
+                    timestamp.day == now.day) {
                   DateTime parsedTime = DateFormat('h:mm').parse(fieldBea[2]);
 
                   String formattedTime = DateFormat('h:mm').format(now);
                   DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
 
-                  if(parsedTime.isAfter(timeNow)){
-                    for(int a = 0; a < 7; a++ ) {
-                      if(a == 0){
-                        allHistory.add(DateFormat.yMMMMd().format(fieldBea[a].toDate()));
+                  if (parsedTime.isAfter(timeNow)) {
+                    for (int a = 0; a < 7; a++) {
+                      if (a == 0) {
+                        allHistory.add(
+                            DateFormat.yMMMMd().format(fieldBea[a].toDate()));
                         //fieldBeaInfo.add(DateFormat.yMMMMd().format(fieldBea[a].toDate()));
-                      }
-                      else if(a == 6 ){
+                      } else if (a == 6) {
                         allHistory.add(fieldBea[a]);
                         //fieldBeaInfo.add(fieldBea[a]);
-                        DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('beaches').doc(bea.id).get();
-                        Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                        DocumentSnapshot snapshot = await FirebaseFirestore
+                            .instance
+                            .collection('beaches')
+                            .doc(bea.id)
+                            .get();
+                        Map<String, dynamic>? dataMap =
+                            snapshot.data() as Map<String, dynamic>?;
                         if (dataMap != null) {
                           List<dynamic>? infoList = dataMap['Info'];
                           if (infoList != null) {
@@ -267,25 +305,28 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                             //fieldBeaInfo.add(infoAtIndex);
                           }
                         }
-                      }
-                      else{
+                      } else {
                         allHistory.add(fieldBea[a]);
                         //fieldBeaInfo.add(fieldBea[a]);
                       }
                     }
                   }
-                }
-                else if(timestamp.isAfter(now)){
-                  for(int a = 0; a < 7; a++ ) {
-                    if(a == 0){
-                      allHistory.add(DateFormat.yMMMMd().format(fieldBea[a].toDate()));
+                } else if (timestamp.isAfter(now)) {
+                  for (int a = 0; a < 7; a++) {
+                    if (a == 0) {
+                      allHistory.add(
+                          DateFormat.yMMMMd().format(fieldBea[a].toDate()));
                       //fieldBeaInfo.add(DateFormat.yMMMMd().format(fieldBea[a].toDate()));
-                    }
-                    else if(a == 6 ){
+                    } else if (a == 6) {
                       allHistory.add(fieldBea[a]);
                       //fieldBeaInfo.add(fieldBea[a]);
-                      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('beaches').doc(bea.id).get();
-                      Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                      DocumentSnapshot snapshot = await FirebaseFirestore
+                          .instance
+                          .collection('beaches')
+                          .doc(bea.id)
+                          .get();
+                      Map<String, dynamic>? dataMap =
+                          snapshot.data() as Map<String, dynamic>?;
                       if (dataMap != null) {
                         List<dynamic>? infoList = dataMap['Info'];
                         if (infoList != null) {
@@ -297,8 +338,7 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                           //fieldBeaInfo.add(infoAtIndex);
                         }
                       }
-                    }
-                    else {
+                    } else {
                       allHistory.add(fieldBea[a]);
                       //fieldBeaInfo.add(fieldBea[a]);
                     }
@@ -313,12 +353,16 @@ class _IncomingHistoryState extends State<IncomingHistory> {
   }
 
   getHistoryRestaurant() async {
-    for(int i = 0; i < 2 ; i++){
-      for(int j = 0; j < userCreateJoin[i].length ; j++){
-        await FirebaseFirestore.instance.collection('restaurants')
-            .get().then((value) async {
-          for(var res in value.docs){
-            final resRef = FirebaseFirestore.instance.collection('restaurants').doc(res.id);
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < userCreateJoin[i].length; j++) {
+        await FirebaseFirestore.instance
+            .collection('restaurants')
+            .get()
+            .then((value) async {
+          for (var res in value.docs) {
+            final resRef = FirebaseFirestore.instance
+                .collection('restaurants')
+                .doc(res.id);
             resRef.get().then((resSnapshot) async {
               Map<String, dynamic> dataRes = resSnapshot.data() ?? {};
               if (dataRes.containsKey(userCreateJoin[i][j])) {
@@ -326,23 +370,30 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 DateTime now = DateTime.now();
                 DateTime timestamp = fieldRes[0].toDate();
 
-                if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+                if (timestamp.year == now.year &&
+                    timestamp.month == now.month &&
+                    timestamp.day == now.day) {
                   DateTime parsedTime = DateFormat('h:mm').parse(fieldRes[2]);
 
                   String formattedTime = DateFormat('h:mm').format(now);
                   DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
 
-                  if(parsedTime.isAfter(timeNow)){
-                    for(int a = 0; a < 7; a++ ) {
-                      if(a == 0){
-                        allHistory.add(DateFormat.yMMMMd().format(fieldRes[a].toDate()));
+                  if (parsedTime.isAfter(timeNow)) {
+                    for (int a = 0; a < 7; a++) {
+                      if (a == 0) {
+                        allHistory.add(
+                            DateFormat.yMMMMd().format(fieldRes[a].toDate()));
                         //fieldResInfo.add(DateFormat.yMMMMd().format(fieldRes[a].toDate()));
-                      }
-                      else if(a == 6 ){
+                      } else if (a == 6) {
                         allHistory.add(fieldRes[a]);
                         //fieldResInfo.add(fieldRes[a]);
-                        DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('restaurants').doc(res.id).get();
-                        Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                        DocumentSnapshot snapshot = await FirebaseFirestore
+                            .instance
+                            .collection('restaurants')
+                            .doc(res.id)
+                            .get();
+                        Map<String, dynamic>? dataMap =
+                            snapshot.data() as Map<String, dynamic>?;
                         if (dataMap != null) {
                           List<dynamic>? infoList = dataMap['Info'];
                           if (infoList != null) {
@@ -354,25 +405,28 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                             //fieldResInfo.add(infoAtIndex);
                           }
                         }
-                      }
-                      else{
+                      } else {
                         allHistory.add(fieldRes[a]);
                         //fieldResInfo.add(fieldRes[a]);
                       }
                     }
                   }
-                }
-                else if(timestamp.isAfter(now)){
-                  for(int a = 0; a < 7; a++ ) {
-                    if(a == 0){
-                      allHistory.add(DateFormat.yMMMMd().format(fieldRes[a].toDate()));
+                } else if (timestamp.isAfter(now)) {
+                  for (int a = 0; a < 7; a++) {
+                    if (a == 0) {
+                      allHistory.add(
+                          DateFormat.yMMMMd().format(fieldRes[a].toDate()));
                       //fieldResInfo.add(DateFormat.yMMMMd().format(fieldRes[a].toDate()));
-                    }
-                    else if(a == 6 ){
+                    } else if (a == 6) {
                       allHistory.add(fieldRes[a]);
                       //fieldResInfo.add(fieldRes[a]);
-                      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('restaurants').doc(res.id).get();
-                      Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                      DocumentSnapshot snapshot = await FirebaseFirestore
+                          .instance
+                          .collection('restaurants')
+                          .doc(res.id)
+                          .get();
+                      Map<String, dynamic>? dataMap =
+                          snapshot.data() as Map<String, dynamic>?;
                       if (dataMap != null) {
                         List<dynamic>? infoList = dataMap['Info'];
                         if (infoList != null) {
@@ -384,8 +438,7 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                           //fieldResInfo.add(infoAtIndex);
                         }
                       }
-                    }
-                    else {
+                    } else {
                       allHistory.add(fieldRes[a]);
                       //fieldResInfo.add(fieldRes[a]);
                     }
@@ -400,12 +453,15 @@ class _IncomingHistoryState extends State<IncomingHistory> {
   }
 
   getHistoryPark() async {
-    for(int i = 0; i < 2 ; i++){
-      for(int j = 0; j < userCreateJoin[i].length ; j++){
-        await FirebaseFirestore.instance.collection('parks')
-            .get().then((value) async {
-          for(var park in value.docs){
-            final parkRef = FirebaseFirestore.instance.collection('parks').doc(park.id);
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < userCreateJoin[i].length; j++) {
+        await FirebaseFirestore.instance
+            .collection('parks')
+            .get()
+            .then((value) async {
+          for (var park in value.docs) {
+            final parkRef =
+                FirebaseFirestore.instance.collection('parks').doc(park.id);
             parkRef.get().then((parkSnapshot) async {
               Map<String, dynamic> dataPark = parkSnapshot.data() ?? {};
               if (dataPark.containsKey(userCreateJoin[i][j])) {
@@ -413,24 +469,30 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 DateTime now = DateTime.now();
                 DateTime timestamp = fieldPark[0].toDate();
 
-                if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
+                if (timestamp.year == now.year &&
+                    timestamp.month == now.month &&
+                    timestamp.day == now.day) {
                   DateTime parsedTime = DateFormat('h:mm').parse(fieldPark[2]);
 
                   String formattedTime = DateFormat('h:mm').format(now);
                   DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
 
-                  if(parsedTime.isAfter(timeNow)){
-                    for(int a = 0; a < 7; a++ ) {
-                      if(a == 0){
-                        allHistory.add(DateFormat.yMMMMd().format(fieldPark[a].toDate()));
+                  if (parsedTime.isAfter(timeNow)) {
+                    for (int a = 0; a < 7; a++) {
+                      if (a == 0) {
+                        allHistory.add(
+                            DateFormat.yMMMMd().format(fieldPark[a].toDate()));
                         //fieldParkInfo.add(DateFormat.yMMMMd().format(fieldPark[a].toDate()));
-
-                      }
-                      else if(a == 6 ){
+                      } else if (a == 6) {
                         allHistory.add(fieldPark[a]);
                         //fieldParkInfo.add(fieldPark[a]);
-                        DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('parks').doc(park.id).get();
-                        Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                        DocumentSnapshot snapshot = await FirebaseFirestore
+                            .instance
+                            .collection('parks')
+                            .doc(park.id)
+                            .get();
+                        Map<String, dynamic>? dataMap =
+                            snapshot.data() as Map<String, dynamic>?;
                         if (dataMap != null) {
                           List<dynamic>? infoList = dataMap['Info'];
                           if (infoList != null) {
@@ -442,25 +504,28 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                             //fieldParkInfo.add(infoAtIndex);
                           }
                         }
-                      }
-                      else{
+                      } else {
                         allHistory.add(fieldPark[a]);
                         //fieldParkInfo.add(fieldPark[a]);
                       }
                     }
                   }
-                }
-                else if(timestamp.isAfter(now)){
-                  for(int a = 0; a < 7; a++ ) {
-                    if(a == 0){
-                      allHistory.add(DateFormat.yMMMMd().format(fieldPark[a].toDate()));
+                } else if (timestamp.isAfter(now)) {
+                  for (int a = 0; a < 7; a++) {
+                    if (a == 0) {
+                      allHistory.add(
+                          DateFormat.yMMMMd().format(fieldPark[a].toDate()));
                       //fieldParkInfo.add(DateFormat.yMMMMd().format(fieldPark[a].toDate()));
-                    }
-                    else if(a == 6 ){
+                    } else if (a == 6) {
                       allHistory.add(fieldPark[a]);
                       //fieldParkInfo.add(fieldPark[a]);
-                      DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('parks').doc(park.id).get();
-                      Map<String, dynamic>? dataMap = snapshot.data() as Map<String, dynamic>?;
+                      DocumentSnapshot snapshot = await FirebaseFirestore
+                          .instance
+                          .collection('parks')
+                          .doc(park.id)
+                          .get();
+                      Map<String, dynamic>? dataMap =
+                          snapshot.data() as Map<String, dynamic>?;
                       if (dataMap != null) {
                         List<dynamic>? infoList = dataMap['Info'];
                         if (infoList != null) {
@@ -472,8 +537,7 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                           //fieldParkInfo.add(infoAtIndex);
                         }
                       }
-                    }
-                    else {
+                    } else {
                       allHistory.add(fieldPark[a]);
                       //fieldParkInfo.add(fieldPark[a]);
                     }
@@ -494,6 +558,7 @@ class _IncomingHistoryState extends State<IncomingHistory> {
       });
     });
   }
+
   // mixALlplace(){
   //   templeLength = fieldTemInfo.length;
   //   restaurantLength = fieldResInfo.length;
@@ -564,201 +629,125 @@ class _IncomingHistoryState extends State<IncomingHistory> {
     Colors.brown,
     Colors.red,
   ];
+
   @override
   Widget build(BuildContext context) {
     print(allHistory);
     print(allHistory.length);
-    return _timerFinished? GridView.count(
-      childAspectRatio: 2.2,
-      crossAxisCount: 1,
-      shrinkWrap: true,
-      children: [
-        for (int num = 0; num < allHistory.length; num+=9)
-        // for(int numArray = 0; numArray < 6 ; numArray++)
-          Column(
+    return _timerFinished
+        ? GridView.count(
+            childAspectRatio: 2.2,
+            crossAxisCount: 1,
+            shrinkWrap: true,
             children: [
-              Container(
-                width: 300,
-                height: 140,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(8),
-                    topLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                    bottomLeft: Radius.circular(8),
-                  ),
-                  boxShadow: Styles.boxShadows,
-                ),
-                child: Column(
+              for (int num = 0; num < allHistory.length; num += 9)
+                Column(
                   children: [
-                    const SizedBox(height: 15),
-                    Row(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Padding(
-                            padding:
-                            const EdgeInsets.only(top: 5.0, left: 30),
-                            child: Container(
-                              width: 85,
-                              height: 85,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    //image:
-                                    //AssetImage('assets/images/beach.png'),
-                                  image: NetworkImage(allHistory[num+8]),
-                                    fit: BoxFit.fill),
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: Styles.boxShadows,
+                    Container(
+                      width: 300,
+                      height: 140,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(8),
+                          topLeft: Radius.circular(8),
+                          bottomRight: Radius.circular(8),
+                          bottomLeft: Radius.circular(8),
+                        ),
+                        boxShadow: Styles.boxShadows,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 35,
+                            width: 310,
+                            decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(8),
+                                topLeft: Radius.circular(8),
+                              ),
+
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 3.0, left: 28),
+                              child: Text(
+                                allHistory[num + 7],
+                                style: GoogleFonts.bebasNeue(fontSize: 16),
+                                maxLines: 1,
+                                overflow: TextOverflow.clip,
                               ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
                             children: [
-                              Text(
-                                allHistory[num]+" ("+allHistory[num+7]+" )",
-                                // DateFormat.yMMMMd().format(dataList[num].value[0].toDate()),
-                                // "30 October",
-                                style: GoogleFonts.bebasNeue(fontSize: 20),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Time ",
-                                    style:
-                                    GoogleFonts.bebasNeue(fontSize: 20),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 5.0, left: 30),
+                                  child: Container(
+                                    width: 85,
+                                    height: 85,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image:
+                                              NetworkImage(allHistory[num + 8]),
+                                          fit: BoxFit.fill),
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      boxShadow: Styles.boxShadows,
+                                    ),
                                   ),
-                                  // Text(dataList[num].value[1]+"-"+dataList[num].value[2]),
-                                  Text(
-                                      "${allHistory[num+1]}"+"-"+"${allHistory[num+2]}"),
-                                ],
+                                ),
                               ),
-                              const SizedBox(
-                                height: 2,
-                              ),
-                              // Text(dataList[num].value[5],
-                              Text(
-                                allHistory[num+5],
-                                //"text",
-                                style: GoogleFonts.poppins(fontSize: 10),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      allHistory[num],
+                                      style:
+                                          GoogleFonts.bebasNeue(fontSize: 20),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Time ",
+                                          style: GoogleFonts.bebasNeue(
+                                              fontSize: 20),
+                                        ),
+                                        // Text(dataList[num].value[1]+"-"+dataList[num].value[2]),
+                                        Text("${allHistory[num + 1]}" +
+                                            "-" +
+                                            "${allHistory[num + 2]}"),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 2,
+                                    ),
+                                    // Text(dataList[num].value[5],
+                                    Text(
+                                      allHistory[num + 5],
+                                      //"text",
+                                      style: GoogleFonts.poppins(fontSize: 10),
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 10.0,left: 22),
-                    //   child: Row(
-                    //     children: [
-                    //       // Expanded(
-                    //       //   flex: 70,
-                    //       //   child: Container(
-                    //       //     child: Row(
-                    //       //       children: [
-                    //       //         for (int count = 8; count < allHistory[num].length-1; count++)
-                    //       //           Padding(
-                    //       //             padding: const EdgeInsets.only(left: 5.0),
-                    //       //             child: Container(
-                    //       //               width: 20,
-                    //       //               height: 20,
-                    //       //               decoration: BoxDecoration(
-                    //       //                 color: colorUser[count],
-                    //       //                 borderRadius:
-                    //       //                 BorderRadius.circular(24),
-                    //       //                 boxShadow: Styles.boxShadows,
-                    //       //               ),
-                    //       //               child: const Icon(
-                    //       //                 Icons.person_2_outlined,
-                    //       //                 size: 12,
-                    //       //                 color: Colors.white,
-                    //       //               ),
-                    //       //             ),
-                    //       //           ),
-                    //       //       ],
-                    //       //     ),
-                    //       //   ),
-                    //       // ),
-                    //       Expanded(
-                    //         flex: 30,
-                    //         child: Container(
-                    //           child: Row(
-                    //             children: [
-                    //               Container(
-                    //                 width: 25,
-                    //                 decoration: BoxDecoration(
-                    //                     color: Colors.blue,
-                    //                     borderRadius: BorderRadius.circular(16)),
-                    //                 child: Row(
-                    //                   crossAxisAlignment:
-                    //                   CrossAxisAlignment.center,
-                    //                   mainAxisAlignment: MainAxisAlignment.center,
-                    //                   children: [
-                    //                     Text(
-                    //                       allHistory[num+3],
-                    //                       //"B",
-                    //                       style: TextStyle(
-                    //                           color: Colors.white,
-                    //                           fontSize: 12,
-                    //                           fontWeight: FontWeight.bold),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //               // const SizedBox(
-                    //               //   width: 5,
-                    //               // ),
-                    //               // Text(
-                    //               //     "${allHistory[num].length-9}"+"/"+"${allHistory[num][4]}",
-                    //               //     style: TextStyle(fontSize: 10)),
-                    //               // const Padding(
-                    //               //   padding:
-                    //               //   EdgeInsets.only(left: 2.0, bottom: 2),
-                    //               //   child: Icon(
-                    //               //     Icons.person,
-                    //               //     size: 14,
-                    //               //   ),
-                    //               // ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 ),
-              ),
-              // Container(
-              //   width: 302,
-              //   height: 20,
-              //   decoration: BoxDecoration(
-              //     color: Colors.green,
-              //     borderRadius: BorderRadius.only(
-              //       bottomRight: Radius.circular(8),
-              //       bottomLeft: Radius.circular(8),
-              //     ),
-              //     boxShadow: Styles.boxShadows,
-              //   ),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: const [
-              //       Padding(padding: EdgeInsets.symmetric(vertical: 5),
-              //         child: Text("Success! Thanks for join us",style: TextStyle(color: Colors.white,fontSize: 10)),
-              //       )
-              //     ],
-              //   ),
-              // ),
             ],
-          ),
-      ],
-    ):Center(child: CircularProgressIndicator());
+          )
+        : Center(child: CircularProgressIndicator());
   }
 }

@@ -606,7 +606,27 @@ class _FinishHistoryState extends State<FinishHistory> {
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(height: 15),
+                    Container(
+                      height: 35,
+                      width: 310,
+                      decoration: BoxDecoration(
+                        color: Colors.deepOrangeAccent,
+                        borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(8),
+                          topLeft: Radius.circular(8),
+                        ),
+                      ),
+                      child: Padding(
+                        padding:
+                        const EdgeInsets.only(top: 3.0, left: 28),
+                        child: Text(
+                          allHistory[num + 7],
+                          style: GoogleFonts.bebasNeue(fontSize: 16),
+                          maxLines: 1,
+                          overflow: TextOverflow.clip,
+                        ),
+                      ),
+                    ),
                     Row(
                       children: [
                         Align(
@@ -637,7 +657,7 @@ class _FinishHistoryState extends State<FinishHistory> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                allHistory[num]+" ("+allHistory[num+7]+" )",
+                                allHistory[num],
                                 // DateFormat.yMMMMd().format(dataList[num].value[0].toDate()),
                                 // "30 October",
                                 style: GoogleFonts.bebasNeue(fontSize: 20),
