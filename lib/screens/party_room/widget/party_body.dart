@@ -616,14 +616,72 @@ class _PartyBodyState extends State<PartyBody> {
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: const Text("Alert"),
-                                          content: const Text(
-                                              "You have been joined already"),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Text("You have already joined."),
+                                              const SizedBox(height: 8),
+                                              Text(
+                                                "Do you want to leave this Party?",
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                           actions: [
                                             TextButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
-                                              child: const Text("OK"),
+                                              child: const Text("Cancel"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                if(place == "Temple"){
+                                                  await firestoreDocument.collection('temples').doc(placeId).update({
+                                                    dataList[num].value[6] : FieldValue.arrayRemove([loggedInUser.uid]),});
+                                                }
+                                                else if(place == "Restaurant"){
+                                                  await firestoreDocument.collection('restaurants').doc(placeId).update({
+                                                    dataList[num].value[6] : FieldValue.arrayRemove([loggedInUser.uid]),});
+                                                }
+                                                else if(place == "Beach"){
+                                                  await firestoreDocument.collection('beaches').doc(placeId).update({
+                                                    dataList[num].value[6] : FieldValue.arrayRemove([loggedInUser.uid]),});
+                                                }
+                                                else if(place == "Park"){
+                                                  await firestoreDocument.collection('parks').doc(placeId).update({
+                                                    dataList[num].value[6] : FieldValue.arrayRemove([loggedInUser.uid]),});
+                                                }
+                                                else{
+                                                  await firestoreDocument.collection('cafes').doc(placeId).update({
+                                                    dataList[num].value[6] : FieldValue.arrayRemove([loggedInUser.uid]),});
+                                                }
+                                                String? j = loggedInUser.joinCount;
+                                                int jj = int.parse(j!) - 1;
+                                                String jjj = jj.toString();
+                                                await _users.doc(user!.uid)
+                                                    .update({"joinCount": jjj});
+                                                await _users.doc(user!.uid).update({
+                                                "join" : FieldValue.arrayRemove([dataList[num].value[6]]),});
+                                                // Handle leave action here
+                                                Navigator.pop(context);
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                      const PartyScreen(),
+                                                    ));
+                                              },
+                                              child: const Text(
+                                                "Leave",
+                                                style: TextStyle(
+                                                  color: Colors.red,
+                                                ),
+                                              ),
                                             ),
                                           ],
                                         );
