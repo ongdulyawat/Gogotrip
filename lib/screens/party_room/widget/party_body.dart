@@ -99,12 +99,12 @@ class _PartyBodyState extends State<PartyBody> {
           dataCheck = dataList.length;
           for (int i = dataCheck - 1; i >= 0; i--) {
             DateTime now = DateTime.now();
-            String formattedTime = DateFormat('h:mm').format(now);
-            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+            String formattedTime = DateFormat('h:mm a').format(now);
+            DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+                DateFormat('h:mm a').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -137,12 +137,12 @@ class _PartyBodyState extends State<PartyBody> {
           dataCheck = dataList.length;
           for (int i = dataCheck - 1; i >= 0; i--) {
             DateTime now = DateTime.now();
-            String formattedTime = DateFormat('h:mm').format(now);
-            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+            String formattedTime = DateFormat('h:mm a').format(now);
+            DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+                DateFormat('h:mm a').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -175,12 +175,12 @@ class _PartyBodyState extends State<PartyBody> {
           dataCheck = dataList.length;
           for (int i = dataCheck - 1; i >= 0; i--) {
             DateTime now = DateTime.now();
-            String formattedTime = DateFormat('h:mm').format(now);
-            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+            String formattedTime = DateFormat('h:mm a').format(now);
+            DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+                DateFormat('h:mm a').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -213,12 +213,12 @@ class _PartyBodyState extends State<PartyBody> {
           dataCheck = dataList.length;
           for (int i = dataCheck - 1; i >= 0; i--) {
             DateTime now = DateTime.now();
-            String formattedTime = DateFormat('h:mm').format(now);
-            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+            String formattedTime = DateFormat('h:mm a').format(now);
+            DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+                DateFormat('h:mm a').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&
@@ -252,12 +252,12 @@ class _PartyBodyState extends State<PartyBody> {
 
           for (int i = dataCheck - 1; i >= 0; i--) {
             DateTime now = DateTime.now();
-            String formattedTime = DateFormat('h:mm').format(now);
-            DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+            String formattedTime = DateFormat('h:mm a').format(now);
+            DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
             DateTime timestamp = dataList[i].value[0].toDate();
             DateTime parsedTime =
-                DateFormat('h:mm').parse(dataList[i].value[2]);
+                DateFormat('h:mm a').parse(dataList[i].value[2]);
 
             if (timestamp.year == now.year &&
                 timestamp.month == now.month &&

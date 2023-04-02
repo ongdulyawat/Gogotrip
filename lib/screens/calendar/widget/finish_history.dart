@@ -74,10 +74,10 @@ class _FinishHistoryState extends State<FinishHistory> {
                 DateTime timestamp = fieldCafe[0].toDate();
 
                 if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldCafe[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldCafe[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
 
                   if(parsedTime.isBefore(timeNow)){
@@ -161,10 +161,10 @@ class _FinishHistoryState extends State<FinishHistory> {
                 DateTime timestamp = fieldTem[0].toDate();
 
                 if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldTem[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldTem[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if(parsedTime.isBefore(timeNow)){
                     for(int a = 0; a < 7; a++ ) {
@@ -247,10 +247,10 @@ class _FinishHistoryState extends State<FinishHistory> {
                 DateTime timestamp = fieldBea[0].toDate();
 
                 if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldBea[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldBea[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if(parsedTime.isBefore(timeNow)){
                     for(int a = 0; a < 7; a++ ) {
@@ -334,10 +334,10 @@ class _FinishHistoryState extends State<FinishHistory> {
                 DateTime timestamp = fieldRes[0].toDate();
 
                 if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldRes[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldRes[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if(parsedTime.isBefore(timeNow)){
                     for(int a = 0; a < 7; a++ ) {
@@ -420,10 +420,10 @@ class _FinishHistoryState extends State<FinishHistory> {
                 DateTime timestamp = fieldPark[0].toDate();
 
                 if(timestamp.year == now.year && timestamp.month == now.month && timestamp.day == now.day){
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldPark[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldPark[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if(parsedTime.isBefore(timeNow)){
                     for(int a = 0; a < 7; a++ ) {

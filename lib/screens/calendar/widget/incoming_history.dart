@@ -75,10 +75,10 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 if (timestamp.year == now.year &&
                     timestamp.month == now.month &&
                     timestamp.day == now.day) {
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldCafe[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldCafe[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if (parsedTime.isAfter(timeNow)) {
                     for (int a = 0; a < 7; a++) {
@@ -174,10 +174,10 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 if (timestamp.year == now.year &&
                     timestamp.month == now.month &&
                     timestamp.day == now.day) {
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldTem[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldTem[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if (parsedTime.isAfter(timeNow)) {
                     for (int a = 0; a < 7; a++) {
@@ -273,10 +273,10 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 if (timestamp.year == now.year &&
                     timestamp.month == now.month &&
                     timestamp.day == now.day) {
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldBea[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldBea[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if (parsedTime.isAfter(timeNow)) {
                     for (int a = 0; a < 7; a++) {
@@ -373,10 +373,10 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 if (timestamp.year == now.year &&
                     timestamp.month == now.month &&
                     timestamp.day == now.day) {
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldRes[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldRes[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if (parsedTime.isAfter(timeNow)) {
                     for (int a = 0; a < 7; a++) {
@@ -472,10 +472,10 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 if (timestamp.year == now.year &&
                     timestamp.month == now.month &&
                     timestamp.day == now.day) {
-                  DateTime parsedTime = DateFormat('h:mm').parse(fieldPark[2]);
+                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldPark[2]);
 
-                  String formattedTime = DateFormat('h:mm').format(now);
-                  DateTime timeNow = DateFormat('hh:mm').parse(formattedTime);
+                  String formattedTime = DateFormat('h:mm a').format(now);
+                  DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
 
                   if (parsedTime.isAfter(timeNow)) {
                     for (int a = 0; a < 7; a++) {
@@ -601,10 +601,10 @@ class _IncomingHistoryState extends State<IncomingHistory> {
     Future.delayed(Duration(milliseconds: 12000), () {
       getHistoryBeach();
     });
-    Future.delayed(Duration(milliseconds: 17000), () {
+    Future.delayed(Duration(milliseconds: 18000), () {
       getHistoryRestaurant();
     });
-    Future.delayed(Duration(milliseconds: 22000), () {
+    Future.delayed(Duration(milliseconds: 23000), () {
       getHistoryPark();
     });
     // Future.delayed(Duration(milliseconds: 27000), () {
