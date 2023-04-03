@@ -977,7 +977,7 @@ class _PartyBodyState extends State<PartyBody> {
                                     children: [
                                       for (int count = 0;
                                           count <
-                                              dataList[num].value.length - 8;
+                                              dataList[num].value.length - 7;
                                           count++)
                                         Padding(
                                           padding: EdgeInsets.only(left: 5.0),
@@ -986,7 +986,7 @@ class _PartyBodyState extends State<PartyBody> {
                                               await FirebaseFirestore.instance
                                                   .collection('users')
                                                   .doc(dataList[num]
-                                                      .value[count + 8])
+                                                      .value[count + 7])
                                                   .get()
                                                   .then((DocumentSnapshot
                                                       documentSnapshot) {
@@ -1044,7 +1044,7 @@ class _PartyBodyState extends State<PartyBody> {
                                                             const SizedBox(
                                                               height: 10,
                                                             ), //SizedBox
-                                                            Text(
+                                                            count == dataList[num].value.length -8?Text(
                                                               'Participant',
                                                               style: TextStyle(
                                                                 fontSize: 30,
@@ -1053,6 +1053,16 @@ class _PartyBodyState extends State<PartyBody> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w500,
+                                                              ), //Textstyle
+                                                            ):Text(
+                                                              'Owner',
+                                                              style: TextStyle(
+                                                                fontSize: 30,
+                                                                color: Colors
+                                                                    .green[900],
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w500,
                                                               ), //Textstyle
                                                             ), //Text
                                                             const SizedBox(

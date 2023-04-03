@@ -691,12 +691,13 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                                         Text(
                                           "Time ",
                                           style: GoogleFonts.deliusUnicase(
-                                              fontSize: 16),
+                                              fontSize: 14),
                                         ),
-                                        // Text(dataList[num].value[1]+"-"+dataList[num].value[2]),
                                         Text("${allHistory[num + 1]}" +
                                             "-" +
-                                            "${allHistory[num + 2]}"),
+                                            "${allHistory[num + 2]}",
+                                            style: GoogleFonts.deliusUnicase(
+                                            fontSize: 12),),
                                       ],
                                     ),
                                     const SizedBox(

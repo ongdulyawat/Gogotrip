@@ -192,7 +192,6 @@ class _RegisterBodyState extends State<RegisterBody> {
             Padding(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: GestureDetector(
-                // onPressed: () => _create(),
                 onTap: () async {
                   final isValid = formKey.currentState!.validate();
                   if (!isValid) return;
@@ -210,6 +209,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       UserModel userModel = UserModel();
                       userModel.email = user!.email;
                       userModel.uid = user!.uid;
+                      userModel.email = _emailController.text.trim();
                       userModel.firstname = _firstnameController.text.trim();
                       userModel.lastname = _lastnameController.text.trim();
                       userModel.username = _usernameController.text.trim();
