@@ -988,7 +988,6 @@ class _LocationCardState extends State<LocationCard> {
                             MaterialPageRoute(
                               builder: (context) => const DetailScreen(
                                 data: null,
-                                // data: "${_data?['result'][index]['place_id']}"
                               ),
                             ));
                       },
@@ -1006,7 +1005,7 @@ class _LocationCardState extends State<LocationCard> {
                                         "${dataDetailSearch?['result'][index]['thumbnail_url']}",
                                       )
                                     : const AssetImage(
-                                            "assets/images/beach.png")
+                                            "assets/images/no-pictures.png")
                                         as ImageProvider,
                                 fit: BoxFit.fill)),
                         child: Column(

@@ -15,9 +15,6 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   final TextEditingController _searchController = TextEditingController();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  void _clearSearch() {
-    _searchController.clear();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,14 +44,6 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                   border: InputBorder.none,
                   fillColor: Colors.white,
-                  // prefixIcon: Padding(
-                  //   padding: const EdgeInsets.only(right: 8, left: 8),
-                  //   child:
-                  //   Icon(
-                  //     Icons.search,
-                  //     color: Colors.grey[500],
-                  //   ),
-                  // ),
                   prefixIconConstraints:
                   const BoxConstraints(maxHeight: 20, maxWidth: 40),
                   prefixIconColor: Colors.black,
@@ -62,13 +51,6 @@ class _SearchBarState extends State<SearchBar> {
                 style: const TextStyle(fontFamily: 'Nunito', color: Colors.black),
               ),
             ),
-            // IconButton(
-            //   onPressed: _clearSearch,
-            //   icon: Icon(
-            //     Icons.clear,
-            //     color: Colors.grey[500],
-            //   ),
-            // ),
             IconButton(
               onPressed: () {
                 print(_searchController.text.toString());

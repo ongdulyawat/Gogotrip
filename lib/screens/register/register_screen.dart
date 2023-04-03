@@ -35,6 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 RegisterBody(),
                 SizedBox(
                   height: 25,
+                  width: 400,
                 ),
               ],
             ),
