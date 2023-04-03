@@ -575,7 +575,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                                 children: [
                                                   Container(
                                                     child: Text(
-                                                      idsRes[5 * (index) + 3],
+                                                      idsBea[5 * (index) + 3],
                                                       style: const TextStyle(
                                                           fontSize: 14,
                                                           fontWeight:
