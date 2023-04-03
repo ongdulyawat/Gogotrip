@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
-import 'package:gogotrip/screens/calendar/widget/calendar_body.dart';
 import 'package:gogotrip/screens/calendar/widget/calendar_header.dart';
 import 'package:gogotrip/screens/calendar/widget/finish_history.dart';
 import 'package:gogotrip/screens/calendar/widget/incoming_history.dart';
@@ -31,7 +30,7 @@ class _CalendarScreenState extends State<CalendarScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      backgroundColor: Styles.bgBackground,
+      backgroundColor: Styles.bgBackground1,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -44,10 +43,9 @@ class _CalendarScreenState extends State<CalendarScreen> with SingleTickerProvid
                   children: [
                     SizedBox(height: 25),
                     Container(
-                      // height: 50,
                       width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
-                          color: Colors.redAccent,
+                          color: Styles.buttonColor,
                           borderRadius: BorderRadius.circular(5)),
                       child: Column(
                         children: [

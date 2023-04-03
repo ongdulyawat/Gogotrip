@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gogotrip/constants/styles.dart';
 import 'package:gogotrip/screens/home/widget/home_footer.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../controllers/user_model.dart';
 import '../detail_place/detail_screen.dart';
 
@@ -97,7 +98,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                       }
                     }
                   }
-                  print(ids);
                 });
                 countFav++;
               }
@@ -127,7 +127,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                       }
                     }
                   }
-                  print(idsRes);
                 });
                 countFavRes++;
               }
@@ -153,7 +152,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                       }
                     }
                   }
-                  print(idsBea);
                 });
                 countFavBea++;
               }
@@ -179,7 +177,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                       }
                     }
                   }
-                  print(idsPark);
                 });
                 countFavPark++;
               }
@@ -205,7 +202,6 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                       }
                     }
                   }
-                  print(idsCafe);
                 });
                 countFavCafe++;
               }
@@ -251,23 +247,25 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
   Widget build(BuildContext context) {
     return _timerFinished
         ? Scaffold(
-            backgroundColor: Styles.bgBackground,
+            backgroundColor: Styles.bgBackground1,
             body: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15.0, top: 45, bottom: 20),
                     child: Text(
                       "Temple",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                      style: GoogleFonts.deliusUnicase(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   ids.length != 0
                       ? Container(
-                          height: 220,
+                          height: 180,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: countFav,
@@ -319,104 +317,107 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           color: Colors.white,
-                                          boxShadow: Styles.boxShadows),
+                                          boxShadow: Styles.boxShadows,
+                                          image: DecorationImage(
+                                              image: ids[(5 * index) + 4] != ''
+                                                  ? NetworkImage(
+                                                      ids[(5 * index) + 4])
+                                                  : const AssetImage(
+                                                          "assets/images/beach.png")
+                                                      as ImageProvider,
+                                              fit: BoxFit.fill)),
                                       child: Column(
                                         children: [
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Container(
-                                            height: 105,
-                                            width: 125,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: ids[(5 * index) +
-                                                                4] !=
-                                                            ''
-                                                        ? NetworkImage(ids[
-                                                            (5 * index) + 4])
-                                                        : const AssetImage(
-                                                                "assets/images/beach.png")
-                                                            as ImageProvider,
-                                                    fit: BoxFit.fill),
-                                                color: Colors.white,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                boxShadow: Styles.boxShadows),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3.0, right: 3),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    ids[(5 * index) + 3],
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    overflow: TextOverflow.clip,
-                                                    maxLines: 1,
-                                                    softWrap: true,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 6.0, right: 5),
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.star,
+                                                        color: Colors.lime,
+                                                        size: 17,
+                                                      ),
+                                                      Text(
+                                                        rateTem[index],
+                                                        //"4",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Text("กรุงเทพมหานคร",
-                                                        style: TextStyle(
-                                                            fontSize: 16)),
-                                                    const SizedBox(width: 3),
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 6.0,
-                                                                  right: 5),
-                                                          child: Row(
-                                                            children: [
-                                                              const Icon(
-                                                                Icons.star,
-                                                                color:
-                                                                    Colors.lime,
-                                                                size: 17,
-                                                              ),
-                                                              Text(
-                                                                rateTem[index],
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 75,
+                                          ),
+                                          Container(
+                                            width: 145,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Styles.bgBackground1,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                      ids[(5 * index) + 3],
+                                                      style: GoogleFonts
+                                                          .deliusUnicase(
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      maxLines: 1,
+                                                      softWrap: true,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .location_on_outlined,
+                                                        color: Colors.black,
+                                                        size: 14,
+                                                      ),
+                                                      Text("กรุงเทพมหานคร",
+                                                          style: GoogleFonts
+                                                              .deliusUnicase(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -432,7 +433,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               alignment: Alignment.center,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.favorite,
                                     size: 25,
@@ -441,25 +442,27 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   SizedBox(width: 10),
                                   Text(
                                     "no favorite temple yet.",
-                                    style: TextStyle(
-                                        fontSize: 25,
+                                    style: GoogleFonts.deliusUnicase(
                                         fontWeight: FontWeight.w600,
+                                        fontSize: 16,
                                         color: Colors.black45),
                                   ),
                                 ],
                               )),
                         ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15.0, top: 45, bottom: 20),
                     child: Text(
                       "Beach",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                      style: GoogleFonts.deliusUnicase(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   idsBea.isNotEmpty
                       ? SizedBox(
-                          height: 220,
+                          height: 180,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: countFavBea,
@@ -511,104 +514,104 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           color: Colors.white,
-                                          boxShadow: Styles.boxShadows),
+                                          boxShadow: Styles.boxShadows,
+                                          image: DecorationImage(
+                                              image: idsBea[(5 * index) + 4] !=
+                                                      ''
+                                                  ? NetworkImage(
+                                                      idsBea[(5 * index) + 4])
+                                                  : const AssetImage(
+                                                          "assets/images/beach.png")
+                                                      as ImageProvider,
+                                              fit: BoxFit.fill)),
                                       child: Column(
                                         children: [
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Container(
-                                            height: 105,
-                                            width: 125,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: idsBea[(5 * index) +
-                                                                4] !=
-                                                            ''
-                                                        ? NetworkImage(idsBea[
-                                                            (5 * index) + 4])
-                                                        : const AssetImage(
-                                                                "assets/images/beach.png")
-                                                            as ImageProvider,
-                                                    fit: BoxFit.fill),
-                                                color: Colors.white,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                boxShadow: Styles.boxShadows),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3.0, right: 3),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    idsRes[5 * (index) + 3],
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    overflow: TextOverflow.clip,
-                                                    maxLines: 1,
-                                                    softWrap: true,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 6.0, right: 5),
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.star,
+                                                        color: Colors.lime,
+                                                        size: 17,
+                                                      ),
+                                                      Text(
+                                                        rateBea[index],
+                                                        //"4",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Text("กรุงเทพมหานคร",
-                                                        style: TextStyle(
-                                                            fontSize: 16)),
-                                                    const SizedBox(width: 3),
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 6.0,
-                                                                  right: 5),
-                                                          child: Row(
-                                                            children: [
-                                                              const Icon(
-                                                                Icons.star,
-                                                                color:
-                                                                    Colors.lime,
-                                                                size: 17,
-                                                              ),
-                                                              Text(
-                                                                rateBea[index],
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 75,
+                                          ),
+                                          Container(
+                                            width: 145,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Styles.bgBackground1,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                      idsRes[5 * (index) + 3],
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      maxLines: 1,
+                                                      softWrap: true,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .location_on_outlined,
+                                                        color: Colors.black,
+                                                        size: 14,
+                                                      ),
+                                                      Text("กรุงเทพมหานคร",
+                                                          style: GoogleFonts
+                                                              .deliusUnicase(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -625,7 +628,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               alignment: Alignment.center,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.favorite,
                                     size: 25,
@@ -634,25 +637,27 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   SizedBox(width: 10),
                                   Text(
                                     "no favorite beach yet.",
-                                    style: TextStyle(
-                                        fontSize: 25,
+                                    style: GoogleFonts.deliusUnicase(
                                         fontWeight: FontWeight.w600,
+                                        fontSize: 16,
                                         color: Colors.black45),
                                   ),
                                 ],
                               )),
                         ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15.0, top: 45, bottom: 20),
                     child: Text(
                       "Restaurant",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                      style: GoogleFonts.deliusUnicase(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   idsRes.length != 0
                       ? Container(
-                          height: 220,
+                          height: 180,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: countFavRes,
@@ -704,104 +709,108 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           color: Colors.white,
-                                          boxShadow: Styles.boxShadows),
+                                          boxShadow: Styles.boxShadows,
+                                          image: DecorationImage(
+                                              image: idsRes[(5 * index) + 4] !=
+                                                      ''
+                                                  ? NetworkImage(
+                                                      idsRes[(5 * index) + 4])
+                                                  : const AssetImage(
+                                                          "assets/images/beach.png")
+                                                      as ImageProvider,
+                                              fit: BoxFit.fill)),
                                       child: Column(
                                         children: [
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Container(
-                                            height: 105,
-                                            width: 125,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: idsRes[(5 * index) +
-                                                                4] !=
-                                                            ''
-                                                        ? NetworkImage(idsRes[
-                                                            (5 * index) + 4])
-                                                        : const AssetImage(
-                                                                "assets/images/beach.png")
-                                                            as ImageProvider,
-                                                    fit: BoxFit.fill),
-                                                color: Colors.white,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                boxShadow: Styles.boxShadows),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3.0, right: 3),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    idsRes[(5 * index) + 3],
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    overflow: TextOverflow.clip,
-                                                    maxLines: 1,
-                                                    softWrap: true,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 6.0, right: 5),
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.star,
+                                                        color: Colors.lime,
+                                                        size: 17,
+                                                      ),
+                                                      Text(
+                                                        rateRes[index],
+                                                        //"4",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Text("กรุงเทพมหานคร",
-                                                        style: TextStyle(
-                                                            fontSize: 16)),
-                                                    const SizedBox(width: 3),
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 6.0,
-                                                                  right: 5),
-                                                          child: Row(
-                                                            children: [
-                                                              const Icon(
-                                                                Icons.star,
-                                                                color:
-                                                                    Colors.lime,
-                                                                size: 17,
-                                                              ),
-                                                              Text(
-                                                                rateRes[index],
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 75,
+                                          ),
+                                          Container(
+                                            width: 145,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Styles.bgBackground1,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                      idsRes[(5 * index) + 3],
+                                                      style: GoogleFonts
+                                                          .deliusUnicase(
+                                                              fontSize: 12,
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      maxLines: 1,
+                                                      softWrap: true,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Icon(
+                                                        Icons
+                                                            .location_on_outlined,
+                                                        color: Colors.black,
+                                                        size: 14,
+                                                      ),
+                                                      Text("กรุงเทพมหานคร",
+                                                          style: GoogleFonts
+                                                              .deliusUnicase(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -818,7 +827,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               alignment: Alignment.center,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.favorite,
                                     size: 25,
@@ -827,25 +836,27 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   SizedBox(width: 10),
                                   Text(
                                     "no favorite restaurant yet.",
-                                    style: TextStyle(
-                                        fontSize: 25,
+                                    style: GoogleFonts.deliusUnicase(
                                         fontWeight: FontWeight.w600,
+                                        fontSize: 16,
                                         color: Colors.black45),
                                   ),
                                 ],
                               )),
                         ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15.0, top: 45, bottom: 20),
                     child: Text(
                       "Cafe",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                      style: GoogleFonts.deliusUnicase(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   idsCafe.length != 0
                       ? SizedBox(
-                          height: 220,
+                          height: 180,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: countFavCafe,
@@ -897,104 +908,98 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           color: Colors.white,
-                                          boxShadow: Styles.boxShadows),
+                                          boxShadow: Styles.boxShadows,
+                                          image: DecorationImage(
+                                              image: idsCafe[(5 * index) + 4] !=
+                                                      ''
+                                                  ? NetworkImage(
+                                                      idsCafe[(5 * index) + 4])
+                                                  : const AssetImage(
+                                                          "assets/images/beach.png")
+                                                      as ImageProvider,
+                                              fit: BoxFit.fill)),
                                       child: Column(
                                         children: [
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Container(
-                                            height: 105,
-                                            width: 125,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: idsCafe[(5 * index) +
-                                                                4] !=
-                                                            ''
-                                                        ? NetworkImage(idsCafe[
-                                                            (5 * index) + 4])
-                                                        : const AssetImage(
-                                                                "assets/images/beach.png")
-                                                            as ImageProvider,
-                                                    fit: BoxFit.fill),
-                                                color: Colors.white,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                boxShadow: Styles.boxShadows),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3.0, right: 3),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    idsCafe[(5 * index) + 3],
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    overflow: TextOverflow.clip,
-                                                    maxLines: 1,
-                                                    softWrap: true,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 6.0, right: 5),
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.star,
+                                                        color: Colors.lime,
+                                                        size: 17,
+                                                      ),
+                                                      Text(
+                                                        rateCafe[index],
+                                                        //"4",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Text("กรุงเทพมหานคร",
-                                                        style: TextStyle(
-                                                            fontSize: 16)),
-                                                    const SizedBox(width: 3),
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 6.0,
-                                                                  right: 5),
-                                                          child: Row(
-                                                            children: [
-                                                              const Icon(
-                                                                Icons.star,
-                                                                color:
-                                                                    Colors.lime,
-                                                                size: 17,
-                                                              ),
-                                                              Text(
-                                                                rateCafe[index],
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 75,
+                                          ),
+                                          Container(
+                                            width: 145,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Styles.bgBackground1,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                      idsCafe[(5 * index) + 3],
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      maxLines: 1,
+                                                      softWrap: true,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Text("กรุงเทพมหานคร",
+                                                          style: GoogleFonts
+                                                              .deliusUnicase(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -1011,7 +1016,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               alignment: Alignment.center,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.favorite,
                                     size: 25,
@@ -1020,25 +1025,27 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   SizedBox(width: 10),
                                   Text(
                                     "no favorite cafe yet.",
-                                    style: TextStyle(
-                                        fontSize: 25,
+                                    style: GoogleFonts.deliusUnicase(
                                         fontWeight: FontWeight.w600,
+                                        fontSize: 16,
                                         color: Colors.black45),
                                   ),
                                 ],
                               )),
                         ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(left: 15.0, top: 45, bottom: 20),
                     child: Text(
                       "Park",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                      style: GoogleFonts.deliusUnicase(
+                          fontSize: 18,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   idsPark.length != 0
                       ? SizedBox(
-                          height: 220,
+                          height: 180,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: countFavPark,
@@ -1090,104 +1097,99 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                           borderRadius:
                                               BorderRadius.circular(15),
                                           color: Colors.white,
-                                          boxShadow: Styles.boxShadows),
+                                          boxShadow: Styles.boxShadows,
+                                          image: DecorationImage(
+                                              image: idsPark[(5 * index) + 4] !=
+                                                      ''
+                                                  ? NetworkImage(
+                                                      idsPark[(5 * index) + 4])
+                                                  : const AssetImage(
+                                                          "assets/images/beach.png")
+                                                      as ImageProvider,
+                                              fit: BoxFit.fill)),
                                       child: Column(
                                         children: [
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Container(
-                                            height: 105,
-                                            width: 125,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: idsPark[(5 * index) +
-                                                                4] !=
-                                                            ''
-                                                        ? NetworkImage(idsPark[
-                                                            (5 * index) + 4])
-                                                        : const AssetImage(
-                                                                "assets/images/beach.png")
-                                                            as ImageProvider,
-                                                    fit: BoxFit.fill),
-                                                color: Colors.white,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                boxShadow: Styles.boxShadows),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 3.0, right: 3),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  child: Text(
-                                                    idsPark[(5 * index) + 3],
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                    overflow: TextOverflow.clip,
-                                                    maxLines: 1,
-                                                    softWrap: true,
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 6.0, right: 5),
+                                                child: CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.star,
+                                                        color: Colors.lime,
+                                                        size: 17,
+                                                      ),
+                                                      Text(
+                                                        ratePark[index],
+                                                        //"4",
+                                                        style: TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                const SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    const Text("กรุงเทพมหานคร",
-                                                        style: TextStyle(
-                                                            fontSize: 16)),
-                                                    const SizedBox(width: 3),
-                                                    Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 6.0,
-                                                                  right: 5),
-                                                          child: Row(
-                                                            children: [
-                                                              const Icon(
-                                                                Icons.star,
-                                                                color:
-                                                                    Colors.lime,
-                                                                size: 17,
-                                                              ),
-                                                              Text(
-                                                                ratePark[index],
-                                                                style:
-                                                                    const TextStyle(
-                                                                        fontSize:
-                                                                            12),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 75,
+                                          ),
+                                          Container(
+                                            width: 145,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: Styles.bgBackground1,
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(5.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    child: Text(
+                                                      idsPark[(5 * index) + 3],
+                                                      style: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      maxLines: 1,
+                                                      softWrap: true,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text("กรุงเทพมหานคร",
+                                                          style: GoogleFonts
+                                                              .deliusUnicase(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black)),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -1204,7 +1206,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                               alignment: Alignment.center,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Icon(
                                     Icons.favorite,
                                     size: 25,
@@ -1213,14 +1215,15 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                   SizedBox(width: 10),
                                   Text(
                                     "no favorite park yet.",
-                                    style: TextStyle(
-                                        fontSize: 25,
+                                    style: GoogleFonts.deliusUnicase(
                                         fontWeight: FontWeight.w600,
+                                        fontSize: 16,
                                         color: Colors.black45),
                                   ),
                                 ],
                               )),
                         ),
+                  SizedBox(height: 10)
                 ],
               ),
             ),

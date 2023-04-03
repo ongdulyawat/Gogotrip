@@ -11,18 +11,17 @@ class DetailHeader extends StatefulWidget {
 }
 
 class _DetailHeaderState extends State<DetailHeader> {
-
-  final CollectionReference checkCollection = FirebaseFirestore.instance.collection('checks');
+  final CollectionReference checkCollection =
+      FirebaseFirestore.instance.collection('checks');
 
   //String place = '';
   String placeUrl = '';
+
   getDataFromPlace() async {
     final DocumentSnapshot snapshot = await checkCollection.doc('state').get();
     if (snapshot.exists) {
       setState(() {
-        //place = snapshot.get('place');
         placeUrl = snapshot.get('placeUrl');
-        //print("Slidesssssssssss"+place);
       });
     }
   }
@@ -78,9 +77,8 @@ class _DetailHeaderState extends State<DetailHeader> {
                     //     : AssetImage("assets/images/beach.png")
                     // as ImageProvider,
                     //image: AssetImage('assets/images/beach.png'),
-                    image : NetworkImage(placeUrl),
-                    fit: BoxFit.fill
-                ),
+                    image: NetworkImage(placeUrl),
+                    fit: BoxFit.fill),
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
                 boxShadow: Styles.boxShadows,

@@ -252,7 +252,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                             builder: (context) => const LoginScreen(),
                           ));
                     } on FirebaseAuthException catch (e) {
-                      print(e);
+
                       Utils.showSnackBar(e.message);
                     }
                   }

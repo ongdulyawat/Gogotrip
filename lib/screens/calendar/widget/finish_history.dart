@@ -499,38 +499,6 @@ class _FinishHistoryState extends State<FinishHistory> {
       });
     });
   }
-  // mixTemple(){
-  //   templeLength = fieldTemInfo.length;
-  //   if(templeLength != 0){
-  //     allHistory.add(fieldTemInfo);
-  //   }
-  // }
-  // mixRestaurant(){
-  //   restaurantLength = fieldResInfo.length;
-  //   if(restaurantLength != 0){
-  //     allHistory.add(fieldResInfo);
-  //   }
-  // }
-  // mixBeach(){
-  //   beachLength = fieldBeaInfo.length;
-  //   if(beachLength != 0 ){
-  //     allHistory.add(fieldBeaInfo);
-  //   }
-  //
-  // }
-  // mixCafe(){
-  //   cafeLength = fieldCafeInfo.length;
-  //   if(cafeLength != 0){
-  //     allHistory.add(fieldCafeInfo);
-  //   }
-  // }
-  // mixPark(){
-  //   parkLength = fieldParkInfo.length;
-  //
-  //   if(parkLength != 0){
-  //     allHistory.add(fieldParkInfo);
-  //   }
-  // }
   @override
   void initState() {
     super.initState();
@@ -552,21 +520,6 @@ class _FinishHistoryState extends State<FinishHistory> {
     Future.delayed(Duration(milliseconds: 28000), () {
       getHistoryPark();
     });
-    // Future.delayed(Duration(milliseconds: 34000), () {
-    //   mixTemple();
-    // });
-    // Future.delayed(Duration(milliseconds: 35000), () {
-    //   mixRestaurant();
-    // });
-    // Future.delayed(Duration(milliseconds: 36000), () {
-    //   mixBeach();
-    // });
-    // Future.delayed(Duration(milliseconds: 37000), () {
-    //   mixCafe();
-    // });
-    // Future.delayed(Duration(milliseconds: 38000), () {
-    //   mixPark();
-    // });
     FirebaseFirestore.instance
         .collection('users')
         .doc(user!.uid)
@@ -580,15 +533,12 @@ class _FinishHistoryState extends State<FinishHistory> {
 
   @override
   Widget build(BuildContext context) {
-    print(allHistory);
-    print(allHistory.length);
     return _timerFinished? GridView.count(
       childAspectRatio: 2.2,
       crossAxisCount: 1,
       shrinkWrap: true,
       children: [
         for (int num = 0; num < allHistory.length; num+=9)
-        // for(int numArray = 0; numArray < 6 ; numArray++)
           Column(
             children: [
               Container(
@@ -621,7 +571,7 @@ class _FinishHistoryState extends State<FinishHistory> {
                         const EdgeInsets.only(top: 3.0, left: 28),
                         child: Text(
                           allHistory[num + 7],
-                          style: GoogleFonts.bebasNeue(fontSize: 16),
+                          style: GoogleFonts.deliusUnicase(fontSize: 16),
                           maxLines: 1,
                           overflow: TextOverflow.clip,
                         ),
@@ -639,8 +589,6 @@ class _FinishHistoryState extends State<FinishHistory> {
                               height: 85,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    // image:
-                                    // AssetImage('assets/images/beach.png')
                                   image: NetworkImage(allHistory[num+8]),
                                     fit: BoxFit.fill),
                                 color: Colors.white,
@@ -658,16 +606,14 @@ class _FinishHistoryState extends State<FinishHistory> {
                             children: [
                               Text(
                                 allHistory[num],
-                                // DateFormat.yMMMMd().format(dataList[num].value[0].toDate()),
-                                // "30 October",
-                                style: GoogleFonts.bebasNeue(fontSize: 20),
+                                style: GoogleFonts.deliusUnicase(fontSize: 16),
                               ),
                               Row(
                                 children: [
                                   Text(
                                     "Time ",
                                     style:
-                                    GoogleFonts.bebasNeue(fontSize: 20),
+                                    GoogleFonts.deliusUnicase(fontSize: 16),
                                   ),
                                   // Text(dataList[num].value[1]+"-"+dataList[num].value[2]),
                                   Text("${allHistory[num+1]}"+"-"+"${allHistory[num+2]}"),
@@ -679,89 +625,13 @@ class _FinishHistoryState extends State<FinishHistory> {
                               // Text(dataList[num].value[5],
                               Text(
                                 allHistory[num+5],
-                                style: GoogleFonts.poppins(fontSize: 10),
+                                style: GoogleFonts.deliusUnicase(fontSize: 8),
                               )
                             ],
                           ),
                         )
                       ],
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 10.0,left: 22),
-                    //   child: Row(
-                    //     children: [
-                    //       Expanded(
-                    //         flex: 70,
-                    //         child: Container(
-                    //           child: Row(
-                    //             children: [
-                    //               for (int count = 0; count < 6; count++)
-                    //                 Padding(
-                    //                   padding: const EdgeInsets.only(left: 5.0),
-                    //                   child: Container(
-                    //                     width: 20,
-                    //                     height: 20,
-                    //                     decoration: BoxDecoration(
-                    //                       color: colorUser[count],
-                    //                       borderRadius:
-                    //                       BorderRadius.circular(24),
-                    //                       boxShadow: Styles.boxShadows,
-                    //                     ),
-                    //                     child: const Icon(
-                    //                       Icons.person_2_outlined,
-                    //                       size: 12,
-                    //                       color: Colors.white,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Expanded(
-                    //         flex: 30,
-                    //         child: Container(
-                    //           child: Row(
-                    //             children: [
-                    //               Container(
-                    //                 width: 25,
-                    //                 decoration: BoxDecoration(
-                    //                     color: Colors.blue,
-                    //                     borderRadius: BorderRadius.circular(16)),
-                    //                 child: Row(
-                    //                   crossAxisAlignment:
-                    //                   CrossAxisAlignment.center,
-                    //                   mainAxisAlignment: MainAxisAlignment.center,
-                    //                   children: const [
-                    //                     Text(
-                    //                       "B",
-                    //                       style: TextStyle(
-                    //                           color: Colors.white,
-                    //                           fontSize: 12,
-                    //                           fontWeight: FontWeight.bold),
-                    //                     ),
-                    //                   ],
-                    //                 ),
-                    //               ),
-                    //               const SizedBox(
-                    //                 width: 5,
-                    //               ),
-                    //               const Text("6/6", style: TextStyle(fontSize: 10)),
-                    //               const Padding(
-                    //                 padding:
-                    //                 EdgeInsets.only(left: 2.0, bottom: 2),
-                    //                 child: Icon(
-                    //                   Icons.person,
-                    //                   size: 14,
-                    //                 ),
-                    //               ),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 ),
               ),

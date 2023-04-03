@@ -35,14 +35,12 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     });
   }
 
-  PickedFile? _imageFile;
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _describeController = TextEditingController();
 
-  //final _controller = TextEditingController();
-  final _controller = TextEditingController();
 
-  final ImagePicker _picker = ImagePicker();
+
 
   final CollectionReference _users =
       FirebaseFirestore.instance.collection('users');
@@ -52,9 +50,6 @@ class _ProfileHeaderState extends State<ProfileHeader> {
   String imageUrl ='';
   @override
   Widget build(BuildContext context) {
-    // return Form(
-    // key: formKey,
-    // child: Container(
     return Container(
       width: 378,
       height: 410,
@@ -72,7 +67,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               Container(
                 width: 378,
                 decoration:const BoxDecoration(
-                  color: Colors.white,
+                  color: Styles.bgBackground1,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(24),
                       bottomRight: Radius.circular(24)),
@@ -95,7 +90,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text("${loggedInUser.username}",
-                                  style: GoogleFonts.bebasNeue(fontSize: 35)),
+                                  style: GoogleFonts.deliusUnicase(fontSize: 30)),
                               IconButton(
                                 icon: Image.asset(
                                   "assets/icons/pencil.png",
@@ -103,7 +98,6 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                   height: 20,
                                 ),
                                 onPressed: () async {
-                                  // mark the function as async
                                   await showDialog(
                                       context: context,
                                       builder: (BuildContext context) =>
@@ -227,16 +221,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                   );
                                                                 },
                                                               );
-                                                              print("ERROR username");
                                                             }
                                                           }
-
-                                                          // setState(() {
-                                                          //   username =
-                                                          //       _controller.text;
-                                                          // });
-                                                          // Navigator.of(context).pop();
-                                                          //Get.back();
                                                         },
                                                       ),
                                                     )
@@ -259,7 +245,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("${loggedInUser.describe}",
-                                style: GoogleFonts.poppins(fontSize: 20)),
+                                style: GoogleFonts.deliusUnicase(fontSize: 18)),
                             IconButton(
                               icon: Image.asset(
                                 "assets/icons/pencil.png",
@@ -360,12 +346,9 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                           final String describe = _describeController.text.trim();
                                                           if (describe != null) {
                                                             await _users.doc(user!.uid)
-                                                                //.doc(documentSnapshot!.id)
                                                                 .update({
                                                               "describe": describe
                                                             });
-                                                           // _describeController.text = '';
-                                                            //Navigator.of(context).pop();
                                                             Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
@@ -375,13 +358,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                                                                 ));
                                                             //Get.back();
                                                           }
-                                                          print("ERROR describe");
                                                         }
-
-                                                        // setState(() {
-                                                        //   describe =
-                                                        //       _controller.text;
-                                                        // });
                                                       },
                                                     ),
                                                   )
@@ -408,15 +385,15 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                     Column(
                       children: [
                         Text("${loggedInUser.createCount}",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.deliusUnicase(
                                 textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: Colors.white))),
                         Text("create",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.deliusUnicase(
                                 textStyle: const TextStyle(
-                                    fontSize: 20, color: Colors.white))),
+                                    fontSize: 18, color: Colors.white))),
                       ],
                     ),
                     Padding(
@@ -424,30 +401,30 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                       child: Column(
                         children: [
                           Text("${loggedInUser.joinCount}",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.deliusUnicase(
                                   textStyle: const TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                       color: Colors.white))),
                           Text("join",
-                              style: GoogleFonts.poppins(
+                              style: GoogleFonts.deliusUnicase(
                                   textStyle: const TextStyle(
-                                      fontSize: 20, color: Colors.white))),
+                                      fontSize: 18, color: Colors.white))),
                         ],
                       ),
                     ),
                     Column(
                       children: [
                         Text("${loggedInUser.like}",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.deliusUnicase(
                                 textStyle: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: Colors.white))),
                         Text("like",
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.deliusUnicase(
                                 textStyle: const TextStyle(
-                                    fontSize: 20, color: Colors.white))),
+                                    fontSize: 18, color: Colors.white))),
                       ],
                     ),
                   ],
@@ -526,8 +503,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
               onPressed: () async {
                 ImagePicker imagePicker = ImagePicker();
                 XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
-                print('${file?.path}');
-                print("camera");
+
                 String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
                 Reference referenceRoot = FirebaseStorage.instance.ref();
@@ -557,8 +533,6 @@ class _ProfileHeaderState extends State<ProfileHeader> {
 
                 ImagePicker imagePicker = ImagePicker();
                 XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
-                print('${file?.path}');
-                print("Gallery");
 
                 String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
@@ -587,10 +561,4 @@ class _ProfileHeaderState extends State<ProfileHeader> {
     );
   }
 
-  // void takePhoto(ImageSource source) async {
-  //   final pickedFile = await _picker.getImage(source: source);
-  //   setState(() {
-  //     _imageFile = pickedFile!;
-  //   });
-  // }
 }

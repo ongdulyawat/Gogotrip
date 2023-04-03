@@ -567,7 +567,7 @@ class _LocationCardState extends State<LocationCard> {
   Map<dynamic, dynamic>? dataDetailSearch;
 
   final CollectionReference checkCollection =
-  FirebaseFirestore.instance.collection('checks');
+      FirebaseFirestore.instance.collection('checks');
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   String place = '';
@@ -619,14 +619,14 @@ class _LocationCardState extends State<LocationCard> {
     const String apiKey =
         "Gy)g(ZH9sJk7V6)7kxxmavBQ9BOHToVYeNBnpCEMK)3YzerR7YQMqZ3YnazuaeL(lm6w7Pr52oyQfuFYgcCvowW=====2";
     var urlBeach = Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=ทะเล&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=ทะเล&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=30&numberOfResult=30&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     var urlTemple = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=วัด&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     var urlRestaurant = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=อาหาร&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
     var urlPark = Uri.parse(
-        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=สวนสาธารณะ&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
+        'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=สวน&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
     var urlCafe = Uri.parse(
         'https://tatapi.tourismthailand.org/tatapi/v5/places/search?keyword=cafe&location=13.6904831,100.5226014&categorycodes=ALL&provinceName=Bangkok&radius=20&numberOfResult=20&pagenumber=1&destination=Bangkok&filterByUpdateDate=2019/09/01-2023/02/28');
 
@@ -846,227 +846,229 @@ class _LocationCardState extends State<LocationCard> {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     return search == ''
         ? SizedBox(
-      height: 180,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: data == null ? 0 : data?["result"].length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 5),
-              child: InkWell(
-                onTap: () {
-                  firestore
-                      .collection('checks')
-                      .doc('state')
-                      .update({'detailReload': 'False'});
-                  firestore.collection('checks').doc('state').update({
-                    'placeId': '${data?['result'][index]['place_id']}'
-                  });
-                  firestore.collection('checks').doc('state').update({
-                    'placeName': '${data?['result'][index]['place_name']}'
-                  });
-                  firestore.collection('checks').doc('state').update({
-                    'placeUrl':
-                    '${data?['result'][index]['thumbnail_url']}'
-                  });
+            height: 180,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: data == null ? 0 : data?["result"].length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5),
+                    child: InkWell(
+                      onTap: () {
+                        firestore
+                            .collection('checks')
+                            .doc('state')
+                            .update({'detailReload': 'False'});
+                        firestore.collection('checks').doc('state').update({
+                          'placeId': '${data?['result'][index]['place_id']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeName': '${data?['result'][index]['place_name']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeUrl':
+                              '${data?['result'][index]['thumbnail_url']}'
+                        });
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DetailScreen(
-                          data: null,
-                        ),
-                      ));
-                },
-                child: Container(
-                  width: 165,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                      boxShadow: Styles.boxShadows,
-                    image: DecorationImage(
-                        image: data?['result'][index]
-                        ['thumbnail_url'] !=
-                            ''
-                            ? NetworkImage(
-                          "${data?['result'][index]['thumbnail_url']}",
-                        )
-                            : const AssetImage(
-                            "assets/images/no-pictures.png")
-                        as ImageProvider,
-                        fit: BoxFit.fill),),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 125,
-                      ),
-                      Container(
-                        width: 145,
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DetailScreen(
+                                data: null,
+                              ),
+                            ));
+                      },
+                      child: Container(
+                        width: 165,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Styles.bgBackground1,
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: Styles.boxShadows,
+                          image: DecorationImage(
+                              image:
+                                  data?['result'][index]['thumbnail_url'] != ''
+                                      ? NetworkImage(
+                                          "${data?['result'][index]['thumbnail_url']}",
+                                        )
+                                      : const AssetImage(
+                                              "assets/images/no-pictures.png")
+                                          as ImageProvider,
+                              fit: BoxFit.fill),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "${data?['result'][index]['place_name']}",
-                                style: GoogleFonts.deliusUnicase(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.clip,
-                                maxLines: 1,
-                                softWrap: true,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 125,
+                            ),
+                            Container(
+                              width: 145,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Styles.bgBackground1,
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.location_on_outlined,
-                                    color: Colors.black,
-                                    size: 14,
-                                  ),
-                                  Text(
-                                      "${data?['result'][index]['destination']}",
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${data?['result'][index]['place_name']}",
                                       style: GoogleFonts.deliusUnicase(
-                                        fontSize: 14,
-                                        color: Colors.black,
-                                      )),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
-    )
-        : SizedBox(
-      height: 180,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: dataDetailSearch == null
-              ? 0
-              : dataDetailSearch?["result"].length,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(left: 5.0, right: 5),
-              child: InkWell(
-                onTap: () {
-                  firestore
-                      .collection('checks')
-                      .doc('state')
-                      .update({'detailReload': 'False'});
-                  firestore.collection('checks').doc('state').update({
-                    'placeId':
-                    '${dataDetailSearch?['result'][index]['place_id']}'
-                  });
-                  firestore.collection('checks').doc('state').update({
-                    'placeName':
-                    '${dataDetailSearch?['result'][index]['place_name']}'
-                  });
-                  firestore.collection('checks').doc('state').update({
-                    'placeUrl':
-                    '${dataDetailSearch?['result'][index]['thumbnail_url']}'
-                  });
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DetailScreen(
-                          data: null,
-                          // data: "${_data?['result'][index]['place_id']}"
-                        ),
-                      ));
-                },
-                child: Container(
-                  width: 165,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                      boxShadow: Styles.boxShadows,
-                      image: DecorationImage(
-                          image: dataDetailSearch?['result'][index]
-                          ['thumbnail_url'] !=
-                              ''
-                              ? NetworkImage(
-                            "${dataDetailSearch?['result'][index]['thumbnail_url']}",
-                          )
-                              : const AssetImage(
-                              "assets/images/beach.png")
-                          as ImageProvider,
-                          fit: BoxFit.fill)
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 125,
-                      ),
-                      Container(
-                        width: 145,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Styles.bgBackground1,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                child: Text(
-                                  "${dataDetailSearch?['result'][index]['place_name']}",
-                                  style: GoogleFonts.deliusUnicase(
-                                      fontSize: 12,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                  overflow: TextOverflow.clip,
-                                  maxLines: 1,
-                                  softWrap: true,
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      overflow: TextOverflow.clip,
+                                      maxLines: 1,
+                                      softWrap: true,
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const Icon(
+                                          Icons.location_on_outlined,
+                                          color: Colors.black,
+                                          size: 14,
+                                        ),
+                                        Text(
+                                            "${data?['result'][index]['destination']}",
+                                            style: GoogleFonts.deliusUnicase(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            )),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Icon(
-                                    Icons.location_on_outlined,
-                                    color: Colors.black,
-                                    size: 14,
-                                  ),
-                                  Text(
-                                      "${dataDetailSearch?['result'][index]['destination']}",
-                                      style: GoogleFonts.deliusUnicase(
-                                        fontSize: 14,
-                                        color: Colors.black,)),
-                                ],
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }),
-    );
+                    ),
+                  );
+                }),
+          )
+        : SizedBox(
+            height: 180,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: dataDetailSearch == null
+                    ? 0
+                    : dataDetailSearch?["result"].length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 5.0, right: 5),
+                    child: InkWell(
+                      onTap: () {
+                        firestore
+                            .collection('checks')
+                            .doc('state')
+                            .update({'detailReload': 'False'});
+                        firestore.collection('checks').doc('state').update({
+                          'placeId':
+                              '${dataDetailSearch?['result'][index]['place_id']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeName':
+                              '${dataDetailSearch?['result'][index]['place_name']}'
+                        });
+                        firestore.collection('checks').doc('state').update({
+                          'placeUrl':
+                              '${dataDetailSearch?['result'][index]['thumbnail_url']}'
+                        });
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DetailScreen(
+                                data: null,
+                                // data: "${_data?['result'][index]['place_id']}"
+                              ),
+                            ));
+                      },
+                      child: Container(
+                        width: 165,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.white,
+                            boxShadow: Styles.boxShadows,
+                            image: DecorationImage(
+                                image: dataDetailSearch?['result'][index]
+                                            ['thumbnail_url'] !=
+                                        ''
+                                    ? NetworkImage(
+                                        "${dataDetailSearch?['result'][index]['thumbnail_url']}",
+                                      )
+                                    : const AssetImage(
+                                            "assets/images/beach.png")
+                                        as ImageProvider,
+                                fit: BoxFit.fill)),
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 125,
+                            ),
+                            Container(
+                              width: 145,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: Styles.bgBackground1,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      child: Text(
+                                        "${dataDetailSearch?['result'][index]['place_name']}",
+                                        style: GoogleFonts.deliusUnicase(
+                                            fontSize: 12,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                        overflow: TextOverflow.clip,
+                                        maxLines: 1,
+                                        softWrap: true,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const Icon(
+                                          Icons.location_on_outlined,
+                                          color: Colors.black,
+                                          size: 14,
+                                        ),
+                                        Text(
+                                            "${dataDetailSearch?['result'][index]['destination']}",
+                                            style: GoogleFonts.deliusUnicase(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                            )),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          );
   }
 }

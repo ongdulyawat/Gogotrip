@@ -75,7 +75,8 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 if (timestamp.year == now.year &&
                     timestamp.month == now.month &&
                     timestamp.day == now.day) {
-                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldCafe[2]);
+                  DateTime parsedTime =
+                      DateFormat('h:mm a').parse(fieldCafe[2]);
 
                   String formattedTime = DateFormat('h:mm a').format(now);
                   DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
@@ -472,7 +473,8 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                 if (timestamp.year == now.year &&
                     timestamp.month == now.month &&
                     timestamp.day == now.day) {
-                  DateTime parsedTime = DateFormat('h:mm a').parse(fieldPark[2]);
+                  DateTime parsedTime =
+                      DateFormat('h:mm a').parse(fieldPark[2]);
 
                   String formattedTime = DateFormat('h:mm a').format(now);
                   DateTime timeNow = DateFormat('hh:mm a').parse(formattedTime);
@@ -559,33 +561,6 @@ class _IncomingHistoryState extends State<IncomingHistory> {
     });
   }
 
-  // mixALlplace(){
-  //   templeLength = fieldTemInfo.length;
-  //   restaurantLength = fieldResInfo.length;
-  //   beachLength = fieldBeaInfo.length;
-  //   parkLength = fieldParkInfo.length;
-  //   cafeLength = fieldCafeInfo.length;
-  //   if(cafeLength != 0){
-  //     allHistory.add(fieldCafeInfo);
-  //   }
-  //   if(parkLength != 0){
-  //     allHistory.add(fieldParkInfo);
-  //   }
-  //   if(restaurantLength != 0){
-  //     allHistory.add(fieldResInfo);
-  //   }
-  //   if(beachLength != 0 ){
-  //     allHistory.add(fieldBeaInfo);
-  //   }
-  //   if(templeLength != 0){
-  //     allHistory.add(fieldTemInfo);
-  //   }
-  // }
-  // Future<void> runFunctions() async {
-  //   await Future(() => getUserCreate());
-  //   await Future(() =>  getHistoryCafe());
-  //   await Future(() =>  startTimer());
-  // }
   @override
   void initState() {
     super.initState();
@@ -632,8 +607,6 @@ class _IncomingHistoryState extends State<IncomingHistory> {
 
   @override
   Widget build(BuildContext context) {
-    print(allHistory);
-    print(allHistory.length);
     return _timerFinished
         ? GridView.count(
             childAspectRatio: 2.2,
@@ -667,14 +640,13 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                                 topRight: Radius.circular(8),
                                 topLeft: Radius.circular(8),
                               ),
-
                             ),
                             child: Padding(
                               padding:
                                   const EdgeInsets.only(top: 3.0, left: 28),
                               child: Text(
                                 allHistory[num + 7],
-                                style: GoogleFonts.bebasNeue(fontSize: 16),
+                                style: GoogleFonts.deliusUnicase(fontSize: 16),
                                 maxLines: 1,
                                 overflow: TextOverflow.clip,
                               ),
@@ -711,15 +683,15 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                                   children: [
                                     Text(
                                       allHistory[num],
-                                      style:
-                                          GoogleFonts.bebasNeue(fontSize: 20),
+                                      style: GoogleFonts.deliusUnicase(
+                                          fontSize: 16),
                                     ),
                                     Row(
                                       children: [
                                         Text(
                                           "Time ",
-                                          style: GoogleFonts.bebasNeue(
-                                              fontSize: 20),
+                                          style: GoogleFonts.deliusUnicase(
+                                              fontSize: 16),
                                         ),
                                         // Text(dataList[num].value[1]+"-"+dataList[num].value[2]),
                                         Text("${allHistory[num + 1]}" +
@@ -734,7 +706,8 @@ class _IncomingHistoryState extends State<IncomingHistory> {
                                     Text(
                                       allHistory[num + 5],
                                       //"text",
-                                      style: GoogleFonts.poppins(fontSize: 10),
+                                      style: GoogleFonts.deliusUnicase(
+                                          fontSize: 8),
                                     )
                                   ],
                                 ),

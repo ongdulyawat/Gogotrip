@@ -15,13 +15,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Styles.bgBackground,
+        backgroundColor: Styles.bgBackground1,
         body: SingleChildScrollView(
           child: Column(
             children: const [
               ProfileHeader(),
               SizedBox(height: 5),
-              ProfileBody()
+              ProfileBody(),
+              SizedBox(height: 5),
             ],
           ),
         ),

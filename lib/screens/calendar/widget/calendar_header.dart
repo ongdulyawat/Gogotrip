@@ -20,11 +20,11 @@ class _CalendarHeaderState extends State<CalendarHeader> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(DateFormat.yMMMMd().format(DateTime.now()),
-              style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.grey[600],fontSize: 20))),
+              style: GoogleFonts.deliusUnicase(textStyle: TextStyle(color: Colors.grey[600],fontSize: 20))),
           const SizedBox(
             height: 2,
           ),
-          Text("Today", style: GoogleFonts.bebasNeue(textStyle: TextStyle(fontSize: 30))),
+          Text("Today", style: GoogleFonts.deliusUnicase(textStyle: TextStyle(fontSize: 30))),
           const SizedBox(
             height: 8,
           ),
@@ -35,8 +35,8 @@ class _CalendarHeaderState extends State<CalendarHeader> {
             initialSelectedDate: DateTime.now(),
             selectionColor: Styles.buttonColor,
             selectedTextColor: Colors.white,
-            dateTextStyle: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey),
+            dateTextStyle: GoogleFonts.deliusUnicase(textStyle:TextStyle(
+                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.grey)),
           ),
         ],
       ),
