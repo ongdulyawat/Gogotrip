@@ -219,7 +219,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                       userModel.like = "0";
                       userModel.join = [];
                       userModel.create = [];
-                      userModel.favorite = [];
+                      userModel.favourite = [];
                       // await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
                       //   'join': FieldValue.arrayUnion([]),
                       // });

@@ -17,12 +17,12 @@ class UserModel{
   String? like;
   List <dynamic>? join;
   List <dynamic>? create;
-  List <dynamic>? favorite;
+  List <dynamic>? favourite;
 
   UserModel({this.uid,this.email,this.firstname,
     this.lastname,this.username,this.password,
   this.describe,this.instagram,this.facebook,this.line,this.image,this.createCount
-    ,this.joinCount,this.like,this.join,this.create,this.favorite});
+    ,this.joinCount,this.like,this.join,this.create,this.favourite});
 
   factory UserModel.fromMap(map){
     return UserModel(
@@ -42,7 +42,7 @@ class UserModel{
       like: map['like'],
       join: map['join'],
       create: map['create'],
-      favorite: map['favorite']
+      favourite: map['favourite']
     );
   }
 
@@ -64,7 +64,7 @@ class UserModel{
       'like' : like,
       'join' : join,
       'create' : create,
-      'favourite' : favorite,
+      'favourite' : favourite,
     };
   }
 }
